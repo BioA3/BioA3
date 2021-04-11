@@ -1,7 +1,7 @@
 Translation Strings Policy
 ===========================
 
-This document provides guidelines for internationalization of the ECODOLLAR Core software.
+This document provides guidelines for internationalization of the BIOA3 Core software.
 
 How to translate?
 ------------------
@@ -75,10 +75,10 @@ In Qt code, use tr's third argument for optional plurality. For example:
 This adds `<numerusform>`s to the respective `.ts` file, which can be translated separately depending on the language. In English, this is simply:
 
     <message numerus="yes">
-        <source>%n active connection(s) to ECODOLLAR network</source>
+        <source>%n active connection(s) to BIOA3 network</source>
         <translation>
-            <numerusform>%n active connection to ECODOLLAR network</numerusform>
-            <numerusform>%n active connections to ECODOLLAR network</numerusform>
+            <numerusform>%n active connection to BIOA3 network</numerusform>
+            <numerusform>%n active connections to BIOA3 network</numerusform>
         </translation>
     </message>
 
@@ -96,4 +96,4 @@ The second example reduces the number of pluralized words that translators have 
 
 During a string freeze (often before a major release), no translation strings are to be added, modified or removed.
 
-This can be checked by executing `make translate` in the `src` directory, then verifying that `ecodollar_en.ts` remains unchanged.
+This can be checked by executing `make translate` in the `src` directory, then verifying that `bioa3_en.ts` remains unchanged.

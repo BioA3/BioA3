@@ -5,7 +5,7 @@
 """Test the listreceivedbyaddress RPC."""
 from decimal import Decimal
 
-from test_framework.test_framework import EcodollarTestFramework
+from test_framework.test_framework import BioA3TestFramework
 from test_framework.util import (
     assert_array_result,
     assert_equal,
@@ -14,7 +14,7 @@ from test_framework.util import (
 )
 
 
-class ReceivedByTest(EcodollarTestFramework):
+class ReceivedByTest(BioA3TestFramework):
     def set_test_params(self):
         self.num_nodes = 2
 

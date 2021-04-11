@@ -1,6 +1,6 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2019 The ECODOLLAR developers
+// Copyright (c) 2015-2019 The BIOA3 developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -286,7 +286,7 @@ RPCConsole::RPCConsole(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHi
     // set library version labels
 #ifdef ENABLE_WALLET
     std::string strPathCustom = GetArg("-backuppath", "");
-    std::string strzECOSPathCustom = GetArg("-zecosbackuppath", "");
+    std::string strzBIOA3PathCustom = GetArg("-zbioa3backuppath", "");
     int nCustomBackupThreshold = GetArg("-custombackupthreshold", DEFAULT_CUSTOMBACKUPTHRESHOLD);
 
     if(!strPathCustom.empty()) {
@@ -295,13 +295,13 @@ RPCConsole::RPCConsole(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHi
         ui->wallet_custombackuppath->show();
     }
 
-    if(!strzECOSPathCustom.empty()) {
-        ui->wallet_customzecosbackuppath->setText(QString::fromStdString(strzECOSPathCustom));
-        ui->wallet_customzecosbackuppath_label->setVisible(true);
-        ui->wallet_customzecosbackuppath->setVisible(true);
+    if(!strzBIOA3PathCustom.empty()) {
+        ui->wallet_customzbioa3backuppath->setText(QString::fromStdString(strzBIOA3PathCustom));
+        ui->wallet_customzbioa3backuppath_label->setVisible(true);
+        ui->wallet_customzbioa3backuppath->setVisible(true);
     }
 
-    if((!strPathCustom.empty() || !strzECOSPathCustom.empty()) && nCustomBackupThreshold > 0) {
+    if((!strPathCustom.empty() || !strzBIOA3PathCustom.empty()) && nCustomBackupThreshold > 0) {
         ui->wallet_custombackupthreshold->setText(QString::fromStdString(std::to_string(nCustomBackupThreshold)));
         ui->wallet_custombackupthreshold_label->setVisible(true);
         ui->wallet_custombackupthreshold->setVisible(true);
@@ -637,7 +637,7 @@ void RPCConsole::clear()
     QString clsKey = "Ctrl-L";
 #endif
 
-    message(CMD_REPLY, (tr("Welcome to the ECODOLLAR RPC console.") + "<br>" +
+    message(CMD_REPLY, (tr("Welcome to the BIOA3 RPC console.") + "<br>" +
                         tr("Use up and down arrows to navigate history, and %1 to clear screen.").arg("<b>"+clsKey+"</b>") + "<br>" +
                         tr("Type <b>help</b> for an overview of available commands.") +
                         "<br><span class=\"secwarning\"><br>" +

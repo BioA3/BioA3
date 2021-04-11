@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2017-2019 The ECODOLLAR developers
+// Copyright (c) 2017-2019 The BIOA3 developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -8,7 +8,7 @@
 #define BITCOIN_BIGNUM_H
 
 #if defined HAVE_CONFIG_H
-#include "config/ecodollar-config.h"
+#include "config/bioa3-config.h"
 #endif
 
 #if defined(USE_NUM_OPENSSL)

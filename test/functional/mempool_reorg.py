@@ -8,12 +8,12 @@ Test re-org scenarios with a mempool that contains transactions
 that spend (directly or indirectly) coinbase transactions.
 """
 
-from test_framework.test_framework import EcodollarTestFramework
+from test_framework.test_framework import BioA3TestFramework
 from test_framework.util import *
 import time
 
 # Create one-input, one-output, no-fee transaction:
-class MempoolCoinbaseTest(EcodollarTestFramework):
+class MempoolCoinbaseTest(BioA3TestFramework):
     def set_test_params(self):
         self.num_nodes = 2
         self.extra_args = [["-checkmempool"]] * 2

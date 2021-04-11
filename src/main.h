@@ -4,7 +4,7 @@
 // Copyright (c) 2011-2013 The PPCoin developers
 // Copyright (c) 2013-2014 The NovaCoin Developers
 // Copyright (c) 2014-2018 The BlackCoin Developers
-// Copyright (c) 2015-2020 The ECODOLLAR developers
+// Copyright (c) 2015-2020 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -12,7 +12,7 @@
 #define BITCOIN_MAIN_H
 
 #if defined(HAVE_CONFIG_H)
-#include "config/ecodollar-config.h"
+#include "config/bioa3-config.h"
 #endif
 
 #include "amount.h"
@@ -23,8 +23,8 @@
 #include "pow.h"
 #include "primitives/block.h"
 #include "primitives/transaction.h"
-#include "zecos/zerocoin.h"
-#include "zecos/zecosmodule.h"
+#include "zbioa3/zerocoin.h"
+#include "zbioa3/zbioa3module.h"
 #include "script/script.h"
 #include "script/sigcache.h"
 #include "script/standard.h"
@@ -44,7 +44,7 @@
 #include <vector>
 
 #include "libzerocoin/CoinSpend.h"
-#include "lightzecosthread.h"
+#include "lightzbioa3thread.h"
 
 #include <boost/unordered_map.hpp>
 
@@ -238,7 +238,7 @@ bool GetOutput(const uint256& hash, unsigned int index, CValidationState& state,
 
 // ***TODO***
 double ConvertBitsToDouble(unsigned int nBits);
-int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCount, bool isZECOSStake);
+int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCount, bool isZBIOA3Stake);
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader* pblock, bool fProofOfStake);
 
 bool ActivateBestChain(CValidationState& state, CBlock* pblock = NULL, bool fAlreadyChecked = false);
@@ -363,9 +363,9 @@ bool IsTransactionInChain(const uint256& txId, int& nHeightTx);
 bool IsBlockHashInChain(const uint256& hashBlock);
 bool ValidOutPoint(const COutPoint& out, int nHeight);
 void AddWrappedSerialsInflation();
-void RecalculateZECOSSpent();
-void RecalculateZECOSMinted();
-bool RecalculateECOSSupply(int nHeightStart);
+void RecalculateZBIOA3Spent();
+void RecalculateZBIOA3Minted();
+bool RecalculateBIOA3Supply(int nHeightStart);
 bool ReindexAccumulators(std::list<uint256>& listMissingCheckpoints, std::string& strError);
 
 // Fake Serial attack Range

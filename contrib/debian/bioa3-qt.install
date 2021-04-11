@@ -1,0 +1,6 @@
+usr/local/bin/bioa3-qt usr/bin
+share/pixmaps/bioa332.xpm usr/share/pixmaps
+share/pixmaps/bioa316.xpm usr/share/pixmaps
+share/pixmaps/bioa3128.png usr/share/pixmaps
+debian/bioa3-qt.desktop usr/share/applications
+debian/bioa3-qt.protocol usr/share/kde4/services/

@@ -1,8 +1,8 @@
-Source: ecodollar
+Source: bioa3
 Section: utils
 Priority: optional
-Maintainer: EcoZion <ecodollar.org@gmail.com>
-Uploaders: EcoZion <ecodollar.org@gmail.com>
+Maintainer: EcoZion <bioa3.org@gmail.com>
+Uploaders: EcoZion <bioa3.org@gmail.com>
 Build-Depends: debhelper,
  devscripts,
  automake,
@@ -28,15 +28,15 @@ Build-Depends: debhelper,
  libzmq3-dev,
  dh-systemd
 Standards-Version: 3.9.2
-Homepage: http://www.ecodollar.org
-Vcs-Git: git://github.com/ECODOLLAR/ECODOLLAR.git
-Vcs-Browser: http://github.com/ECODOLLAR/ECODOLLAR
+Homepage: http://www.bioa3.org
+Vcs-Git: git://github.com/BIOA3/BIOA3.git
+Vcs-Browser: http://github.com/BIOA3/BIOA3
 
-Package: ecodollard
+Package: bioa3d
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer network based digital currency - daemon
- ECODOLLAR is a free open source peer-to-peer electronic cash system that
+ BIOA3 is a free open source peer-to-peer electronic cash system that
  is completely decentralized, without the need for a central server or
  trusted parties.  Users hold the crypto keys to their own money and
  transact directly with each other, with the help of a P2P network to
@@ -45,14 +45,14 @@ Description: peer-to-peer network based digital currency - daemon
  Full transaction history is stored locally at each client.  This
  requires 10+ GB of space, slowly growing.
  .
- This package provides the daemon, ecodollard, and the CLI tool
- ecodollar-cli to interact with the daemon.
+ This package provides the daemon, bioa3d, and the CLI tool
+ bioa3-cli to interact with the daemon.
 
-Package: ecodollar-qt
+Package: bioa3-qt
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: peer-to-peer network based digital currency - Qt GUI
- ECODOLLAR is a free open source peer-to-peer electronic cash system that
+ BIOA3 is a free open source peer-to-peer electronic cash system that
  is completely decentralized, without the need for a central server or
  trusted parties.  Users hold the crypto keys to their own money and
  transact directly with each other, with the help of a P2P network to
@@ -61,4 +61,4 @@ Description: peer-to-peer network based digital currency - Qt GUI
  Full transaction history is stored locally at each client.  This
  requires 10+ GB of space, slowly growing.
  .
- This package provides Ecodollar-Qt, a GUI for ECODOLLAR based on Qt.
+ This package provides BioA3-Qt, a GUI for BIOA3 based on Qt.

@@ -1,5 +1,5 @@
 // Copyright (c) 2012-2014 The Bitcoin developers
-// Copyright (c) 2017-2019 The ECODOLLAR developers
+// Copyright (c) 2017-2019 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -20,7 +20,7 @@
 
 
 #define LN2SQUARED 0.4804530139182014246671025263266649717305529515945455
-#define LN2 0.6931471805599453094172321214581765680755001343912552
+#define LN2 0.6931471805599453094172321214581765680755001344137452
 
 
 CBloomFilter::CBloomFilter(unsigned int nElements, double nFPRate, unsigned int nTweakIn, unsigned char nFlagsIn) :
@@ -124,7 +124,7 @@ bool CBloomFilter::IsWithinSizeConstraints() const
 }
 
 /**
- * Returns true if this filter will match anything. See {@link org.ecodollarj.core.BloomFilter#setMatchAll()}
+ * Returns true if this filter will match anything. See {@link org.bioa3j.core.BloomFilter#setMatchAll()}
  * for when this can be a useful thing to do.
  */
 bool CBloomFilter::MatchesAll() const {

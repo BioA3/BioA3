@@ -94,7 +94,7 @@ def get_legacy_sigopcount_tx(tx, fAccurate=True):
         count += CScript(j.scriptSig).GetSigOpCount(fAccurate)
     return count
 
-### ECODOLLAR specific blocktools ###
+### BIOA3 specific blocktools ###
 def create_coinbase_pos(height):
     coinbase = CTransaction()
     coinbase.vin = [CTxIn(NullOutPoint, cbase_scriptsig(height), 0xffffffff)]

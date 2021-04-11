@@ -10,7 +10,7 @@ forward all unrecognized arguments onto the individual test scripts.
 Functional tests are disabled on Windows by default. Use --force to run them anyway.
 
 For a description of arguments recognized by test scripts, see
-`test/functional/test_framework/test_framework.py:EcodollarTestFramework.main`.
+`test/functional/test_framework/test_framework.py:BioA3TestFramework.main`.
 
 """
 
@@ -196,7 +196,7 @@ def main():
     logging.basicConfig(format='%(message)s', level=logging_level)
 
     # Create base test directory
-    tmpdir = "%s/ecodollar_test_runner_%s" % (args.tmpdirprefix, datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
+    tmpdir = "%s/bioa3_test_runner_%s" % (args.tmpdirprefix, datetime.datetime.now().strftime("%Y%m%d_%H%M%S"))
     os.makedirs(tmpdir)
 
     logging.debug("Temporary test directory at %s" % tmpdir)
@@ -212,7 +212,7 @@ def main():
         sys.exit(0)
 
     if not (enable_wallet and enable_utils and enable_bitcoind):
-        print("No functional tests to run. Wallet, utils, and ecodollard must all be enabled")
+        print("No functional tests to run. Wallet, utils, and bioa3d must all be enabled")
         print("Rerun `configure` with -enable-wallet, -with-utils and -with-daemon and rerun make")
         sys.exit(0)
 
@@ -272,10 +272,10 @@ def main():
               args.keepcache)
 
 def run_tests(test_list, src_dir, build_dir, exeext, tmpdir, jobs=1, enable_coverage=False, args=[], combined_logs_len=0, keep_cache=False):
-    # Warn if ecodollard is already running (unix only)
+    # Warn if bioa3d is already running (unix only)
     try:
-        if subprocess.check_output(["pidof", "ecodollard"]) is not None:
-            print("%sWARNING!%s There is already a ecodollard process running on this system. Tests may fail unexpectedly due to resource contention!" % (BOLD[1], BOLD[0]))
+        if subprocess.check_output(["pidof", "bioa3d"]) is not None:
+            print("%sWARNING!%s There is already a bioa3d process running on this system. Tests may fail unexpectedly due to resource contention!" % (BOLD[1], BOLD[0]))
     except (OSError, subprocess.SubprocessError):
         pass
 
@@ -286,8 +286,8 @@ def run_tests(test_list, src_dir, build_dir, exeext, tmpdir, jobs=1, enable_cove
 
     #Set env vars
     if "BITCOIND" not in os.environ:
-        os.environ["BITCOIND"] = build_dir + '/src/ecodollard' + exeext
-        os.environ["BITCOINCLI"] = build_dir + '/src/ecodollar-cli' + exeext
+        os.environ["BITCOIND"] = build_dir + '/src/bioa3d' + exeext
+        os.environ["BITCOINCLI"] = build_dir + '/src/bioa3-cli' + exeext
 
     tests_dir = src_dir + '/test/functional/'
 
@@ -404,7 +404,7 @@ class TestHandler:
         self.test_list = test_list
         self.flags = flags
         self.num_running = 0
-        # In case there is a graveyard of zombie ecodollards, we can apply a
+        # In case there is a graveyard of zombie bioa3ds, we can apply a
         # pseudorandom offset to hopefully jump over them.
         # (625 is PORT_RANGE/MAX_NODES)
         self.portseed_offset = int(time.time() * 1000) % 625
@@ -531,7 +531,7 @@ class RPCCoverage():
     Coverage calculation works by having each test script subprocess write
     coverage files into a particular directory. These files contain the RPC
     commands invoked during testing, as well as a complete listing of RPC
-    commands per `ecodollar-cli help` (`rpc_interface.txt`).
+    commands per `bioa3-cli help` (`rpc_interface.txt`).
 
     After all tests complete, the commands run are combined and diff'd against
     the complete list to calculate uncovered RPC commands.

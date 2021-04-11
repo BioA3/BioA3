@@ -1,39 +1,39 @@
-ECODOLLAR Core
+BIOA3 Core
 =============
 
 Setup
 ---------------------
-[ECODOLLAR Core](http://ecodollar.org/wallet) is the original ECODOLLAR client and it builds the backbone of the network. However, it downloads and stores the entire history of ECODOLLAR transactions; depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more. Thankfully you only have to do this once.
+[BIOA3 Core](http://bioa3.org/wallet) is the original BIOA3 client and it builds the backbone of the network. However, it downloads and stores the entire history of BIOA3 transactions; depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more. Thankfully you only have to do this once.
 
 Running
 ---------------------
-The following are some helpful notes on how to run ECODOLLAR Core on your native platform.
+The following are some helpful notes on how to run BIOA3 Core on your native platform.
 
 ### Unix
 
 Unpack the files into a directory and run:
 
-- `bin/ecodollar-qt` (GUI) or
-- `bin/ecodollard` (headless)
+- `bin/bioa3-qt` (GUI) or
+- `bin/bioa3d` (headless)
 
 ### Windows
 
-Unpack the files into a directory, and then run ecodollar-qt.exe.
+Unpack the files into a directory, and then run bioa3-qt.exe.
 
 ### macOS
 
-Drag ECODOLLAR-Qt to your applications folder, and then run ECODOLLAR-Qt.
+Drag BIOA3-Qt to your applications folder, and then run BIOA3-Qt.
 
 ### Need Help?
 
-* See the documentation at the [ECODOLLAR Wiki](https://github.com/ecodollar/ECODOLLAR/wiki)
+* See the documentation at the [BIOA3 Wiki](https://github.com/bioa3/BIOA3/wiki)
 for help and more information.
-* Ask for help on [BitcoinTalk](https://bitcointalk.org/index.php?topic=?) or on the [ECODOLLAR Forum](http://forum.ecodollar.org/).
-* Join our Discord server [Discord Server](https://discord.ecodollar.org)
+* Ask for help on [BitcoinTalk](https://bitcointalk.org/index.php?topic=?) or on the [BIOA3 Forum](http://forum.bioa3.org/).
+* Join our Discord server [Discord Server](https://discord.bioa3.org)
 
 Building
 ---------------------
-The following are developer notes on how to build ECODOLLAR Core on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
+The following are developer notes on how to build BIOA3 Core on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
 
 - [Dependencies](dependencies.md)
 - [macOS Build Notes](build-osx.md)
@@ -43,7 +43,7 @@ The following are developer notes on how to build ECODOLLAR Core on your native 
 
 Development
 ---------------------
-The ECODOLLAR repo's [root README](/README.md) contains relevant information on the development process and automated testing.
+The BIOA3 repo's [root README](/README.md) contains relevant information on the development process and automated testing.
 
 - [Developer Notes](developer-notes.md)
 - [Multiwallet Qt Development](multiwallet-qt.md)
@@ -55,8 +55,8 @@ The ECODOLLAR repo's [root README](/README.md) contains relevant information on 
 - [Dnsseed Policy](dnsseed-policy.md)
 
 ### Resources
-* Discuss on the [BitcoinTalk](https://bitcointalk.org/index.php?topic=?) or the [ECODOLLAR](http://forum.ecodollar.org/) forum.
-* Join the [ECODOLLAR Discord](https://discord.ecodollar.org).
+* Discuss on the [BitcoinTalk](https://bitcointalk.org/index.php?topic=?) or the [BIOA3](http://forum.bioa3.org/) forum.
+* Join the [BIOA3 Discord](https://discord.bioa3.org).
 
 ### Miscellaneous
 - [Assets Attribution](assets-attribution.md)

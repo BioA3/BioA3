@@ -11,7 +11,7 @@
 #include "clientversion.h"
 #include "main.h"
 #include "utiltime.h"
-#include "test/test_ecodollar.h"
+#include "test/test_bioa3.h"
 
 #include <cstdio>
 

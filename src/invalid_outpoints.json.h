@@ -1,9 +1,9 @@
-// Copyright (c) 2018 The ECODOLLAR developers
+// Copyright (c) 2018 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef ECODOLLAR_INVALID_OUTPOINTS_JSON_H
-#define ECODOLLAR_INVALID_OUTPOINTS_JSON_H
+#ifndef BIOA3_INVALID_OUTPOINTS_JSON_H
+#define BIOA3_INVALID_OUTPOINTS_JSON_H
 #include <string>
 
 std::string LoadInvalidOutPoints()
@@ -6793,4 +6793,4 @@ std::string LoadInvalidOutPoints()
     return str;
 }
 
-#endif //ECODOLLAR_INVALID_OUTPOINTS_JSON_H
+#endif //BIOA3_INVALID_OUTPOINTS_JSON_H

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2019 The ECODOLLAR developers
+# Copyright (c) 2019 The BIOA3 developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,7 +10,7 @@ Tests v2, v3 and v4 Zerocoin Spends
 from time import sleep
 
 from test_framework.authproxy import JSONRPCException
-from test_framework.test_framework import EcodollarTestFramework
+from test_framework.test_framework import BioA3TestFramework
 from test_framework.util import (
     sync_blocks,
     assert_equal,
@@ -20,7 +20,7 @@ from test_framework.util import (
 )
 
 
-class ZerocoinSpendTest(EcodollarTestFramework):
+class ZerocoinSpendTest(BioA3TestFramework):
 
     def set_test_params(self):
         self.num_nodes = 3
@@ -62,13 +62,13 @@ class ZerocoinSpendTest(EcodollarTestFramework):
         def get_zerocoin_data(coin):
             return coin["s"], coin["r"], coin["k"], coin["id"], coin["d"], coin["t"]
 
-        def check_balances(denom, zecos_bal, ecos_bal):
-            zecos_bal -= denom
-            assert_equal(self.nodes[2].getzerocoinbalance()['Total'], zecos_bal)
-            ecos_bal += denom
+        def check_balances(denom, zbioa3_bal, bioa3_bal):
+            zbioa3_bal -= denom
+            assert_equal(self.nodes[2].getzerocoinbalance()['Total'], zbioa3_bal)
+            bioa3_bal += denom
             wi = self.nodes[2].getwalletinfo()
-            assert_equal(wi['balance'] + wi['immature_balance'], ecos_bal)
-            return zecos_bal, ecos_bal
+            assert_equal(wi['balance'] + wi['immature_balance'], bioa3_bal)
+            return zbioa3_bal, bioa3_bal
 
         def stake_4_blocks(block_time):
             for peer in range(2):
@@ -84,9 +84,9 @@ class ZerocoinSpendTest(EcodollarTestFramework):
         # Start with cache balances
         wi = self.nodes[2].getwalletinfo()
         balance = wi['balance'] + wi['immature_balance']
-        zecos_balance = self.nodes[2].getzerocoinbalance()['Total']
+        zbioa3_balance = self.nodes[2].getzerocoinbalance()['Total']
         assert_equal(balance, DecimalAmt(13833.92))
-        assert_equal(zecos_balance, 6666)
+        assert_equal(zbioa3_balance, 6666)
 
         # Export zerocoin data
         listmints = self.nodes[2].listmintedzerocoins(True, True)
@@ -108,7 +108,7 @@ class ZerocoinSpendTest(EcodollarTestFramework):
         # stake 4 blocks - check it gets included on chain and check balances
         block_time = stake_4_blocks(block_time)
         self.check_tx_in_chain(0, txid)
-        zecos_balance, balance = check_balances(denom_0, zecos_balance, balance)
+        zbioa3_balance, balance = check_balances(denom_0, zbioa3_balance, balance)
         self.log.info("--> VALID COIN SPEND (v2) PASSED")
 
         # 3) stake more blocks - save a v3 spend for later (serial_1)
@@ -143,7 +143,7 @@ class ZerocoinSpendTest(EcodollarTestFramework):
         # stake 4 blocks - check it gets included on chain and check balances
         block_time = stake_4_blocks(block_time)
         self.check_tx_in_chain(0, txid)
-        zecos_balance, balance = check_balances(denom_2, zecos_balance, balance)
+        zbioa3_balance, balance = check_balances(denom_2, zbioa3_balance, balance)
         self.log.info("--> VALID PUBLIC COIN SPEND (v3) PASSED")
 
         # 6) Check double spends - spend v3
@@ -162,7 +162,7 @@ class ZerocoinSpendTest(EcodollarTestFramework):
         # stake 4 blocks - check it gets included on chain and check balances
         block_time = stake_4_blocks(block_time)
         self.check_tx_in_chain(0, txid)
-        zecos_balance, balance = check_balances(denom_3, zecos_balance, balance)
+        zbioa3_balance, balance = check_balances(denom_3, zbioa3_balance, balance)
         self.log.info("--> VALID PUBLIC COIN SPEND (v4) PASSED")
 
         # 9) Check double spends - spend v4
@@ -172,7 +172,7 @@ class ZerocoinSpendTest(EcodollarTestFramework):
 
         # 10) Try to relay old v3 spend now (serial_1)
         self.log.info("Trying to send old v3 spend now...")
-        assert_raises_rpc_error(-26, "bad-txns-invalid-zecos",
+        assert_raises_rpc_error(-26, "bad-txns-invalid-zbioa3",
                                 self.nodes[2].sendrawtransaction, old_spend_v3)
         self.log.info("GOOD: Old transaction not sent.")
 
@@ -191,7 +191,7 @@ class ZerocoinSpendTest(EcodollarTestFramework):
         self.check_tx_in_chain(0, txid)
         # need to reset spent mints since this was a raw broadcast
         self.nodes[2].resetmintzerocoin()
-        _, _ = check_balances(denom_1, zecos_balance, balance)
+        _, _ = check_balances(denom_1, zbioa3_balance, balance)
         self.log.info("--> VALID PUBLIC COIN SPEND (v3) PASSED")
 
 

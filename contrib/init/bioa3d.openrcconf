@@ -1,0 +1,33 @@
+# /etc/conf.d/bioa3d: config file for /etc/init.d/bioa3d
+
+# Config file location
+#BITCOIND_CONFIGFILE="/etc/bioa3/bioa3.conf"
+
+# What directory to write pidfile to?  (created and owned by $BITCOIND_USER)
+#BITCOIND_PIDDIR="/var/run/bioa3d"
+
+# What filename to give the pidfile
+#BITCOIND_PIDFILE="${BITCOIND_PIDDIR}/bioa3d.pid"
+
+# Where to write bioa3d data (be mindful that the blockchain is large)
+#BITCOIND_DATADIR="/var/lib/bioa3d"
+
+# User and group to own bioa3d process
+#BITCOIND_USER="bioa3"
+#BITCOIND_GROUP="bioa3"
+
+# Path to bioa3d executable
+#BITCOIND_BIN="/usr/bin/bioa3d"
+
+# Nice value to run bioa3d under
+#BITCOIND_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+#BITCOIND_OPTS=""
+
+# The timeout in seconds OpenRC will wait for bitcoind to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+BITCOIND_SIGTERM_TIMEOUT=60

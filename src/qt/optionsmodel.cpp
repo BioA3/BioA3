@@ -1,11 +1,11 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2019 The ECODOLLAR developers
+// Copyright (c) 2015-2019 The BIOA3 developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "config/ecodollar-config.h"
+#include "config/bioa3-config.h"
 #endif
 
 #include "optionsmodel.h"
@@ -190,7 +190,7 @@ void OptionsModel::setWindowDefaultOptions(QSettings& settings, bool reset){
 
 void OptionsModel::setDisplayDefaultOptions(QSettings& settings, bool reset){
     if (!settings.contains("nDisplayUnit") || reset)
-        settings.setValue("nDisplayUnit", BitcoinUnits::ECOS);
+        settings.setValue("nDisplayUnit", BitcoinUnits::BIOA3);
     nDisplayUnit = settings.value("nDisplayUnit").toInt();
     if (!settings.contains("digits") || reset)
         settings.setValue("digits", "2");
@@ -211,8 +211,8 @@ void OptionsModel::setDisplayDefaultOptions(QSettings& settings, bool reset){
         SoftSetArg("-zeromintpercentage", settings.value("nZeromintPercentage").toString().toStdString());
     if (settings.contains("nPreferredDenom") || reset)
         SoftSetArg("-preferredDenom", settings.value("nPreferredDenom").toString().toStdString());
-    if (settings.contains("nAnonymizeEcodollarAmount") || reset)
-        SoftSetArg("-anonymizeecodollaramount", settings.value("nAnonymizeEcodollarAmount").toString().toStdString());
+    if (settings.contains("nAnonymizeBioA3Amount") || reset)
+        SoftSetArg("-anonymizebioa3amount", settings.value("nAnonymizeBioA3Amount").toString().toStdString());
 
     if (!settings.contains("strThirdPartyTxUrls") || reset)
         settings.setValue("strThirdPartyTxUrls", "");
@@ -229,7 +229,7 @@ void OptionsModel::Reset()
 
     // Remove all entries from our QSettings object
     settings.clear();
-    resetSettings = true; // Needed in ecodollar.cpp during shotdown to also remove the window positions
+    resetSettings = true; // Needed in bioa3.cpp during shotdown to also remove the window positions
 
     // default setting for OptionsModel::StartAtStartup - disabled
     if (GUIUtil::GetStartOnSystemStartup())

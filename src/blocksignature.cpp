@@ -1,10 +1,10 @@
-// Copyright (c) 2017-2019 The ECODOLLAR developers
+// Copyright (c) 2017-2019 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "blocksignature.h"
 #include "main.h"
-#include "zecoschain.h"
+#include "zbioa3chain.h"
 
 bool SignBlockWithKey(CBlock& block, const CKey& key)
 {
@@ -64,13 +64,13 @@ bool CheckBlockSignature(const CBlock& block)
     if (block.vchBlockSig.empty())
         return error("%s: vchBlockSig is empty!", __func__);
 
-    /** Each block is signed by the private key of the input that is staked. This can be either zECOS or normal UTXO
-     *  zECOS: Each zECOS has a keypair associated with it. The serial number is a hash of the public key.
+    /** Each block is signed by the private key of the input that is staked. This can be either zBIOA3 or normal UTXO
+     *  zBIOA3: Each zBIOA3 has a keypair associated with it. The serial number is a hash of the public key.
      *  UTXO: The public key that signs must match the public key associated with the first utxo of the coinstake tx.
      */
     CPubKey pubkey;
-    bool fzECOSStake = block.vtx[1].vin[0].IsZerocoinSpend();
-    if (fzECOSStake) {
+    bool fzBIOA3Stake = block.vtx[1].vin[0].IsZerocoinSpend();
+    if (fzBIOA3Stake) {
         libzerocoin::CoinSpend spend = TxInToZerocoinSpend(block.vtx[1].vin[0]);
         pubkey = spend.getPubKey();
     } else {

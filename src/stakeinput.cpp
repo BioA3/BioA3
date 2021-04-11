@@ -1,15 +1,15 @@
-// Copyright (c) 2017-2019 The ECODOLLAR developers
+// Copyright (c) 2017-2019 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "zecos/accumulators.h"
+#include "zbioa3/accumulators.h"
 #include "chain.h"
-#include "zecos/deterministicmint.h"
+#include "zbioa3/deterministicmint.h"
 #include "main.h"
 #include "stakeinput.h"
 #include "wallet/wallet.h"
 
-CZEcosStake::CZEcosStake(const libzerocoin::CoinSpend& spend)
+CZBioA3Stake::CZBioA3Stake(const libzerocoin::CoinSpend& spend)
 {
     this->nChecksum = spend.getAccumulatorChecksum();
     this->denom = spend.getDenomination();
@@ -18,7 +18,7 @@ CZEcosStake::CZEcosStake(const libzerocoin::CoinSpend& spend)
     fMint = false;
 }
 
-int CZEcosStake::GetChecksumHeightFromMint()
+int CZBioA3Stake::GetChecksumHeightFromMint()
 {
     int nHeightChecksum = chainActive.Height() - Params().Zerocoin_RequiredStakeDepth();
     nHeightChecksum = std::min(nHeightChecksum, Params().Zerocoin_Block_Last_Checkpoint());
@@ -30,20 +30,20 @@ int CZEcosStake::GetChecksumHeightFromMint()
     return GetChecksumHeight(nChecksum, denom);
 }
 
-int CZEcosStake::GetChecksumHeightFromSpend()
+int CZBioA3Stake::GetChecksumHeightFromSpend()
 {
     return GetChecksumHeight(nChecksum, denom);
 }
 
-uint32_t CZEcosStake::GetChecksum()
+uint32_t CZBioA3Stake::GetChecksum()
 {
     return nChecksum;
 }
 
-// The zECOS block index is the first appearance of the accumulator checksum that was used in the spend
+// The zBIOA3 block index is the first appearance of the accumulator checksum that was used in the spend
 // note that this also means when staking that this checksum should be from a block that is beyond 60 minutes old and
 // 100 blocks deep.
-CBlockIndex* CZEcosStake::GetIndexFrom()
+CBlockIndex* CZBioA3Stake::GetIndexFrom()
 {
     if (pindexFrom)
         return pindexFrom;
@@ -65,14 +65,14 @@ CBlockIndex* CZEcosStake::GetIndexFrom()
     return pindexFrom;
 }
 
-CAmount CZEcosStake::GetValue()
+CAmount CZBioA3Stake::GetValue()
 {
     return denom * COIN;
 }
 
 //Use the first accumulator checkpoint that occurs 60 minutes after the block being staked from
 // In case of regtest, next accumulator of 60 blocks after the block being staked from
-bool CZEcosStake::GetModifier(uint64_t& nStakeModifier)
+bool CZBioA3Stake::GetModifier(uint64_t& nStakeModifier)
 {
     CBlockIndex* pindex = GetIndexFrom();
     if (!pindex)
@@ -85,7 +85,7 @@ bool CZEcosStake::GetModifier(uint64_t& nStakeModifier)
     }
 
     int64_t nTimeBlockFrom = pindex->GetBlockTime();
-    // zECOS staking is disabled long before block v7 (and checkpoint is not included in blocks since v7)
+    // zBIOA3 staking is disabled long before block v7 (and checkpoint is not included in blocks since v7)
     // just return false for now. !TODO: refactor/remove this method
     while (pindex && pindex->nHeight + 1 <= std::min(chainActive.Height(), Params().Zerocoin_Block_Last_Checkpoint()-1)) {
         if (pindex->GetBlockTime() - nTimeBlockFrom > 60 * 60) {
@@ -99,15 +99,15 @@ bool CZEcosStake::GetModifier(uint64_t& nStakeModifier)
     return false;
 }
 
-CDataStream CZEcosStake::GetUniqueness()
+CDataStream CZBioA3Stake::GetUniqueness()
 {
-    //The unique identifier for a zECOS is a hash of the serial
+    //The unique identifier for a zBIOA3 is a hash of the serial
     CDataStream ss(SER_GETHASH, 0);
     ss << hashSerial;
     return ss;
 }
 
-bool CZEcosStake::CreateTxIn(CWallet* pwallet, CTxIn& txIn, uint256 hashTxOut)
+bool CZBioA3Stake::CreateTxIn(CWallet* pwallet, CTxIn& txIn, uint256 hashTxOut)
 {
     CBlockIndex* pindexCheckpoint = GetIndexFrom();
     if (!pindexCheckpoint)
@@ -127,25 +127,25 @@ bool CZEcosStake::CreateTxIn(CWallet* pwallet, CTxIn& txIn, uint256 hashTxOut)
     return true;
 }
 
-bool CZEcosStake::CreateTxOuts(CWallet* pwallet, std::vector<CTxOut>& vout, CAmount nTotal)
+bool CZBioA3Stake::CreateTxOuts(CWallet* pwallet, std::vector<CTxOut>& vout, CAmount nTotal)
 {
-    //Create an output returning the zECOS that was staked
+    //Create an output returning the zBIOA3 that was staked
     CTxOut outReward;
     libzerocoin::CoinDenomination denomStaked = libzerocoin::AmountToZerocoinDenomination(this->GetValue());
     CDeterministicMint dMint;
-    if (!pwallet->CreateZECOSOutPut(denomStaked, outReward, dMint))
-        return error("%s: failed to create zECOS output", __func__);
+    if (!pwallet->CreateZBIOA3OutPut(denomStaked, outReward, dMint))
+        return error("%s: failed to create zBIOA3 output", __func__);
     vout.emplace_back(outReward);
 
     //Add new staked denom to our wallet
     if (!pwallet->DatabaseMint(dMint))
-        return error("%s: failed to database the staked zECOS", __func__);
+        return error("%s: failed to database the staked zBIOA3", __func__);
 
     for (unsigned int i = 0; i < 3; i++) {
         CTxOut out;
         CDeterministicMint dMintReward;
-        if (!pwallet->CreateZECOSOutPut(libzerocoin::CoinDenomination::ZQ_ONE, out, dMintReward))
-            return error("%s: failed to create zECOS output", __func__);
+        if (!pwallet->CreateZBIOA3OutPut(libzerocoin::CoinDenomination::ZQ_ONE, out, dMintReward))
+            return error("%s: failed to create zBIOA3 output", __func__);
         vout.emplace_back(out);
 
         if (!pwallet->DatabaseMint(dMintReward))
@@ -155,48 +155,48 @@ bool CZEcosStake::CreateTxOuts(CWallet* pwallet, std::vector<CTxOut>& vout, CAmo
     return true;
 }
 
-bool CZEcosStake::GetTxFrom(CTransaction& tx)
+bool CZBioA3Stake::GetTxFrom(CTransaction& tx)
 {
     return false;
 }
 
-bool CZEcosStake::MarkSpent(CWallet *pwallet, const uint256& txid)
+bool CZBioA3Stake::MarkSpent(CWallet *pwallet, const uint256& txid)
 {
-    CzECOSTracker* zecosTracker = pwallet->zecosTracker.get();
+    CzBIOA3Tracker* zbioa3Tracker = pwallet->zbioa3Tracker.get();
     CMintMeta meta;
-    if (!zecosTracker->GetMetaFromStakeHash(hashSerial, meta))
+    if (!zbioa3Tracker->GetMetaFromStakeHash(hashSerial, meta))
         return error("%s: tracker does not have serialhash", __func__);
 
-    zecosTracker->SetPubcoinUsed(meta.hashPubcoin, txid);
+    zbioa3Tracker->SetPubcoinUsed(meta.hashPubcoin, txid);
     return true;
 }
 
-//!ECOS Stake
-bool CEcosStake::SetInput(CTransaction txPrev, unsigned int n)
+//!BIOA3 Stake
+bool CBioA3Stake::SetInput(CTransaction txPrev, unsigned int n)
 {
     this->txFrom = txPrev;
     this->nPosition = n;
     return true;
 }
 
-bool CEcosStake::GetTxFrom(CTransaction& tx)
+bool CBioA3Stake::GetTxFrom(CTransaction& tx)
 {
     tx = txFrom;
     return true;
 }
 
-bool CEcosStake::CreateTxIn(CWallet* pwallet, CTxIn& txIn, uint256 hashTxOut)
+bool CBioA3Stake::CreateTxIn(CWallet* pwallet, CTxIn& txIn, uint256 hashTxOut)
 {
     txIn = CTxIn(txFrom.GetHash(), nPosition);
     return true;
 }
 
-CAmount CEcosStake::GetValue()
+CAmount CBioA3Stake::GetValue()
 {
     return txFrom.vout[nPosition].nValue;
 }
 
-bool CEcosStake::CreateTxOuts(CWallet* pwallet, std::vector<CTxOut>& vout, CAmount nTotal)
+bool CBioA3Stake::CreateTxOuts(CWallet* pwallet, std::vector<CTxOut>& vout, CAmount nTotal)
 {
     std::vector<valtype> vSolutions;
     txnouttype whichType;
@@ -244,7 +244,7 @@ bool CEcosStake::CreateTxOuts(CWallet* pwallet, std::vector<CTxOut>& vout, CAmou
     return true;
 }
 
-bool CEcosStake::GetModifier(uint64_t& nStakeModifier)
+bool CBioA3Stake::GetModifier(uint64_t& nStakeModifier)
 {
     if (this->nStakeModifier == 0) {
         // look for the modifier
@@ -259,16 +259,16 @@ bool CEcosStake::GetModifier(uint64_t& nStakeModifier)
     return true;
 }
 
-CDataStream CEcosStake::GetUniqueness()
+CDataStream CBioA3Stake::GetUniqueness()
 {
-    //The unique identifier for a ECOS stake is the outpoint
+    //The unique identifier for a BIOA3 stake is the outpoint
     CDataStream ss(SER_NETWORK, 0);
     ss << nPosition << txFrom.GetHash();
     return ss;
 }
 
 //The block that the UTXO was added to the chain
-CBlockIndex* CEcosStake::GetIndexFrom()
+CBlockIndex* CBioA3Stake::GetIndexFrom()
 {
     if (pindexFrom)
         return pindexFrom;

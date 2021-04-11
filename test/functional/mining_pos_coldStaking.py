@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2019 The ECODOLLAR developers
+# Copyright (c) 2019 The BIOA3 developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 # -*- coding: utf-8 -*-
@@ -10,9 +10,9 @@ from time import sleep
 from test_framework.authproxy import JSONRPCException
 from test_framework.messages import CTransaction, CTxIn, CTxOut, COIN, COutPoint
 from test_framework.mininode import network_thread_start
-from test_framework.ecodollar_node import EcodollarTestNode
+from test_framework.bioa3_node import BioA3TestNode
 from test_framework.script import CScript, OP_CHECKSIG
-from test_framework.test_framework import EcodollarTestFramework
+from test_framework.test_framework import BioA3TestFramework
 from test_framework.util import connect_nodes_bi, p2p_port, bytes_to_hex_str, \
     assert_equal, assert_greater_than, sync_blocks, assert_raises_rpc_error
 
@@ -21,7 +21,7 @@ def getDelegatedUtxos(utxos):
     return [x for x in utxos if x["scriptPubKey"][:10] == '76a97b63d1']
 
 
-class ECODOLLAR_ColdStakingTest(EcodollarTestFramework):
+class BIOA3_ColdStakingTest(BioA3TestFramework):
 
     def set_test_params(self):
         self.setup_clean_chain = True
@@ -46,7 +46,7 @@ class ECODOLLAR_ColdStakingTest(EcodollarTestFramework):
         # Setup the p2p connections and start up the network thread.
         self.test_nodes = []
         for i in range(self.num_nodes):
-            self.test_nodes.append(EcodollarTestNode())
+            self.test_nodes.append(BioA3TestNode())
             self.test_nodes[i].peer_connect('127.0.0.1', p2p_port(i))
 
         network_thread_start()  # Start up network handling in another thread
@@ -286,7 +286,7 @@ class ECODOLLAR_ColdStakingTest(EcodollarTestFramework):
         assert_greater_than(len(stakeInputs), 0)
         # Create the block
         new_block = self.stake_next_block(1, stakeInputs, None, staker_privkey)
-        # Add output (dummy key address) to coinstake (taking 100 ECOS from the pot)
+        # Add output (dummy key address) to coinstake (taking 100 BIOA3 from the pot)
         self.add_output_to_coinstake(new_block, 100)
         self.log.info("New block created (rawtx) by cold-staking. Trying to submit...")
         # Try to submit the block
@@ -435,4 +435,4 @@ class ECODOLLAR_ColdStakingTest(EcodollarTestFramework):
 
 
 if __name__ == '__main__':
-    ECODOLLAR_ColdStakingTest().main()
+    BIOA3_ColdStakingTest().main()

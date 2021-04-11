@@ -1,13 +1,13 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2020 The ECODOLLAR developers
+// Copyright (c) 2015-2020 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "wallet/wallet.h"
 
-#include "zecos/accumulators.h"
+#include "zbioa3/accumulators.h"
 #include "base58.h"
 #include "checkpoints.h"
 #include "coincontrol.h"
@@ -24,20 +24,20 @@
 #include "txdb.h"
 #include "util.h"
 #include "utilmoneystr.h"
-#include "zecoschain.h"
+#include "zbioa3chain.h"
 
 #include "denomination_functions.h"
 #include "libzerocoin/Denominations.h"
-#include "zecos/zecoswallet.h"
-#include "zecos/zecostracker.h"
-#include "zecos/deterministicmint.h"
+#include "zbioa3/zbioa3wallet.h"
+#include "zbioa3/zbioa3tracker.h"
+#include "zbioa3/deterministicmint.h"
 #include <assert.h>
 
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/thread.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <zecos/witness.h>
+#include <zbioa3/witness.h>
 
 
 /**
@@ -53,7 +53,7 @@ bool fPayAtLeastCustomFee = true;
 int64_t nStartupTime = GetTime(); //!< Client startup time for use with automint
 
 /**
- * Fees smaller than this (in uecos) are considered zero fee (for transaction creation)
+ * Fees smaller than this (in ubioa3) are considered zero fee (for transaction creation)
  * We are ~100 times smaller then bitcoin now (2015-06-23), set minTxFee 10 times higher
  * so it's still 10 times lower comparing to bitcoin.
  * Override with -mintxfee
@@ -1014,7 +1014,7 @@ bool CWallet::IsUsed(const CBitcoinAddress address) const
 
 bool CWallet::IsMyZerocoinSpend(const CBigNum& bnSerial) const
 {
-    return zecosTracker->HasSerial(bnSerial);
+    return zbioa3Tracker->HasSerial(bnSerial);
 }
 
 CAmount CWallet::GetDebit(const CTxIn& txin, const isminefilter& filter) const
@@ -1533,9 +1533,9 @@ int CWallet::ScanForWalletTransactions(CBlockIndex* pindexStart, bool fUpdate, b
 {
     int ret = 0;
     int64_t nNow = GetTime();
-    bool fCheckZECOS = GetBoolArg("-zapwallettxes", false);
-    if (fCheckZECOS)
-        zecosTracker->Init();
+    bool fCheckZBIOA3 = GetBoolArg("-zapwallettxes", false);
+    if (fCheckZBIOA3)
+        zbioa3Tracker->Init();
 
     CBlockIndex* pindex = pindexStart;
     {
@@ -1565,8 +1565,8 @@ int CWallet::ScanForWalletTransactions(CBlockIndex* pindexStart, bool fUpdate, b
                     ret++;
             }
 
-            //If this is a zapwallettx, need to readd zecos
-            if (fCheckZECOS && pindex->nHeight >= Params().Zerocoin_StartHeight()) {
+            //If this is a zapwallettx, need to readd zbioa3
+            if (fCheckZBIOA3 && pindex->nHeight >= Params().Zerocoin_StartHeight()) {
                 std::list<CZerocoinMint> listMints;
                 BlockToZerocoinMintList(block, listMints, true);
                 CWalletDB walletdb(strWalletFile);
@@ -1785,7 +1785,7 @@ CAmount CWallet::GetDelegatedBalance() const
 CAmount CWallet::GetZerocoinBalance(bool fMatureOnly) const
 {
     if (fMatureOnly) {
-        // This code is not removed just for when we back to use zECOS in the future, for now it's useless,
+        // This code is not removed just for when we back to use zBIOA3 in the future, for now it's useless,
         // every public coin spend is now spendable without need to have new mints on top.
 
         //if (chainActive.Height() > nLastMaturityCheck)
@@ -1793,7 +1793,7 @@ CAmount CWallet::GetZerocoinBalance(bool fMatureOnly) const
         //nLastMaturityCheck = chainActive.Height();
 
         CAmount nBalance = 0;
-        std::vector<CMintMeta> vMints = zecosTracker->GetMints(true);
+        std::vector<CMintMeta> vMints = zbioa3Tracker->GetMints(true);
         for (auto meta : vMints) {
             // Every public coin spend is now spendable, no need to mint new coins on top.
             //if (meta.nHeight >= mapMintMaturity.at(meta.denom) || meta.nHeight >= chainActive.Height() || meta.nHeight == 0)
@@ -1803,7 +1803,7 @@ CAmount CWallet::GetZerocoinBalance(bool fMatureOnly) const
         return nBalance;
     }
 
-    return zecosTracker->GetBalance(false, false);
+    return zbioa3Tracker->GetBalance(false, false);
 }
 
 CAmount CWallet::GetImmatureZerocoinBalance() const
@@ -1813,7 +1813,7 @@ CAmount CWallet::GetImmatureZerocoinBalance() const
 
 CAmount CWallet::GetUnconfirmedZerocoinBalance() const
 {
-    return zecosTracker->GetUnconfirmedBalance();
+    return zbioa3Tracker->GetUnconfirmedBalance();
 }
 
 CAmount CWallet::GetUnlockedCoins() const
@@ -1844,7 +1844,7 @@ std::map<libzerocoin::CoinDenomination, CAmount> CWallet::GetMyZerocoinDistribut
         spread.insert(std::pair<libzerocoin::CoinDenomination, CAmount>(denom, 0));
     {
         LOCK(cs_wallet);
-        std::set<CMintMeta> setMints = zecosTracker->ListMints(true, true, true);
+        std::set<CMintMeta> setMints = zbioa3Tracker->ListMints(true, true, true);
         for (auto& mint : setMints)
             spread.at(mint.denom)++;
     }
@@ -2139,7 +2139,7 @@ bool less_then_denom(const COutput& out1, const COutput& out2)
 bool CWallet::SelectStakeCoins(std::list<std::unique_ptr<CStakeInput> >& listInputs, CAmount nTargetAmount, int blockHeight)
 {
     LOCK(cs_main);
-    //Add ECOS
+    //Add BIOA3
     std::vector<COutput> vCoins;
 
     // include cold, exclude delegated
@@ -2147,7 +2147,7 @@ bool CWallet::SelectStakeCoins(std::list<std::unique_ptr<CStakeInput> >& listInp
     AvailableCoins(vCoins, true, NULL, false, STAKABLE_COINS, false, 1, fIncludeCold, false);
 
     CAmount nAmountSelected = 0;
-    if (GetBoolArg("-ecosstake", true)) {
+    if (GetBoolArg("-bioa3stake", true)) {
         for (const COutput &out : vCoins) {
             //make sure not to outrun target amount
             if (nAmountSelected + out.tx->vout[out.i].nValue > nTargetAmount)
@@ -2167,7 +2167,7 @@ bool CWallet::SelectStakeCoins(std::list<std::unique_ptr<CStakeInput> >& listInp
             //add to our stake set
             nAmountSelected += out.tx->vout[out.i].nValue;
 
-            std::unique_ptr<CEcosStake> input(new CEcosStake());
+            std::unique_ptr<CBioA3Stake> input(new CBioA3Stake());
             input->SetInput((CTransaction) *out.tx, out.i);
             listInputs.emplace_back(std::move(input));
         }
@@ -2180,11 +2180,11 @@ bool CWallet::MintableCoins()
 {
     LOCK(cs_main);
     CAmount nBalance = GetStakingBalance(GetBoolArg("-coldstaking", true));
-    CAmount nZecosBalance = GetZerocoinBalance(false);
+    CAmount nZbioa3Balance = GetZerocoinBalance(false);
 
     int chainHeight = chainActive.Height();
 
-    // Regular ECOS
+    // Regular BIOA3
     if (nBalance > 0) {
         if (mapArgs.count("-reservebalance") && !ParseMoney(mapArgs["-reservebalance"], nReserveBalance))
             return error("%s : invalid reserve balance amount", __func__);
@@ -2205,9 +2205,9 @@ bool CWallet::MintableCoins()
         }
     }
 
-    // zECOS
-    if (nZecosBalance > 0) {
-        std::set<CMintMeta> setMints = zecosTracker->ListMints(true, true, true);
+    // zBIOA3
+    if (nZbioa3Balance > 0) {
+        std::set<CMintMeta> setMints = zbioa3Tracker->ListMints(true, true, true);
         for (auto mint : setMints) {
             if (mint.nVersion < CZerocoinMint::STAKABLE_VERSION)
                 continue;
@@ -2366,7 +2366,7 @@ bool CWallet::GetBudgetSystemCollateralTX(CWalletTx& tx, uint256 hash, bool useI
     CAmount nFeeRet = 0;
     std::string strFail = "";
     std::vector<std::pair<CScript, CAmount> > vecSend;
-    vecSend.push_back(std::make_pair(scriptChange, BUDGET_FEE_TX_OLD)); // Old 50 ECOS collateral
+    vecSend.push_back(std::make_pair(scriptChange, BUDGET_FEE_TX_OLD)); // Old 50 BIOA3 collateral
 
     CCoinControl* coinControl = NULL;
     bool success = CreateTransaction(vecSend, tx, reservekey, nFeeRet, strFail, coinControl, ALL_COINS, useIX, (CAmount)0);
@@ -2389,7 +2389,7 @@ bool CWallet::GetBudgetFinalizationCollateralTX(CWalletTx& tx, uint256 hash, boo
     CAmount nFeeRet = 0;
     std::string strFail = "";
     std::vector<std::pair<CScript, CAmount> > vecSend;
-    vecSend.push_back(std::make_pair(scriptChange, BUDGET_FEE_TX)); // New 5 ECOS collateral
+    vecSend.push_back(std::make_pair(scriptChange, BUDGET_FEE_TX)); // New 5 BIOA3 collateral
 
     CCoinControl* coinControl = NULL;
     bool success = CreateTransaction(vecSend, tx, reservekey, nFeeRet, strFail, coinControl, ALL_COINS, useIX, (CAmount)0);
@@ -2483,9 +2483,9 @@ bool CWallet::CreateTransaction(const std::vector<std::pair<CScript, CAmount> >&
                     if (coin_type == ALL_COINS) {
                         strFailReason = _("Insufficient funds.");
                     } else if (coin_type == ONLY_NOT10000IFMN) {
-                        strFailReason = _("Unable to locate enough funds for this transaction that are not equal 10000 ECOS.");
+                        strFailReason = _("Unable to locate enough funds for this transaction that are not equal 10000 BIOA3.");
                     } else if (coin_type == ONLY_NONDENOMINATED_NOT10000IFMN) {
-                        strFailReason = _("Unable to locate enough Obfuscation non-denominated funds for this transaction that are not equal 10000 ECOS.");
+                        strFailReason = _("Unable to locate enough Obfuscation non-denominated funds for this transaction that are not equal 10000 BIOA3.");
                     } else {
                         strFailReason = _("Unable to locate enough Obfuscation denominated funds for this transaction.");
                         strFailReason += " " + _("Obfuscation uses exact denominated amounts to send funds, you might simply need to anonymize some more coins.");
@@ -2526,7 +2526,7 @@ bool CWallet::CreateTransaction(const std::vector<std::pair<CScript, CAmount> >&
                 if (nChange > 0) {
                     // Fill a vout to ourself
                     // TODO: pass in scriptChange instead of reservekey so
-                    // change transaction isn't always pay-to-ecodollar-address
+                    // change transaction isn't always pay-to-bioa3-address
                     CScript scriptChange;
                     bool combineChange = false;
 
@@ -2735,7 +2735,7 @@ bool CWallet::CreateCoinStake(
         txNew.vout.insert(txNew.vout.end(), vout.begin(), vout.end());
 
         CAmount nMinFee = 0;
-        if (!stakeInput->IsZECOS()) {
+        if (!stakeInput->IsZBIOA3()) {
             // Set output amount
             int outputs = txNew.vout.size() - 1;
             CAmount nRemaining = nCredit - nMinFee;
@@ -2758,7 +2758,7 @@ bool CWallet::CreateCoinStake(
             return error("CreateCoinStake : exceeded coinstake size limit");
 
         //Masternode payment
-        FillBlockPayee(txNew, nMinFee, true, stakeInput->IsZECOS());
+        FillBlockPayee(txNew, nMinFee, true, stakeInput->IsZBIOA3());
 
         uint256 hashTxOut = txNew.GetHash();
         CTxIn in;
@@ -2772,8 +2772,8 @@ bool CWallet::CreateCoinStake(
 
 
         //Mark mints as spent
-        if (stakeInput->IsZECOS()) {
-            CZEcosStake* z = (CZEcosStake*)stakeInput.get();
+        if (stakeInput->IsZBIOA3()) {
+            CZBioA3Stake* z = (CZBioA3Stake*)stakeInput.get();
             if (!z->MarkSpent(this, txNew.GetHash()))
                 return error("%s: failed to mark mint as used\n", __func__);
         }
@@ -2785,7 +2785,7 @@ bool CWallet::CreateCoinStake(
     if (!fKernelFound)
         return false;
 
-    // Sign for ECOS
+    // Sign for BIOA3
     int nIn = 0;
     if (!txNew.vin[0].scriptSig.IsZerocoinSpend()) {
         for (CTxIn txIn : txNew.vin) {
@@ -2805,13 +2805,13 @@ bool CWallet::CreateCoinStake(
                 return error("%s: extracting pubcoin from txout failed", __func__);
 
             uint256 hashPubcoin = GetPubCoinHash(pubcoin.getValue());
-            if (!zecosTracker->HasPubcoinHash(hashPubcoin))
+            if (!zbioa3Tracker->HasPubcoinHash(hashPubcoin))
                 return error("%s: could not find pubcoinhash %s in tracker", __func__, hashPubcoin.GetHex());
 
-            CMintMeta meta = zecosTracker->GetMetaFromPubcoin(hashPubcoin);
+            CMintMeta meta = zbioa3Tracker->GetMetaFromPubcoin(hashPubcoin);
             meta.txid = txNew.GetHash();
             meta.nHeight = chainActive.Height() + 1;
-            if (!zecosTracker->UpdateState(meta))
+            if (!zbioa3Tracker->UpdateState(meta))
                 return error("%s: failed to update metadata in tracker", __func__);
         }
     }
@@ -3630,7 +3630,7 @@ void CWallet::CreateAutoMintTransaction(const CAmount& nMintAmount, CCoinControl
         CAmount nZerocoinBalance = GetZerocoinBalance(false);
         CAmount nBalance = GetUnlockedCoins();
         CAmount dPercentage = 100 * (double)nZerocoinBalance / (double)(nZerocoinBalance + nBalance);
-        LogPrintf("CWallet::AutoZeromint() @ block %ld: successfully minted %ld zECOS. Current percentage of zECOS: %lf%%\n",
+        LogPrintf("CWallet::AutoZeromint() @ block %ld: successfully minted %ld zBIOA3. Current percentage of zBIOA3: %lf%%\n",
                   chainActive.Tip()->nHeight, nMintAmount, dPercentage);
         // Re-adjust startup time to delay next Automint for 5 minutes
         nStartupTime = GetAdjustedTime();
@@ -3673,32 +3673,32 @@ void CWallet::AutoZeromint()
     CAmount nMintAmount = 0;
     CAmount nToMintAmount = 0;
 
-    // zECOS are integers > 0, so we can't mint 10% of 9 ECOS
+    // zBIOA3 are integers > 0, so we can't mint 10% of 9 BIOA3
     if (nBalance < 10){
-        LogPrint("zero", "CWallet::AutoZeromint(): available balance (%ld) too small for minting zECOS\n", nBalance);
+        LogPrint("zero", "CWallet::AutoZeromint(): available balance (%ld) too small for minting zBIOA3\n", nBalance);
         return;
     }
 
-    // Percentage of zECOS we already have
+    // Percentage of zBIOA3 we already have
     double dPercentage = 100 * (double)nZerocoinBalance / (double)(nZerocoinBalance + nBalance);
 
     // Check if minting is actually needed
     if(dPercentage >= nZeromintPercentage){
-        LogPrint("zero", "CWallet::AutoZeromint() @block %ld: percentage of existing zECOS (%lf%%) already >= configured percentage (%d%%). No minting needed...\n",
+        LogPrint("zero", "CWallet::AutoZeromint() @block %ld: percentage of existing zBIOA3 (%lf%%) already >= configured percentage (%d%%). No minting needed...\n",
                   chainActive.Tip()->nHeight, dPercentage, nZeromintPercentage);
         return;
     }
 
-    // zECOS amount needed for the target percentage
+    // zBIOA3 amount needed for the target percentage
     nToMintAmount = ((nZerocoinBalance + nBalance) * nZeromintPercentage / 100);
 
-    // zECOS amount missing from target (must be minted)
+    // zBIOA3 amount missing from target (must be minted)
     nToMintAmount = (nToMintAmount - nZerocoinBalance) / COIN;
 
-    // Use the biggest denomination smaller than the needed zECOS We'll only mint exact denomination to make minting faster.
+    // Use the biggest denomination smaller than the needed zBIOA3 We'll only mint exact denomination to make minting faster.
     // Exception: for big amounts use 6666 (6666 = 1*5000 + 1*1000 + 1*500 + 1*100 + 1*50 + 1*10 + 1*5 + 1) to create all
     // possible denominations to avoid having 5000 denominations only.
-    // If a preferred denomination is used (means nPreferredDenom != 0) do nothing until we have enough ECOS to mint this denomination
+    // If a preferred denomination is used (means nPreferredDenom != 0) do nothing until we have enough BIOA3 to mint this denomination
 
     if (nPreferredDenom > 0){
         if (nToMintAmount >= nPreferredDenom)
@@ -4106,11 +4106,11 @@ bool CWallet::GetZerocoinKey(const CBigNum& bnSerial, CKey& key)
     return mint.GetKeyPair(key);
 }
 
-bool CWallet::CreateZECOSOutPut(libzerocoin::CoinDenomination denomination, CTxOut& outMint, CDeterministicMint& dMint)
+bool CWallet::CreateZBIOA3OutPut(libzerocoin::CoinDenomination denomination, CTxOut& outMint, CDeterministicMint& dMint)
 {
     // mint a new coin (create Pedersen Commitment) and extract PublicCoin that is shareable from it
     libzerocoin::PrivateCoin coin(Params().Zerocoin_Params(false), denomination, false);
-    zwalletMain->GenerateDeterministicZECOS(denomination, coin, dMint);
+    zwalletMain->GenerateDeterministicZBIOA3(denomination, coin, dMint);
 
     libzerocoin::PublicCoin pubCoin = coin.getPublicCoin();
 
@@ -4155,8 +4155,8 @@ bool CWallet::CreateZerocoinMintTransaction(const CAmount nValue, CMutableTransa
 
         CTxOut outMint;
         CDeterministicMint dMint;
-        if (!CreateZECOSOutPut(denomination, outMint, dMint)) {
-            strFailReason = strprintf("%s: failed to create new zecos output", __func__);
+        if (!CreateZBIOA3OutPut(denomination, outMint, dMint)) {
+            strFailReason = strprintf("%s: failed to create new zbioa3 output", __func__);
             return error(strFailReason.c_str());
         }
         txNew.vout.push_back(outMint);
@@ -4190,7 +4190,7 @@ bool CWallet::CreateZerocoinMintTransaction(const CAmount nValue, CMutableTransa
     }
 
     //any change that is less than 0.0100000 will be ignored and given as an extra fee
-    //also assume that a zerocoinspend that is minting the change will not have any change that goes to Ecos
+    //also assume that a zerocoinspend that is minting the change will not have any change that goes to BioA3
     CAmount nChange = nValueIn - nTotalValue; // Fee already accounted for in nTotalValue
     if (nChange > 1 * CENT && !isZCSpendChange) {
         // Fill a vout to ourself using the largest contributing address
@@ -4204,7 +4204,7 @@ bool CWallet::CreateZerocoinMintTransaction(const CAmount nValue, CMutableTransa
             reservekey->ReturnKey();
     }
 
-    // Sign if these are ecodollar outputs - NOTE that zECOS outputs are signed later in SoK
+    // Sign if these are bioa3 outputs - NOTE that zBIOA3 outputs are signed later in SoK
     if (!isZCSpendChange) {
         int nIn = 0;
         for (const std::pair<const CWalletTx*, unsigned int>& coin : setCoins) {
@@ -4221,20 +4221,20 @@ bool CWallet::CreateZerocoinMintTransaction(const CAmount nValue, CMutableTransa
 bool CWallet::CheckCoinSpend(libzerocoin::CoinSpend& spend, libzerocoin::Accumulator& accumulator, CZerocoinSpendReceipt& receipt)
 {
     if (!spend.Verify(accumulator)) {
-        receipt.SetStatus(_("The transaction did not verify"), ZECOS_BAD_SERIALIZATION);
+        receipt.SetStatus(_("The transaction did not verify"), ZBIOA3_BAD_SERIALIZATION);
         return error("%s : The transaction did not verify", __func__);
     }
 
     if (Params().NetworkID() != CBaseChainParams::REGTEST && IsSerialKnown(spend.getCoinSerialNumber())) {
-        //Tried to spend an already spent zECOS
-        receipt.SetStatus(_("The coin spend has been used"), ZECOS_SPENT_USED_ZECOS);
+        //Tried to spend an already spent zBIOA3
+        receipt.SetStatus(_("The coin spend has been used"), ZBIOA3_SPENT_USED_ZBIOA3);
         uint256 hashSerial = GetSerialHash(spend.getCoinSerialNumber());
-        if(!zecosTracker->HasSerialHash(hashSerial))
+        if(!zbioa3Tracker->HasSerialHash(hashSerial))
             return error("%s: serialhash %s not found in tracker", __func__, hashSerial.GetHex());
 
-        CMintMeta meta = zecosTracker->Get(hashSerial);
+        CMintMeta meta = zbioa3Tracker->Get(hashSerial);
         meta.isUsed = true;
-        if (!zecosTracker->UpdateState(meta))
+        if (!zbioa3Tracker->UpdateState(meta))
             LogPrintf("%s: failed to write zerocoinmint\n", __func__);
 
         return false;
@@ -4274,7 +4274,7 @@ bool CWallet::MintsToInputVector(std::map<CBigNum, CZerocoinMint>& mapMintsSelec
                          CZerocoinSpendReceipt& receipt, libzerocoin::SpendType spendType, CBlockIndex* pindexCheckpoint)
 {
     // Default error status if not changed below
-    receipt.SetStatus(_("Transaction Mint Started"), ZECOS_TXMINT_GENERAL);
+    receipt.SetStatus(_("Transaction Mint Started"), ZBIOA3_TXMINT_GENERAL);
     libzerocoin::ZerocoinParams* paramsAccumulator = Params().Zerocoin_Params(false);
     AccumulatorMap mapAccumulators(paramsAccumulator);
     int64_t nTimeStart = GetTimeMicros();
@@ -4287,7 +4287,7 @@ bool CWallet::MintsToInputVector(std::map<CBigNum, CZerocoinMint>& mapMintsSelec
         // Generate the witness for each mint being spent
         if (!GenerateAccumulatorWitness(&coinWitness, mapAccumulators, pindexCheckpoint)) {
             receipt.SetStatus(_("Couldn't generate the accumulator witness"),
-                              ZECOS_FAILED_ACCUMULATOR_INITIALIZATION);
+                              ZBIOA3_FAILED_ACCUMULATOR_INITIALIZATION);
             return error("%s : %s", __func__, receipt.GetStatusMessage());
         }
 
@@ -4307,7 +4307,7 @@ bool CWallet::MintsToInputVector(std::map<CBigNum, CZerocoinMint>& mapMintsSelec
         if (nVersion >= libzerocoin::PrivateCoin::PUBKEY_VERSION) {
             CKey key;
             if (!mint.GetKeyPair(key))
-                return error("%s: failed to set zECOS privkey mint version=%d", __func__, nVersion);
+                return error("%s: failed to set zBIOA3 privkey mint version=%d", __func__, nVersion);
             privateCoin.setPrivKey(key.GetPrivKey());
         }
         int64_t nTime3 = GetTimeMicros();
@@ -4327,7 +4327,7 @@ bool CWallet::MintsToInputVector(std::map<CBigNum, CZerocoinMint>& mapMintsSelec
                                          *coinWitness.pWitness, hashTxOut, spendType);
 
             if (!CheckCoinSpend(spend, accumulator, receipt)) {
-                receipt.SetStatus(_("CoinSpend: failed check"), ZECOS_SPEND_ERROR);
+                receipt.SetStatus(_("CoinSpend: failed check"), ZBIOA3_SPEND_ERROR);
                 return error("%s : %s", __func__, receipt.GetStatusMessage());
             }
 
@@ -4340,7 +4340,7 @@ bool CWallet::MintsToInputVector(std::map<CBigNum, CZerocoinMint>& mapMintsSelec
             int64_t nTime5 = GetTimeMicros();
             LogPrint("bench", "        - CoinSpend verified in %.2fms\n", 0.001 * (nTime5 - nTime4));
         } catch (const std::exception&) {
-            receipt.SetStatus(_("CoinSpend: Accumulator witness does not verify"), ZECOS_INVALID_WITNESS);
+            receipt.SetStatus(_("CoinSpend: Accumulator witness does not verify"), ZBIOA3_INVALID_WITNESS);
             return error("%s : %s", __func__, receipt.GetStatusMessage());
         }
     }
@@ -4348,7 +4348,7 @@ bool CWallet::MintsToInputVector(std::map<CBigNum, CZerocoinMint>& mapMintsSelec
     int64_t nTimeFinished = GetTimeMicros();
     LogPrint("bench", "    - %s took %.2fms [%.3fms/spend]\n", __func__, 0.001 * (nTimeFinished - nTimeStart), 0.001 * (nTimeFinished - nTimeStart) / mapMintsSelected.size());
 
-    receipt.SetStatus(_("Spend Valid"), ZECOS_SPEND_OKAY); // Everything okay
+    receipt.SetStatus(_("Spend Valid"), ZBIOA3_SPEND_OKAY); // Everything okay
 
     return true;
 }
@@ -4357,7 +4357,7 @@ bool CWallet::MintsToInputVectorPublicSpend(std::map<CBigNum, CZerocoinMint>& ma
                                     CZerocoinSpendReceipt& receipt, libzerocoin::SpendType spendType, CBlockIndex* pindexCheckpoint)
 {
     // Default error status if not changed below
-    receipt.SetStatus(_("Transaction Mint Started"), ZECOS_TXMINT_GENERAL);
+    receipt.SetStatus(_("Transaction Mint Started"), ZBIOA3_TXMINT_GENERAL);
 
     // Get the chain tip to determine the active public spend version
     int nHeight = 0;
@@ -4378,11 +4378,11 @@ bool CWallet::MintsToInputVectorPublicSpend(std::map<CBigNum, CZerocoinMint>& ma
         CTransaction txMint;
         uint256 hashBlock;
         if (!GetTransaction(mint.GetTxHash(), txMint, hashBlock)) {
-            receipt.SetStatus(strprintf(_("Unable to find transaction containing mint %s"), mint.GetTxHash().GetHex()), ZECOS_TXMINT_GENERAL);
+            receipt.SetStatus(strprintf(_("Unable to find transaction containing mint %s"), mint.GetTxHash().GetHex()), ZBIOA3_TXMINT_GENERAL);
             return false;
         } else if (mapBlockIndex.count(hashBlock) < 1) {
             // check that this mint made it into the blockchain
-            receipt.SetStatus(_("Mint did not make it into blockchain"), ZECOS_TXMINT_GENERAL);
+            receipt.SetStatus(_("Mint did not make it into blockchain"), ZBIOA3_TXMINT_GENERAL);
             return false;
         }
 
@@ -4403,21 +4403,21 @@ bool CWallet::MintsToInputVectorPublicSpend(std::map<CBigNum, CZerocoinMint>& ma
         }
 
         if (outputIndex == -1) {
-            receipt.SetStatus(_("Pubcoin not found in mint tx"), ZECOS_TXMINT_GENERAL);
+            receipt.SetStatus(_("Pubcoin not found in mint tx"), ZBIOA3_TXMINT_GENERAL);
             return false;
         }
 
         mint.SetOutputIndex(outputIndex);
         CTxIn in;
-        if(!ZECOSModule::createInput(in, mint, hashTxOut, spendVersion)) {
-            receipt.SetStatus(_("Cannot create public spend input"), ZECOS_TXMINT_GENERAL);
+        if(!ZBIOA3Module::createInput(in, mint, hashTxOut, spendVersion)) {
+            receipt.SetStatus(_("Cannot create public spend input"), ZBIOA3_TXMINT_GENERAL);
             return false;
         }
         vin.emplace_back(in);
         receipt.AddSpend(CZerocoinSpend(mint.GetSerialNumber(), 0, mint.GetValue(), mint.GetDenomination(), 0));
     }
 
-    receipt.SetStatus(_("Spend Valid"), ZECOS_SPEND_OKAY); // Everything okay
+    receipt.SetStatus(_("Spend Valid"), ZBIOA3_SPEND_OKAY); // Everything okay
 
     return true;
 }
@@ -4436,19 +4436,19 @@ bool CWallet::CreateZerocoinSpendTransaction(
         bool isPublicSpend)
 {
     // Check available funds
-    int nStatus = ZECOS_TRX_FUNDS_PROBLEMS;
+    int nStatus = ZBIOA3_TRX_FUNDS_PROBLEMS;
     if (nValue > GetZerocoinBalance(true)) {
         receipt.SetStatus(_("You don't have enough Zerocoins in your wallet"), nStatus);
         return false;
     }
 
     if (nValue < 1) {
-        receipt.SetStatus(_("Value is below the smallest available denomination (= 1) of zECOS"), nStatus);
+        receipt.SetStatus(_("Value is below the smallest available denomination (= 1) of zBIOA3"), nStatus);
         return false;
     }
 
     // Create transaction
-    nStatus = ZECOS_TRX_CREATE;
+    nStatus = ZBIOA3_TRX_CREATE;
 
     // If not already given pre-selected mints, then select mints from the wallet
     CWalletDB walletdb(pwalletMain->strWalletFile);
@@ -4456,11 +4456,11 @@ bool CWallet::CreateZerocoinSpendTransaction(
     CAmount nValueSelected = 0;
     int nCoinsReturned = 0; // Number of coins returned in change from function below (for debug)
     int nNeededSpends = 0;  // Number of spends which would be needed if selection failed
-    const int nMaxSpends = Params().Zerocoin_MaxPublicSpendsPerTransaction(); // Maximum possible spends for one zECOS public spend transaction
+    const int nMaxSpends = Params().Zerocoin_MaxPublicSpendsPerTransaction(); // Maximum possible spends for one zBIOA3 public spend transaction
     std::vector<CMintMeta> vMintsToFetch;
     if (vSelectedMints.empty()) {
-        //  All of the zECOS used in the public coin spend are mature by default (everything is public now.. no need to wait for any accumulation)
-        setMints = zecosTracker->ListMints(true, false, true, true); // need to find mints to spend
+        //  All of the zBIOA3 used in the public coin spend are mature by default (everything is public now.. no need to wait for any accumulation)
+        setMints = zbioa3Tracker->ListMints(true, false, true, true); // need to find mints to spend
         if(setMints.empty()) {
             receipt.SetStatus(_("Failed to find Zerocoins in wallet.dat"), nStatus);
             return false;
@@ -4473,7 +4473,7 @@ bool CWallet::CreateZerocoinSpendTransaction(
         if(!fWholeNumber)
             nValueToSelect = static_cast<CAmount>(ceil(dValue) * COIN);
 
-        // Select the zECOS mints to use in this spend
+        // Select the zBIOA3 mints to use in this spend
         std::map<libzerocoin::CoinDenomination, CAmount> DenomMap = GetMyZerocoinDistribution();
         std::list<CMintMeta> listMints(setMints.begin(), setMints.end());
         vMintsToFetch = SelectMintsFromList(nValueToSelect, nValueSelected, nMaxSpends, fMinimizeChange,
@@ -4506,12 +4506,12 @@ bool CWallet::CreateZerocoinSpendTransaction(
         if (IsSerialInBlockchain(mint.GetSerialNumber(), nHeightSpend)) {
             receipt.SetStatus(_("Trying to spend an already spent serial #, try again."), nStatus);
             uint256 hashSerial = GetSerialHash(mint.GetSerialNumber());
-            if (!zecosTracker->HasSerialHash(hashSerial))
+            if (!zbioa3Tracker->HasSerialHash(hashSerial))
                 return error("%s: tracker does not have serialhash %s", __func__, hashSerial.GetHex());
 
-            CMintMeta meta = zecosTracker->Get(hashSerial);
+            CMintMeta meta = zbioa3Tracker->Get(hashSerial);
             meta.isUsed = true;
-            zecosTracker->UpdateState(meta);
+            zbioa3Tracker->UpdateState(meta);
 
             return false;
         }
@@ -4557,7 +4557,7 @@ bool CWallet::CreateZerocoinSpendTransaction(
 
 
     // Create change if needed
-    nStatus = ZECOS_TRX_CHANGE;
+    nStatus = ZBIOA3_TRX_CHANGE;
 
     CMutableTransaction txNew;
     wtxNew.BindWallet(this);
@@ -4590,7 +4590,7 @@ bool CWallet::CreateZerocoinSpendTransaction(
 
             for (std::pair<CBitcoinAddress*,CAmount> pair : addressesTo){
                 CScript scriptZerocoinSpend = GetScriptForDestination(pair.first->Get());
-                //add output to ecodollar address to the transaction (the actual primary spend taking place)
+                //add output to bioa3 address to the transaction (the actual primary spend taking place)
                 // TODO: check value?
                 CTxOut txOutZerocoinSpend(pair.second, scriptZerocoinSpend);
                 txNew.vout.push_back(txOutZerocoinSpend);
@@ -4647,7 +4647,7 @@ bool CWallet::CreateZerocoinSpendTransaction(
             // Limit size
             unsigned int nBytes = ::GetSerializeSize(txNew, SER_NETWORK, PROTOCOL_VERSION);
             if (nBytes >= MAX_ZEROCOIN_TX_SIZE) {
-                receipt.SetStatus(_("In rare cases, a spend with 7 coins exceeds our maximum allowable transaction size, please retry spend using 6 or less coins"), ZECOS_TX_TOO_LARGE);
+                receipt.SetStatus(_("In rare cases, a spend with 7 coins exceeds our maximum allowable transaction size, please retry spend using 6 or less coins"), ZBIOA3_TX_TOO_LARGE);
                 return false;
             }
 
@@ -4669,7 +4669,7 @@ bool CWallet::CreateZerocoinSpendTransaction(
         }
     }
 
-    receipt.SetStatus(_("Transaction Created"), ZECOS_SPEND_OKAY); // Everything okay
+    receipt.SetStatus(_("Transaction Created"), ZBIOA3_SPEND_OKAY); // Everything okay
 
     return true;
 }
@@ -4680,7 +4680,7 @@ std::string CWallet::ResetMintZerocoin()
     long deletions = 0;
     CWalletDB walletdb(pwalletMain->strWalletFile);
 
-    std::set<CMintMeta> setMints = zecosTracker->ListMints(false, false, true);
+    std::set<CMintMeta> setMints = zbioa3Tracker->ListMints(false, false, true);
     std::vector<CMintMeta> vMintsToFind(setMints.begin(), setMints.end());
     std::vector<CMintMeta> vMintsMissing;
     std::vector<CMintMeta> vMintsToUpdate;
@@ -4691,17 +4691,17 @@ std::string CWallet::ResetMintZerocoin()
     // Update the meta data of mints that were marked for updating
     for (CMintMeta meta : vMintsToUpdate) {
         updates++;
-        zecosTracker->UpdateState(meta);
+        zbioa3Tracker->UpdateState(meta);
     }
 
     // Delete any mints that were unable to be located on the blockchain
     for (CMintMeta mint : vMintsMissing) {
         deletions++;
-        if (!zecosTracker->Archive(mint))
+        if (!zbioa3Tracker->Archive(mint))
             LogPrintf("%s: failed to archive mint\n", __func__);
     }
 
-    NotifyzECOSReset();
+    NotifyzBIOA3Reset();
 
     std::string strResult = _("ResetMintZerocoin finished: ") + std::to_string(updates) + _(" mints updated, ") + std::to_string(deletions) + _(" mints deleted\n");
     return strResult;
@@ -4712,7 +4712,7 @@ std::string CWallet::ResetSpentZerocoin()
     long removed = 0;
     CWalletDB walletdb(pwalletMain->strWalletFile);
 
-    std::set<CMintMeta> setMints = zecosTracker->ListMints(false, false, true);
+    std::set<CMintMeta> setMints = zbioa3Tracker->ListMints(false, false, true);
     std::list<CZerocoinSpend> listSpends = walletdb.ListSpentCoins();
     std::list<CZerocoinSpend> listUnconfirmedSpends;
 
@@ -4734,14 +4734,14 @@ std::string CWallet::ResetSpentZerocoin()
             if (meta.hashSerial == GetSerialHash(spend.GetSerial())) {
                 removed++;
                 meta.isUsed = false;
-                zecosTracker->UpdateState(meta);
+                zbioa3Tracker->UpdateState(meta);
                 walletdb.EraseZerocoinSpendSerialEntry(spend.GetSerial());
                 continue;
             }
         }
     }
 
-    NotifyzECOSReset();
+    NotifyzBIOA3Reset();
 
     std::string strResult = _("ResetSpentZerocoin finished: ") + std::to_string(removed) + _(" unconfirmed transactions removed\n");
     return strResult;
@@ -4784,10 +4784,10 @@ void CWallet::ReconsiderZerocoins(std::list<CZerocoinMint>& listMintsRestored, s
         mint.SetHeight(nHeight);
         mint.SetUsed(IsSerialInBlockchain(mint.GetSerialNumber(), nHeight));
 
-        if (!zecosTracker->UnArchive(hashPubcoin, false)) {
+        if (!zbioa3Tracker->UnArchive(hashPubcoin, false)) {
             LogPrintf("%s : failed to unarchive mint %s\n", __func__, mint.GetValue().GetHex());
         } else {
-            zecosTracker->UpdateZerocoinMint(mint);
+            zbioa3Tracker->UpdateZerocoinMint(mint);
         }
         listMintsRestored.emplace_back(mint);
     }
@@ -4803,39 +4803,39 @@ void CWallet::ReconsiderZerocoins(std::list<CZerocoinMint>& listMintsRestored, s
         uint256 txidSpend;
         dMint.SetUsed(IsSerialInBlockchain(dMint.GetSerialHash(), nHeight, txidSpend));
 
-        if (!zecosTracker->UnArchive(dMint.GetPubcoinHash(), true)) {
+        if (!zbioa3Tracker->UnArchive(dMint.GetPubcoinHash(), true)) {
             LogPrintf("%s : failed to unarchive deterministic mint %s\n", __func__, dMint.GetPubcoinHash().GetHex());
         } else {
-            zecosTracker->Add(dMint, true);
+            zbioa3Tracker->Add(dMint, true);
         }
         listDMintsRestored.emplace_back(dMint);
     }
 }
 
-std::string CWallet::GetUniqueWalletBackupName(bool fzecosAuto) const
+std::string CWallet::GetUniqueWalletBackupName(bool fzbioa3Auto) const
 {
     std::stringstream ssDateTime;
     std::string strWalletBackupName = strprintf("%s", DateTimeStrFormat(".%Y-%m-%d-%H-%M", GetTime()));
     ssDateTime << strWalletBackupName;
 
-    return strprintf("wallet%s.dat%s", fzecosAuto ? "-autozecosbackup" : "", DateTimeStrFormat(".%Y-%m-%d-%H-%M", GetTime()));
+    return strprintf("wallet%s.dat%s", fzbioa3Auto ? "-autozbioa3backup" : "", DateTimeStrFormat(".%Y-%m-%d-%H-%M", GetTime()));
 }
 
-void CWallet::ZEcosBackupWallet()
+void CWallet::ZBioA3BackupWallet()
 {
     boost::filesystem::path backupDir = GetDataDir() / "backups";
     boost::filesystem::path backupPath;
     std::string strNewBackupName;
 
     for (int i = 0; i < 10; i++) {
-        strNewBackupName = strprintf("wallet-autozecosbackup-%d.dat", i);
+        strNewBackupName = strprintf("wallet-autozbioa3backup-%d.dat", i);
         backupPath = backupDir / strNewBackupName;
 
         if (boost::filesystem::exists(backupPath)) {
             //Keep up to 10 backups
             if (i <= 8) {
                 //If the next file backup exists and is newer, then iterate
-                boost::filesystem::path nextBackupPath = backupDir / strprintf("wallet-autozecosbackup-%d.dat", i + 1);
+                boost::filesystem::path nextBackupPath = backupDir / strprintf("wallet-autozbioa3backup-%d.dat", i + 1);
                 if (boost::filesystem::exists(nextBackupPath)) {
                     time_t timeThis = boost::filesystem::last_write_time(backupPath);
                     time_t timeNext = boost::filesystem::last_write_time(nextBackupPath);
@@ -4850,7 +4850,7 @@ void CWallet::ZEcosBackupWallet()
                 continue;
             }
             //reset to 0 because name with 9 already used
-            strNewBackupName = strprintf("wallet-autozecosbackup-%d.dat", 0);
+            strNewBackupName = strprintf("wallet-autozbioa3backup-%d.dat", 0);
             backupPath = backupDir / strNewBackupName;
             break;
         }
@@ -4860,8 +4860,8 @@ void CWallet::ZEcosBackupWallet()
 
     BackupWallet(*this, backupPath.string());
 
-    if(!GetArg("-zecosbackuppath", "").empty()) {
-        boost::filesystem::path customPath(GetArg("-zecosbackuppath", ""));
+    if(!GetArg("-zbioa3backuppath", "").empty()) {
+        boost::filesystem::path customPath(GetArg("-zbioa3backuppath", ""));
         boost::filesystem::create_directories(customPath);
 
         if(!customPath.has_extension()) {
@@ -4936,13 +4936,13 @@ std::string CWallet::MintZerocoin(CAmount nValue, CWalletTx& wtxNew, std::vector
         CWalletDB walletdb(pwalletMain->strWalletFile);
         for (CDeterministicMint dMint : vDMints) {
             dMint.SetTxHash(wtxNew.GetHash());
-            zecosTracker->Add(dMint, true);
+            zbioa3Tracker->Add(dMint, true);
         }
     }
 
     //Create a backup of the wallet
     if (fBackupMints)
-        ZEcosBackupWallet();
+        ZBioA3BackupWallet();
 
     return "";
 }
@@ -4960,10 +4960,10 @@ bool CWallet::SpendZerocoin(
 )
 {
     // Default: assume something goes wrong. Depending on the problem this gets more specific below
-    int nStatus = ZECOS_SPEND_ERROR;
+    int nStatus = ZBIOA3_SPEND_ERROR;
 
     if (IsLocked()) {
-        receipt.SetStatus("Error: Wallet locked, unable to create transaction!", ZECOS_WALLET_LOCKED);
+        receipt.SetStatus("Error: Wallet locked, unable to create transaction!", ZBIOA3_WALLET_LOCKED);
         return false;
     }
 
@@ -4986,24 +4986,24 @@ bool CWallet::SpendZerocoin(
     }
 
     if (fMintChange && fBackupMints)
-        ZEcosBackupWallet();
+        ZBioA3BackupWallet();
 
     CWalletDB walletdb(pwalletMain->strWalletFile);
     if (!CommitTransaction(wtxNew, reserveKey)) {
         LogPrintf("%s: failed to commit\n", __func__);
-        nStatus = ZECOS_COMMIT_FAILED;
+        nStatus = ZBIOA3_COMMIT_FAILED;
 
         //reset all mints
         for (CZerocoinMint mint : vMintsSelected) {
             uint256 hashPubcoin = GetPubCoinHash(mint.GetValue());
-            zecosTracker->SetPubcoinNotUsed(hashPubcoin);
+            zbioa3Tracker->SetPubcoinNotUsed(hashPubcoin);
             pwalletMain->NotifyZerocoinChanged(pwalletMain, mint.GetValue().GetHex(), "New", CT_UPDATED);
         }
 
         //erase spends
         for (CZerocoinSpend spend : receipt.GetSpends()) {
             if (!walletdb.EraseZerocoinSpendSerialEntry(spend.GetSerial())) {
-                receipt.SetStatus("Error: It cannot delete coin serial number in wallet", ZECOS_ERASE_SPENDS_FAILED);
+                receipt.SetStatus("Error: It cannot delete coin serial number in wallet", ZBIOA3_ERASE_SPENDS_FAILED);
             }
 
             //Remove from public zerocoinDB
@@ -5013,7 +5013,7 @@ bool CWallet::SpendZerocoin(
         // erase new mints
         for (auto& dMint : vNewMints) {
             if (!walletdb.EraseDeterministicMint(dMint.GetPubcoinHash())) {
-                receipt.SetStatus("Error: Unable to cannot delete zerocoin mint in wallet", ZECOS_ERASE_NEW_MINTS_FAILED);
+                receipt.SetStatus("Error: Unable to cannot delete zerocoin mint in wallet", ZBIOA3_ERASE_NEW_MINTS_FAILED);
             }
         }
 
@@ -5025,9 +5025,9 @@ bool CWallet::SpendZerocoin(
     uint256 txidSpend = wtxNew.GetHash();
     for (CZerocoinMint mint : vMintsSelected) {
         uint256 hashPubcoin = GetPubCoinHash(mint.GetValue());
-        zecosTracker->SetPubcoinUsed(hashPubcoin, txidSpend);
+        zbioa3Tracker->SetPubcoinUsed(hashPubcoin, txidSpend);
 
-        CMintMeta metaCheck = zecosTracker->GetMetaFromPubcoin(hashPubcoin);
+        CMintMeta metaCheck = zbioa3Tracker->GetMetaFromPubcoin(hashPubcoin);
         if (!metaCheck.isUsed) {
             receipt.SetStatus("Error, the mint did not get marked as used", nStatus);
             return false;
@@ -5037,10 +5037,10 @@ bool CWallet::SpendZerocoin(
     // write new Mints to db
     for (auto& dMint : vNewMints) {
         dMint.SetTxHash(txidSpend);
-        zecosTracker->Add(dMint, true);
+        zbioa3Tracker->Add(dMint, true);
     }
 
-    receipt.SetStatus("Spend Successful", ZECOS_SPEND_OKAY);  // When we reach this point spending zECOS was successful
+    receipt.SetStatus("Spend Successful", ZBIOA3_SPEND_OKAY);  // When we reach this point spending zBIOA3 was successful
 
     return true;
 }
@@ -5048,18 +5048,18 @@ bool CWallet::SpendZerocoin(
 bool CWallet::GetMintFromStakeHash(const uint256& hashStake, CZerocoinMint& mint)
 {
     CMintMeta meta;
-    if (!zecosTracker->GetMetaFromStakeHash(hashStake, meta))
+    if (!zbioa3Tracker->GetMetaFromStakeHash(hashStake, meta))
         return error("%s: failed to find meta associated with hashStake", __func__);
     return GetMint(meta.hashSerial, mint);
 }
 
 bool CWallet::GetMint(const uint256& hashSerial, CZerocoinMint& mint)
 {
-    if (!zecosTracker->HasSerialHash(hashSerial))
+    if (!zbioa3Tracker->HasSerialHash(hashSerial))
         return error("%s: serialhash %s is not in tracker", __func__, hashSerial.GetHex());
 
     CWalletDB walletdb(strWalletFile);
-    CMintMeta meta = zecosTracker->Get(hashSerial);
+    CMintMeta meta = zbioa3Tracker->Get(hashSerial);
     if (meta.isDeterministic) {
         CDeterministicMint dMint;
         if (!walletdb.ReadDeterministicMint(meta.hashPubcoin, dMint))
@@ -5078,7 +5078,7 @@ bool CWallet::GetMint(const uint256& hashSerial, CZerocoinMint& mint)
 
 bool CWallet::IsMyMint(const CBigNum& bnValue) const
 {
-    if (zecosTracker->HasPubcoin(bnValue))
+    if (zbioa3Tracker->HasPubcoin(bnValue))
         return true;
 
     return zwalletMain->IsInMintPool(bnValue);
@@ -5088,11 +5088,11 @@ bool CWallet::UpdateMint(const CBigNum& bnValue, const int& nHeight, const uint2
 {
     uint256 hashValue = GetPubCoinHash(bnValue);
     CZerocoinMint mint;
-    if (zecosTracker->HasPubcoinHash(hashValue)) {
-        CMintMeta meta = zecosTracker->GetMetaFromPubcoin(hashValue);
+    if (zbioa3Tracker->HasPubcoinHash(hashValue)) {
+        CMintMeta meta = zbioa3Tracker->GetMetaFromPubcoin(hashValue);
         meta.nHeight = nHeight;
         meta.txid = txid;
-        return zecosTracker->UpdateState(meta);
+        return zbioa3Tracker->UpdateState(meta);
     } else {
         //Check if this mint is one that is in our mintpool (a potential future mint from our deterministic generation)
         if (zwalletMain->IsInMintPool(bnValue)) {
@@ -5108,18 +5108,18 @@ bool CWallet::UpdateMint(const CBigNum& bnValue, const int& nHeight, const uint2
 bool CWallet::SetMintUnspent(const CBigNum& bnSerial)
 {
     uint256 hashSerial = GetSerialHash(bnSerial);
-    if (!zecosTracker->HasSerialHash(hashSerial))
+    if (!zbioa3Tracker->HasSerialHash(hashSerial))
         return error("%s: did not find mint", __func__);
 
-    CMintMeta meta = zecosTracker->Get(hashSerial);
-    zecosTracker->SetPubcoinNotUsed(meta.hashPubcoin);
+    CMintMeta meta = zbioa3Tracker->Get(hashSerial);
+    zbioa3Tracker->SetPubcoinNotUsed(meta.hashPubcoin);
     return true;
 }
 
 bool CWallet::DatabaseMint(CDeterministicMint& dMint)
 {
     CWalletDB walletdb(strWalletFile);
-    zecosTracker->Add(dMint, true);
+    zbioa3Tracker->Add(dMint, true);
     return true;
 }
 
@@ -5184,13 +5184,13 @@ int CWallet::getZeromintPercentage()
     return nZeromintPercentage;
 }
 
-void CWallet::setZWallet(CzECOSWallet* zwallet)
+void CWallet::setZWallet(CzBIOA3Wallet* zwallet)
 {
     zwalletMain = zwallet;
-    zecosTracker = std::unique_ptr<CzECOSTracker>(new CzECOSTracker(strWalletFile));
+    zbioa3Tracker = std::unique_ptr<CzBIOA3Tracker>(new CzBIOA3Tracker(strWalletFile));
 }
 
-CzECOSWallet* CWallet::getZWallet()
+CzBIOA3Wallet* CWallet::getZWallet()
 {
     return zwalletMain;
 }
@@ -5200,7 +5200,7 @@ bool CWallet::isZeromintEnabled()
     return fEnableZeromint || fEnableAutoConvert;
 }
 
-void CWallet::setZEcosAutoBackups(bool fEnabled)
+void CWallet::setZBioA3AutoBackups(bool fEnabled)
 {
     fBackupMints = fEnabled;
 }

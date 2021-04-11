@@ -3,7 +3,7 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-from test_framework.test_framework import EcodollarTestFramework
+from test_framework.test_framework import BioA3TestFramework
 from test_framework.util import *
 
 
@@ -14,7 +14,7 @@ def get_unspent(listunspent, amount):
     raise AssertionError('Could not find unspent with amount={}'.format(amount))
 
 
-class RawTransactionsTest(EcodollarTestFramework):
+class RawTransactionsTest(BioA3TestFramework):
 
     def __init__(self):
         super().__init__()
@@ -201,9 +201,9 @@ class RawTransactionsTest(EcodollarTestFramework):
 
         try:
             self.nodes[2].fundrawtransaction(rawtx, {'changeAddress': 'foobar'})
-            raise AssertionError("Accepted invalid ecodollar address")
+            raise AssertionError("Accepted invalid bioa3 address")
         except JSONRPCException as e:
-            assert("changeAddress must be a valid ecodollar address" in e.error['message'])
+            assert("changeAddress must be a valid bioa3 address" in e.error['message'])
 
 
         ############################################################

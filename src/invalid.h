@@ -1,11 +1,11 @@
-// Copyright (c) 2018 The ECODOLLAR developers
+// Copyright (c) 2018 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef ECODOLLAR_INVALID_H
-#define ECODOLLAR_INVALID_H
+#ifndef BIOA3_INVALID_H
+#define BIOA3_INVALID_H
 
-#endif //ECODOLLAR_INVALID_H
+#endif //BIOA3_INVALID_H
 
 #include <libzerocoin/bignum.h>
 #include <univalue/include/univalue.h>

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-# Copyright (c) 2018-2019 The ECODOLLAR developers
+# Copyright (c) 2018-2019 The BIOA3 developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test RPC commands for BIP38 encrypting and decrypting addresses."""
 
-from test_framework.test_framework import EcodollarTestFramework
+from test_framework.test_framework import BioA3TestFramework
 from test_framework.util import assert_equal
 
-class Bip38Test(EcodollarTestFramework):
+class Bip38Test(BioA3TestFramework):
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 2

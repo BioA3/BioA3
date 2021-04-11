@@ -1,0 +1,15 @@
+# http://standards.freedesktop.org/desktop-entry-spec/desktop-entry-spec-1.0.html
+
+[Desktop Entry]
+Encoding=UTF-8
+Name=BIOA3 Core Daemon SNAP
+Comment=main
+GenericName=BIOA3 Digital Currency Daemon Client main network
+Exec=bioa3-core.daemon %u
+Terminal=true
+Type=Application
+Icon=${SNAP}/share/pixmaps/bioa3.png
+MimeType=x-scheme-handler/bioa3;
+Categories=X-Office;X-Finance;
+Keywords=internet;bioa3;zbioa3;core;wallet;daemon;main;snap;launchpad;crypto;digital;currency;coin;token;zerocoin;
+Version=1.0

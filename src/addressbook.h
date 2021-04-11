@@ -1,9 +1,9 @@
-// Copyright (c) 2019 The ECODOLLAR developers
+// Copyright (c) 2019 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef ECODOLLAR_ADDRESSBOOK_H
-#define ECODOLLAR_ADDRESSBOOK_H
+#ifndef BIOA3_ADDRESSBOOK_H
+#define BIOA3_ADDRESSBOOK_H
 
 #include <map>
 #include <string>
@@ -43,4 +43,4 @@ namespace AddressBook {
 
 }
 
-#endif //ECODOLLAR_ADDRESSBOOK_H
+#endif //BIOA3_ADDRESSBOOK_H

@@ -1,9 +1,9 @@
-// Copyright (c) 2019 The ECODOLLAR developers
+// Copyright (c) 2019 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef ECODOLLAR_PAIRRESULT_H
-#define ECODOLLAR_PAIRRESULT_H
+#ifndef BIOA3_PAIRRESULT_H
+#define BIOA3_PAIRRESULT_H
 
 
 class PairResult {
@@ -17,4 +17,4 @@ public:
 };
 
 
-#endif //ECODOLLAR_PAIRRESULT_H
+#endif //BIOA3_PAIRRESULT_H

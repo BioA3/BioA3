@@ -17,7 +17,7 @@
   <string>APPL</string>
 
   <key>CFBundleGetInfoString</key>
-  <string>@CLIENT_VERSION_MAJOR@.@CLIENT_VERSION_MINOR@.@CLIENT_VERSION_REVISION@.@CLIENT_VERSION_BUILD@, Copyright © 2009-@COPYRIGHT_YEAR@ The Bitcoin Core developers, 2014-@COPYRIGHT_YEAR@ The Dash Core developers, 2015-@COPYRIGHT_YEAR@ The ECODOLLAR Core developers</string>
+  <string>@CLIENT_VERSION_MAJOR@.@CLIENT_VERSION_MINOR@.@CLIENT_VERSION_REVISION@.@CLIENT_VERSION_BUILD@, Copyright © 2009-@COPYRIGHT_YEAR@ The Bitcoin Core developers, 2014-@COPYRIGHT_YEAR@ The Dash Core developers, 2015-@COPYRIGHT_YEAR@ The BIOA3 Core developers</string>
 
   <key>CFBundleShortVersionString</key>
   <string>@CLIENT_VERSION_MAJOR@.@CLIENT_VERSION_MINOR@.@CLIENT_VERSION_REVISION@</string>
@@ -29,16 +29,16 @@
   <string>????</string>
 
   <key>CFBundleExecutable</key>
-  <string>ECODOLLAR-Qt</string>
+  <string>BIOA3-Qt</string>
 
   <key>CFBundleName</key>
-  <string>ECODOLLAR-Qt</string>
+  <string>BIOA3-Qt</string>
 
   <key>LSHasLocalizedDisplayName</key>
   <true/>
 
   <key>CFBundleIdentifier</key>
-  <string>io.ecodollar.Ecodollar-Qt</string>
+  <string>io.bioa3.BioA3-Qt</string>
 
   <key>CFBundleURLTypes</key>
   <array>
@@ -46,10 +46,10 @@
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>CFBundleURLName</key>
-      <string>io.ecodollar.EcodollarPayment</string>
+      <string>io.bioa3.BioA3Payment</string>
       <key>CFBundleURLSchemes</key>
       <array>
-        <string>ecodollar</string>
+        <string>bioa3</string>
       </array>
     </dict>
   </array>
@@ -58,9 +58,9 @@
   <array>
     <dict>
       <key>UTTypeIdentifier</key>
-      <string>io.ecodollar.paymentrequest</string>
+      <string>io.bioa3.paymentrequest</string>
       <key>UTTypeDescription</key>
-      <string>Ecodollar payment request</string>
+      <string>BioA3 payment request</string>
       <key>UTTypeConformsTo</key>
       <array>
         <string>public.data</string>
@@ -68,10 +68,10 @@
       <key>UTTypeTagSpecification</key>
       <dict>
         <key>public.mime-type</key>
-        <string>application/x-ecodollar-payment-request</string>
+        <string>application/x-bioa3-payment-request</string>
         <key>public.filename-extension</key>
         <array>
-          <string>ecodollarpaymentrequest</string>
+          <string>bioa3paymentrequest</string>
         </array>
       </dict>
     </dict>
@@ -84,7 +84,7 @@
       <string>Editor</string>
       <key>LSItemContentTypes</key>
       <array>
-        <string>io.ecodollar.paymentrequest</string>
+        <string>io.bioa3.paymentrequest</string>
       </array>
       <key>LSHandlerRank</key>
       <string>Owner</string>

@@ -1,9 +1,9 @@
-// Copyright (c) 2017-2018 The ECODOLLAR developers
+// Copyright (c) 2017-2018 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef ECODOLLAR_UINT512_H
-#define ECODOLLAR_UINT512_H
+#ifndef BIOA3_UINT512_H
+#define BIOA3_UINT512_H
 
 #include "arith_uint256.h"
 #include "uint256.h"
@@ -42,4 +42,4 @@ inline uint512 uint512S(const char* str)
     return rv;
 }
 
-#endif // ECODOLLAR_UINT512_H
+#endif // BIOA3_UINT512_H

@@ -3,10 +3,10 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test the wallet."""
-from test_framework.test_framework import EcodollarTestFramework
+from test_framework.test_framework import BioA3TestFramework
 from test_framework.util import *
 
-class WalletTest(EcodollarTestFramework):
+class WalletTest(BioA3TestFramework):
     def set_test_params(self):
         self.num_nodes = 4
         self.setup_clean_chain = True

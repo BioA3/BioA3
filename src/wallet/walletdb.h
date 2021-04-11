@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2013 The Bitcoin developers
-// Copyright (c) 2016-2020 The ECODOLLAR developers
+// Copyright (c) 2016-2020 The BIOA3 developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -11,10 +11,10 @@
 #include "wallet/db.h"
 #include "key.h"
 #include "keystore.h"
-#include "zecos/zerocoin.h"
+#include "zbioa3/zerocoin.h"
 #include "libzerocoin/Accumulator.h"
 #include "libzerocoin/Denominations.h"
-#include "zecos/zecostracker.h"
+#include "zbioa3/zbioa3tracker.h"
 
 #include <list>
 #include <stdint.h>
@@ -177,14 +177,14 @@ public:
     bool ReadZerocoinSpendSerialEntry(const CBigNum& bnSerial);
     bool WriteCurrentSeedHash(const uint256& hashSeed);
     bool ReadCurrentSeedHash(uint256& hashSeed);
-    bool WriteZECOSSeed(const uint256& hashSeed, const std::vector<unsigned char>& seed);
-    bool ReadZECOSSeed(const uint256& hashSeed, std::vector<unsigned char>& seed);
-    bool ReadZECOSSeed_deprecated(uint256& seed);
-    bool EraseZECOSSeed();
-    bool EraseZECOSSeed_deprecated();
+    bool WriteZBIOA3Seed(const uint256& hashSeed, const std::vector<unsigned char>& seed);
+    bool ReadZBIOA3Seed(const uint256& hashSeed, std::vector<unsigned char>& seed);
+    bool ReadZBIOA3Seed_deprecated(uint256& seed);
+    bool EraseZBIOA3Seed();
+    bool EraseZBIOA3Seed_deprecated();
 
-    bool WriteZECOSCount(const uint32_t& nCount);
-    bool ReadZECOSCount(uint32_t& nCount);
+    bool WriteZBIOA3Count(const uint32_t& nCount);
+    bool ReadZBIOA3Count(uint32_t& nCount);
     std::map<uint256, std::vector<std::pair<uint256, uint32_t> > > MapMintPool();
     bool WriteMintPoolPair(const uint256& hashMasterSeed, const uint256& hashPubcoin, const uint32_t& nCount);
 

@@ -30,10 +30,10 @@
        <item>
         <widget class="QCheckBox" name="bitcoinAtStartup">
          <property name="toolTip">
-          <string>Automatically start ECODOLLAR after logging in to the system.</string>
+          <string>Automatically start BIOA3 after logging in to the system.</string>
          </property>
          <property name="text">
-          <string>&amp;Start ECODOLLAR on system login</string>
+          <string>&amp;Start BIOA3 on system login</string>
          </property>
         </widget>
        </item>
@@ -131,8 +131,8 @@
         </spacer>
        </item>
        <item>
-        <widget class="QWidget" name="verticalZecosOptionsWidget" native="true">
-         <layout class="QVBoxLayout" name="verticalZecosOptionsLayout">
+        <widget class="QWidget" name="verticalZbioa3OptionsWidget" native="true">
+         <layout class="QVBoxLayout" name="verticalZbioa3OptionsLayout">
           <property name="margin">
            <number>0</number>
           </property>
@@ -141,20 +141,20 @@
             <item>
              <widget class="QCheckBox" name="checkBoxZeromintEnable">
               <property name="toolTip">
-               <string>Enable automatic minting of ECOS units to zECOS</string>
+               <string>Enable automatic minting of BIOA3 units to zBIOA3</string>
               </property>
               <property name="layoutDirection">
                <enum>Qt::LeftToRight</enum>
               </property>
               <property name="text">
-               <string>Enable zECOS Automint</string>
+               <string>Enable zBIOA3 Automint</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QCheckBox" name="checkBoxZeromintAddresses">
               <property name="toolTip">
-               <string>Enable automatic zECOS minting from specific addresses</string>
+               <string>Enable automatic zBIOA3 minting from specific addresses</string>
               </property>
               <property name="layoutDirection">
                <enum>Qt::LeftToRight</enum>
@@ -171,10 +171,10 @@
             <item>
              <widget class="QLabel" name="percentage_label">
               <property name="toolTip">
-               <string>Percentage of incoming ECOS which get automatically converted to zECOS via Zerocoin Protocol (min: 10%)</string>
+               <string>Percentage of incoming BIOA3 which get automatically converted to zBIOA3 via Zerocoin Protocol (min: 10%)</string>
               </property>
               <property name="text">
-               <string>Percentage of autominted zECOS</string>
+               <string>Percentage of autominted zBIOA3</string>
               </property>
              </widget>
             </item>
@@ -204,10 +204,10 @@
                </size>
               </property>
               <property name="toolTip">
-               <string>Wait with automatic conversion to Zerocoin until enough ECOS for this denomination is available</string>
+               <string>Wait with automatic conversion to Zerocoin until enough BIOA3 for this denomination is available</string>
               </property>
               <property name="text">
-               <string>Preferred Automint zECOS Denomination</string>
+               <string>Preferred Automint zBIOA3 Denomination</string>
               </property>
              </widget>
             </item>
@@ -220,7 +220,7 @@
                </size>
               </property>
               <property name="toolTip">
-               <string>Wait with automatic conversion to Zerocoin until enough ECOS for this denomination is available</string>
+               <string>Wait with automatic conversion to Zerocoin until enough BIOA3 for this denomination is available</string>
               </property>
               <property name="maxVisibleItems">
                <number>9</number>
@@ -325,7 +325,7 @@
        <item>
         <widget class="QCheckBox" name="mapPortUpnp">
          <property name="toolTip">
-          <string>Automatically open the ECODOLLAR client port on the router. This only works when your router supports UPnP and it is enabled.</string>
+          <string>Automatically open the BIOA3 client port on the router. This only works when your router supports UPnP and it is enabled.</string>
          </property>
          <property name="text">
           <string>Map port using &amp;UPnP</string>
@@ -345,7 +345,7 @@
        <item>
         <widget class="QCheckBox" name="connectSocks">
          <property name="toolTip">
-          <string>Connect to the ECODOLLAR network through a SOCKS5 proxy.</string>
+          <string>Connect to the BIOA3 network through a SOCKS5 proxy.</string>
          </property>
          <property name="text">
           <string>&amp;Connect through SOCKS5 proxy (default proxy):</string>
@@ -511,7 +511,7 @@
          <item>
           <widget class="QValueComboBox" name="lang">
            <property name="toolTip">
-            <string>The user interface language can be set here. This setting will take effect after restarting ECODOLLAR.</string>
+            <string>The user interface language can be set here. This setting will take effect after restarting BIOA3.</string>
            </property>
           </widget>
          </item>
@@ -533,7 +533,7 @@
          </property>
          <property name="text">
           <string>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/ecodollar-project/ecodollar-project-translations</string>
+https://www.transifex.com/bioa3-project/bioa3-project-translations</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -561,8 +561,8 @@ https://www.transifex.com/ecodollar-project/ecodollar-project-translations</stri
         </layout>
        </item>
        <item>
-        <widget class="QWidget" name="verticalZecosDisplayWidget" native="true">
-         <layout class="QVBoxLayout" name="verticalZecosDisplayLayout">
+        <widget class="QWidget" name="verticalZbioa3DisplayWidget" native="true">
+         <layout class="QVBoxLayout" name="verticalZbioa3DisplayLayout">
           <property name="margin">
            <number>0</number>
           </property>

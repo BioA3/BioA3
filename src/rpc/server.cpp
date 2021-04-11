@@ -1,7 +1,7 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2020 The ECODOLLAR developers
+// Copyright (c) 2015-2020 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -129,7 +129,7 @@ UniValue ValueFromAmount(const CAmount& amount)
     int64_t quotient = n_abs / COIN;
     int64_t remainder = n_abs % COIN;
     return UniValue(UniValue::VNUM,
-            strprintf("%s%d.%07d", sign ? "-" : "", quotient, remainder));
+            strprintf("%s%d.%08d", sign ? "-" : "", quotient, remainder));
 }
 
 uint256 ParseHashV(const UniValue& v, std::string strName)
@@ -265,11 +265,11 @@ UniValue stop(const UniValue& params, bool fHelp)
     if (fHelp || params.size() > 1)
         throw std::runtime_error(
             "stop\n"
-            "\nStop ECODOLLAR server.");
+            "\nStop BIOA3 server.");
     // Event loop will exit after current HTTP requests have been handled, so
     // this reply will get back to the client.
     StartShutdown();
-    return "ECODOLLAR server stopping";
+    return "BIOA3 server stopping";
 }
 
 
@@ -362,35 +362,35 @@ static const CRPCCommand vRPCCommands[] =
         { "hidden",             "waitforblock",           &waitforblock,           true,  true,  false  },
         { "hidden",             "waitforblockheight",     &waitforblockheight,     true,  true,  false  },
 
-        /* ECODOLLAR features */
-        {"ecodollar", "listmasternodes", &listmasternodes, true, true, false},
-        {"ecodollar", "getmasternodecount", &getmasternodecount, true, true, false},
-        {"ecodollar", "masternodeconnect", &masternodeconnect, true, true, false},
-        {"ecodollar", "createmasternodebroadcast", &createmasternodebroadcast, true, true, false},
-        {"ecodollar", "decodemasternodebroadcast", &decodemasternodebroadcast, true, true, false},
-        {"ecodollar", "relaymasternodebroadcast", &relaymasternodebroadcast, true, true, false},
-        {"ecodollar", "masternodecurrent", &masternodecurrent, true, true, false},
-        {"ecodollar", "masternodedebug", &masternodedebug, true, true, false},
-        {"ecodollar", "startmasternode", &startmasternode, true, true, false},
-        {"ecodollar", "createmasternodekey", &createmasternodekey, true, true, false},
-        {"ecodollar", "getmasternodeoutputs", &getmasternodeoutputs, true, true, false},
-        {"ecodollar", "listmasternodeconf", &listmasternodeconf, true, true, false},
-        {"ecodollar", "getmasternodestatus", &getmasternodestatus, true, true, false},
-        {"ecodollar", "getmasternodewinners", &getmasternodewinners, true, true, false},
-        {"ecodollar", "getmasternodescores", &getmasternodescores, true, true, false},
-        {"ecodollar", "preparebudget", &preparebudget, true, true, false},
-        {"ecodollar", "submitbudget", &submitbudget, true, true, false},
-        {"ecodollar", "mnbudgetvote", &mnbudgetvote, true, true, false},
-        {"ecodollar", "getbudgetvotes", &getbudgetvotes, true, true, false},
-        {"ecodollar", "getnextsuperblock", &getnextsuperblock, true, true, false},
-        {"ecodollar", "getbudgetprojection", &getbudgetprojection, true, true, false},
-        {"ecodollar", "getbudgetinfo", &getbudgetinfo, true, true, false},
-        {"ecodollar", "mnbudgetrawvote", &mnbudgetrawvote, true, true, false},
-        {"ecodollar", "mnfinalbudget", &mnfinalbudget, true, true, false},
-        {"ecodollar", "checkbudgets", &checkbudgets, true, true, false},
-        {"ecodollar", "mnsync", &mnsync, true, true, false},
-        {"ecodollar", "spork", &spork, true, true, false},
-        {"ecodollar", "getpoolinfo", &getpoolinfo, true, true, false},
+        /* BIOA3 features */
+        {"bioa3", "listmasternodes", &listmasternodes, true, true, false},
+        {"bioa3", "getmasternodecount", &getmasternodecount, true, true, false},
+        {"bioa3", "masternodeconnect", &masternodeconnect, true, true, false},
+        {"bioa3", "createmasternodebroadcast", &createmasternodebroadcast, true, true, false},
+        {"bioa3", "decodemasternodebroadcast", &decodemasternodebroadcast, true, true, false},
+        {"bioa3", "relaymasternodebroadcast", &relaymasternodebroadcast, true, true, false},
+        {"bioa3", "masternodecurrent", &masternodecurrent, true, true, false},
+        {"bioa3", "masternodedebug", &masternodedebug, true, true, false},
+        {"bioa3", "startmasternode", &startmasternode, true, true, false},
+        {"bioa3", "createmasternodekey", &createmasternodekey, true, true, false},
+        {"bioa3", "getmasternodeoutputs", &getmasternodeoutputs, true, true, false},
+        {"bioa3", "listmasternodeconf", &listmasternodeconf, true, true, false},
+        {"bioa3", "getmasternodestatus", &getmasternodestatus, true, true, false},
+        {"bioa3", "getmasternodewinners", &getmasternodewinners, true, true, false},
+        {"bioa3", "getmasternodescores", &getmasternodescores, true, true, false},
+        {"bioa3", "preparebudget", &preparebudget, true, true, false},
+        {"bioa3", "submitbudget", &submitbudget, true, true, false},
+        {"bioa3", "mnbudgetvote", &mnbudgetvote, true, true, false},
+        {"bioa3", "getbudgetvotes", &getbudgetvotes, true, true, false},
+        {"bioa3", "getnextsuperblock", &getnextsuperblock, true, true, false},
+        {"bioa3", "getbudgetprojection", &getbudgetprojection, true, true, false},
+        {"bioa3", "getbudgetinfo", &getbudgetinfo, true, true, false},
+        {"bioa3", "mnbudgetrawvote", &mnbudgetrawvote, true, true, false},
+        {"bioa3", "mnfinalbudget", &mnfinalbudget, true, true, false},
+        {"bioa3", "checkbudgets", &checkbudgets, true, true, false},
+        {"bioa3", "mnsync", &mnsync, true, true, false},
+        {"bioa3", "spork", &spork, true, true, false},
+        {"bioa3", "getpoolinfo", &getpoolinfo, true, true, false},
 
 #ifdef ENABLE_WALLET
         /* Wallet */
@@ -472,11 +472,11 @@ static const CRPCCommand vRPCCommands[] =
         {"zerocoin", "exportzerocoins", &exportzerocoins, false, false, true},
         {"zerocoin", "reconsiderzerocoins", &reconsiderzerocoins, false, false, true},
         {"zerocoin", "getspentzerocoinamount", &getspentzerocoinamount, false, false, false},
-        {"zerocoin", "getzecosseed", &getzecosseed, false, false, true},
-        {"zerocoin", "setzecosseed", &setzecosseed, false, false, true},
+        {"zerocoin", "getzbioa3seed", &getzbioa3seed, false, false, true},
+        {"zerocoin", "setzbioa3seed", &setzbioa3seed, false, false, true},
         {"zerocoin", "generatemintlist", &generatemintlist, false, false, true},
-        {"zerocoin", "searchdzecos", &searchdzecos, false, false, true},
-        {"zerocoin", "dzecosstate", &dzecosstate, false, false, true},*/
+        {"zerocoin", "searchdzbioa3", &searchdzbioa3, false, false, true},
+        {"zerocoin", "dzbioa3state", &dzbioa3state, false, false, true},*/
 
 #endif // ENABLE_WALLET
 };
@@ -640,14 +640,14 @@ std::vector<std::string> CRPCTable::listCommands() const
 
 std::string HelpExampleCli(std::string methodname, std::string args)
 {
-    return "> ecodollar-cli " + methodname + " " + args + "\n";
+    return "> bioa3-cli " + methodname + " " + args + "\n";
 }
 
 std::string HelpExampleRpc(std::string methodname, std::string args)
 {
     return "> curl --user myusername --data-binary '{\"jsonrpc\": \"1.0\", \"id\":\"curltest\", "
            "\"method\": \"" +
-           methodname + "\", \"params\": [" + args + "] }' -H 'content-type: text/plain;' http://127.0.0.1:39124/\n";
+           methodname + "\", \"params\": [" + args + "] }' -H 'content-type: text/plain;' http://127.0.0.1:41373/\n";
 }
 
 void RPCSetTimerInterfaceIfUnset(RPCTimerInterface *iface)

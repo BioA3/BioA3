@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(ECODOLLAR)
+project(BIOA3)
 
 set(BDB_VER "4.8.30")
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/contrib/cmake")
@@ -31,7 +31,7 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         message(STATUS "Compiling on WSL")
         set(ENV{DISPLAY} ":0")
         set(ENV{LIBGL_ALWAYS_INDIRECT} 1)
-        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY /home/$ENV{USER}/ecodollar-run)
+        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY /home/$ENV{USER}/bioa3-run)
         message(WARNING "WSL Runtime support requires VcXsrv to be installed and running")
     else()
         message(STATUS "Compiling on Linux")
@@ -85,8 +85,8 @@ else()
     )
 endif()
 
-# run configure if ecodollar_config.h doesn't exist
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/config/ecodollar-config.h")
+# run configure if bioa3_config.h doesn't exist
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/config/bioa3-config.h")
 else()
     execute_process(
         COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/configure ${CONFIGSITE} ${BDB_CONFIGURE_FLAGS} ${BIGNUM_CONFIGURE_FLAGS} ${SSL_CONFIGURE_FLAGS}
@@ -304,7 +304,7 @@ set(SERVER_SOURCES
         ./src/txdb.cpp
         ./src/txmempool.cpp
         ./src/validationinterface.cpp
-        ./src/zecoschain.cpp
+        ./src/zbioa3chain.cpp
         )
 add_library(SERVER_A STATIC ${BitcoinHeaders} ${SERVER_SOURCES})
 if(MINIUPNP_FOUND)
@@ -345,21 +345,21 @@ set(WALLET_SOURCES
         ./src/masternodeconfig.cpp
         ./src/masternodeman.cpp
         ./src/messagesigner.cpp
-        ./src/zecos/mintpool.cpp
+        ./src/zbioa3/mintpool.cpp
         ./src/wallet/rpcdump.cpp
-        ./src/zecos/deterministicmint.cpp
-        ./src/zecos/zerocoin.cpp
+        ./src/zbioa3/deterministicmint.cpp
+        ./src/zbioa3/zerocoin.cpp
         ./src/wallet/rpcwallet.cpp
         ./src/kernel.cpp
         ./src/wallet/wallet.cpp
         ./src/wallet/wallet_ismine.cpp
         ./src/wallet/walletdb.cpp
-        ./src/zecos/zecoswallet.cpp
-        ./src/zecos/zecostracker.cpp
-        ./src/zecos/zecosmodule.cpp
+        ./src/zbioa3/zbioa3wallet.cpp
+        ./src/zbioa3/zbioa3tracker.cpp
+        ./src/zbioa3/zbioa3module.cpp
         ./src/stakeinput.cpp
         ./src/genwit.cpp
-        ./src/lightzecosthread.cpp
+        ./src/lightzbioa3thread.cpp
         )
 add_library(WALLET_A STATIC ${BitcoinHeaders} ${WALLET_SOURCES})
 target_include_directories(WALLET_A PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -445,10 +445,10 @@ target_include_directories(ZEROCOIN_A PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
         )
 
 set(COMMON_SOURCES
-        ./src/zecos/accumulators.cpp
-        ./src/zecos/accumulatorcheckpoints.cpp
-        ./src/zecos/accumulatormap.cpp
-        ./src/zecos/witness.cpp
+        ./src/zbioa3/accumulators.cpp
+        ./src/zbioa3/accumulatorcheckpoints.cpp
+        ./src/zbioa3/accumulatormap.cpp
+        ./src/zbioa3/witness.cpp
         ./src/allocators.cpp
         ./src/amount.cpp
         ./src/base58.cpp
@@ -458,9 +458,9 @@ set(COMMON_SOURCES
         ./src/compressor.cpp
         ./src/consensus/merkle.cpp
         ./src/primitives/block.cpp
-        ./src/zecos/deterministicmint.cpp
+        ./src/zbioa3/deterministicmint.cpp
         ./src/primitives/transaction.cpp
-        ./src/zecos/zerocoin.cpp
+        ./src/zbioa3/zerocoin.cpp
         ./src/core_read.cpp
         ./src/core_write.cpp
         ./src/hash.cpp
@@ -522,13 +522,13 @@ link_directories(
         ${CMAKE_SOURCE_DIR}/src/secp256k1/.libs
         )
 
-set(ecodollar-cli_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/ecodollar-cli.cpp)
+set(bioa3-cli_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/bioa3-cli.cpp)
 if($ENV{target} MATCHES "Windows")
-    list(APPEND ecodollar-cli_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/ecodollar-cli-res.rc)
+    list(APPEND bioa3-cli_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/bioa3-cli-res.rc)
 endif()
-add_executable(ecodollar-cli ${ecodollar-cli_SOURCES})
-add_dependencies(ecodollar-cli libunivalue)
-target_link_libraries(ecodollar-cli
+add_executable(bioa3-cli ${bioa3-cli_SOURCES})
+add_dependencies(bioa3-cli libunivalue)
+target_link_libraries(bioa3-cli
         CLI_A
         univalue
         UTIL_A
@@ -536,16 +536,16 @@ target_link_libraries(ecodollar-cli
         ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES} ${LIBEVENT_LIB}
         )
 if($ENV{target} MATCHES "Windows")
-    target_link_libraries(ecodollar-cli ${WINDOWS_LDADD})
+    target_link_libraries(bioa3-cli ${WINDOWS_LDADD})
 endif()
 
-set(ecodollar-tx_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/ecodollar-tx.cpp)
+set(bioa3-tx_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/bioa3-tx.cpp)
 if($ENV{target} MATCHES "Windows")
-    list(APPEND ecodollar-tx_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/ecodollar-tx-res.rc)
+    list(APPEND bioa3-tx_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/bioa3-tx-res.rc)
 endif()
-add_executable(ecodollar-tx ${ecodollar-tx_SOURCES})
-add_dependencies(ecodollar-tx libunivalue libsecp256k1)
-target_link_libraries(ecodollar-tx
+add_executable(bioa3-tx ${bioa3-tx_SOURCES})
+add_dependencies(bioa3-tx libunivalue libsecp256k1)
+target_link_libraries(bioa3-tx
         univalue
         COMMON_A
         ZEROCOIN_A
@@ -555,26 +555,26 @@ target_link_libraries(ecodollar-tx
         ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES} ${LIBEVENT_LIB}
         )
 if($ENV{target} MATCHES "Windows")
-    target_link_libraries(ecodollar-tx ${WINDOWS_LDADD})
+    target_link_libraries(bioa3-tx ${WINDOWS_LDADD})
 endif()
 if(GMP_FOUND)
-    target_link_libraries(ecodollar-tx ${GMP_LIBRARY})
+    target_link_libraries(bioa3-tx ${GMP_LIBRARY})
 endif()
 
 link_directories(${CMAKE_BINARY_DIR})
 
-set(ecodollard_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/ecodollard.cpp)
+set(bioa3d_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/bioa3d.cpp)
 if($ENV{target} MATCHES "Windows")
-    list(APPEND ecodollard_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/ecodollard-res.rc)
+    list(APPEND bioa3d_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/bioa3d-res.rc)
 endif()
-add_executable(ecodollard ${ecodollard_SOURCES} ${BitcoinHeaders})
-add_dependencies(ecodollard libunivalue libsecp256k1 leveldb leveldb_sse42 memenv)
-target_include_directories(ecodollard PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
+add_executable(bioa3d ${bioa3d_SOURCES} ${BitcoinHeaders})
+add_dependencies(bioa3d libunivalue libsecp256k1 leveldb leveldb_sse42 memenv)
+target_include_directories(bioa3d PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${CMAKE_CURRENT_SOURCE_DIR}/src/leveldb
         ${CMAKE_CURRENT_SOURCE_DIR}/src/leveldb/include
         ${CMAKE_CURRENT_SOURCE_DIR}/src/leveldb/helpers/memenv
         ${LIBEVENT_INCLUDE_DIR})
-target_link_libraries(ecodollard
+target_link_libraries(bioa3d
         pthread
         SERVER_A
         WALLET_A
@@ -591,22 +591,22 @@ target_link_libraries(ecodollard
         )
 if($ENV{target} MATCHES "Windows")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wstack-protector -fstack-protector-all -fPIE -pipe -O2 -pthread -Wl,--dynamicbase -Wl,--nxcompat -Wl,--high-entropy-va -pie --static")
-    target_link_libraries(ecodollard ${WINDOWS_LDADD})
+    target_link_libraries(bioa3d ${WINDOWS_LDADD})
 endif()
 if(GMP_FOUND)
-    target_link_libraries(ecodollard ${GMP_LIBRARY})
-    target_include_directories(ecodollard PUBLIC ${GMP_INCLUDE_DIR})
+    target_link_libraries(bioa3d ${GMP_LIBRARY})
+    target_include_directories(bioa3d PUBLIC ${GMP_INCLUDE_DIR})
 endif()
 if(ZMQ_FOUND)
-    target_link_libraries(ecodollard ZMQ_A ${ZMQ_LIB})
-    target_include_directories(ecodollard PUBLIC ${ZMQ_INCLUDE_DIR})
+    target_link_libraries(bioa3d ZMQ_A ${ZMQ_LIB})
+    target_include_directories(bioa3d PUBLIC ${ZMQ_INCLUDE_DIR})
 endif()
 if(MINIUPNP_FOUND)
-    target_compile_definitions(ecodollard PUBLIC "-DSTATICLIB -DMINIUPNP_STATICLIB")
-    target_link_libraries(ecodollard ${MINIUPNP_LIBRARY})
-    target_include_directories(ecodollard PUBLIC ${MINIUPNP_INCLUDE_DIR})
+    target_compile_definitions(bioa3d PUBLIC "-DSTATICLIB -DMINIUPNP_STATICLIB")
+    target_link_libraries(bioa3d ${MINIUPNP_LIBRARY})
+    target_include_directories(bioa3d PUBLIC ${MINIUPNP_INCLUDE_DIR})
 endif()
 
-target_link_libraries(ecodollard -lpthread)
+target_link_libraries(bioa3d -lpthread)
 
 add_subdirectory(src/qt)

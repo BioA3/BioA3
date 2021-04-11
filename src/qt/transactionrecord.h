@@ -1,6 +1,6 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2016 The Dash developers
-// Copyright (c) 2016-2020 The ECODOLLAR developers
+// Copyright (c) 2016-2020 The BIOA3 developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -77,7 +77,7 @@ public:
         Other,
         Generated,
         StakeMint,
-        StakeZECOS,
+        StakeZBIOA3,
         SendToAddress,
         SendToOther,
         RecvWithAddress,
@@ -87,7 +87,7 @@ public:
         ZerocoinMint,
         ZerocoinSpend,
         RecvFromZerocoinSpend,
-        ZerocoinSpend_Change_zEcos,
+        ZerocoinSpend_Change_zBioA3,
         ZerocoinSpend_FromMe,
         RecvWithObfuscation,
         ObfuscationDenominate,

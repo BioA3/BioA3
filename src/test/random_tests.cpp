@@ -4,7 +4,7 @@
 
 #include "random.h"
 
-#include "test/test_ecodollar.h"
+#include "test/test_bioa3.h"
 
 #include <boost/test/unit_test.hpp>
 

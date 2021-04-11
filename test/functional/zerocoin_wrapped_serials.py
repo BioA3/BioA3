@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Copyright (c) 2019 The ECODOLLAR developers
+# Copyright (c) 2019 The BIOA3 developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,7 +10,7 @@ Covers the 'Wrapped Serials Attack' scenario for Zerocoin Spends
 import random
 from time import sleep
 
-from test_framework.test_framework import EcodollarTestFramework
+from test_framework.test_framework import BioA3TestFramework
 from test_framework.util import (
     sync_blocks,
     assert_equal,
@@ -19,7 +19,7 @@ from test_framework.util import (
     DecimalAmt
 )
 
-class zECOSwrappedSerialsTest(EcodollarTestFramework):
+class zBIOA3wrappedSerialsTest(BioA3TestFramework):
 
     def set_test_params(self):
         self.num_nodes = 3
@@ -60,13 +60,13 @@ class zECOSwrappedSerialsTest(EcodollarTestFramework):
         def get_zerocoin_data(coin):
             return coin["s"], coin["r"], coin["k"], coin["id"], coin["d"], coin["t"]
 
-        def check_balances(denom, zecos_bal, ecos_bal):
-            zecos_bal -= denom
-            assert_equal(self.nodes[2].getzerocoinbalance()['Total'], zecos_bal)
-            ecos_bal += denom
+        def check_balances(denom, zbioa3_bal, bioa3_bal):
+            zbioa3_bal -= denom
+            assert_equal(self.nodes[2].getzerocoinbalance()['Total'], zbioa3_bal)
+            bioa3_bal += denom
             wi = self.nodes[2].getwalletinfo()
-            assert_equal(wi['balance'] + wi['immature_balance'], ecos_bal)
-            return zecos_bal, ecos_bal
+            assert_equal(wi['balance'] + wi['immature_balance'], bioa3_bal)
+            return zbioa3_bal, bioa3_bal
 
         def stake_4_blocks(block_time):
             for peer in range(2):
@@ -85,9 +85,9 @@ class zECOSwrappedSerialsTest(EcodollarTestFramework):
         # Start with cache balances
         wi = self.nodes[2].getwalletinfo()
         balance = wi['balance'] + wi['immature_balance']
-        zecos_balance = self.nodes[2].getzerocoinbalance()['Total']
+        zbioa3_balance = self.nodes[2].getzerocoinbalance()['Total']
         assert_equal(balance, DecimalAmt(13833.92))
-        assert_equal(zecos_balance, 6666)
+        assert_equal(zbioa3_balance, 6666)
 
         # Export zerocoin data
         listmints = self.nodes[2].listmintedzerocoins(True, True)
@@ -103,7 +103,7 @@ class zECOSwrappedSerialsTest(EcodollarTestFramework):
         # stake 4 blocks - check it gets included on chain and check balances
         block_time = stake_4_blocks(block_time)
         self.check_tx_in_chain(0, txid)
-        zecos_balance, balance = check_balances(denom_0, zecos_balance, balance)
+        zbioa3_balance, balance = check_balances(denom_0, zbioa3_balance, balance)
         self.log.info("Coin spent.")
 
         # 2) create 5  new coins
@@ -127,4 +127,4 @@ class zECOSwrappedSerialsTest(EcodollarTestFramework):
 
 
 if __name__ == '__main__':
-    zECOSwrappedSerialsTest().main()
+    zBIOA3wrappedSerialsTest().main()

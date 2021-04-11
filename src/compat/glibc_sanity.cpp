@@ -1,10 +1,10 @@
 // Copyright (c) 2009-2017 The Bitcoin Core developers
-// Copyright (c) 2016-2019 The ECODOLLAR developers
+// Copyright (c) 2016-2019 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "config/ecodollar-config.h"
+#include "config/bioa3-config.h"
 #endif
 
 #include <cstddef>

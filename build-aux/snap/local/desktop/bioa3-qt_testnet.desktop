@@ -1,0 +1,15 @@
+# http://standards.freedesktop.org/desktop-entry-spec/desktop-entry-spec-1.0.html
+
+[Desktop Entry]
+Encoding=UTF-8
+Name=BIOA3 Core
+Comment=BIOA3 Core QT test network
+GenericName=BIOA3 Digital Currency QT client testnet network
+Exec=bioa3-core.qt-testnet %u
+Terminal=false
+Type=Application
+Icon=${SNAP}/share/pixmaps/bioa3_testnet.png
+MimeType=x-scheme-handler/bioa3;
+Categories=X-Office;X-Finance;
+Keywords=internet;bioa3;zbioa3;tbioa3;core;wallet;qt;testnet;snap;launchpad;crypto;digital;currency;coin;token;zerocoin;
+Version=1.0

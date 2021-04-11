@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2019 The ECODOLLAR developers
+// Copyright (c) 2017-2019 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -9,7 +9,7 @@
 #include "libzerocoin/Denominations.h"
 #include "libzerocoin/CoinSpend.h"
 #include "libzerocoin/Accumulator.h"
-#include "zecos/zerocoin.h"
+#include "zbioa3/zerocoin.h"
 
 
 bool testRandKBitBignum(int k_bits)

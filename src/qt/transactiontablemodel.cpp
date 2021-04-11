@@ -1,6 +1,6 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2016 The Dash developers
-// Copyright (c) 2016-2020 The ECODOLLAR developers
+// Copyright (c) 2016-2020 The BIOA3 developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -172,7 +172,7 @@ public:
     static bool HasZcTxesIfNeeded(const TransactionRecord& record) {
         return (record.type == TransactionRecord::ZerocoinMint ||
                 record.type == TransactionRecord::ZerocoinSpend ||
-                record.type == TransactionRecord::ZerocoinSpend_Change_zEcos ||
+                record.type == TransactionRecord::ZerocoinSpend_Change_zBioA3 ||
                 record.type == TransactionRecord::ZerocoinSpend_FromMe);
     }
 
@@ -453,13 +453,13 @@ QString TransactionTableModel::formatTxType(const TransactionRecord* wtx) const
     case TransactionRecord::SendToSelf:
         return tr("Payment to yourself");
     case TransactionRecord::StakeMint:
-        return tr("ECOS Stake");
-    case TransactionRecord::StakeZECOS:
-        return tr("zECOS Stake");
+        return tr("BIOA3 Stake");
+    case TransactionRecord::StakeZBIOA3:
+        return tr("zBIOA3 Stake");
     case TransactionRecord::StakeDelegated:
-        return tr("ECOS Cold Stake");
+        return tr("BIOA3 Cold Stake");
     case TransactionRecord::StakeHot:
-        return tr("ECOS Stake on behalf of");
+        return tr("BIOA3 Stake on behalf of");
     case TransactionRecord::P2CSDelegationSent:
     case TransactionRecord::P2CSDelegationSentOwner:
     case TransactionRecord::P2CSDelegation:
@@ -480,15 +480,15 @@ QString TransactionTableModel::formatTxType(const TransactionRecord* wtx) const
     case TransactionRecord::Obfuscated:
         return tr("Obfuscated");
     case TransactionRecord::ZerocoinMint:
-        return tr("Converted ECOS to zECOS");
+        return tr("Converted BIOA3 to zBIOA3");
     case TransactionRecord::ZerocoinSpend:
-        return tr("Spent zECOS");
+        return tr("Spent zBIOA3");
     case TransactionRecord::RecvFromZerocoinSpend:
-        return tr("Received ECOS from zECOS");
-    case TransactionRecord::ZerocoinSpend_Change_zEcos:
-        return tr("Minted Change as zECOS from zECOS Spend");
+        return tr("Received BIOA3 from zBIOA3");
+    case TransactionRecord::ZerocoinSpend_Change_zBioA3:
+        return tr("Minted Change as zBIOA3 from zBIOA3 Spend");
     case TransactionRecord::ZerocoinSpend_FromMe:
-        return tr("Converted zECOS to ECOS");
+        return tr("Converted zBIOA3 to BIOA3");
     default:
         return QString();
     }
@@ -499,7 +499,7 @@ QVariant TransactionTableModel::txAddressDecoration(const TransactionRecord* wtx
     switch (wtx->type) {
     case TransactionRecord::Generated:
     case TransactionRecord::StakeMint:
-    case TransactionRecord::StakeZECOS:
+    case TransactionRecord::StakeZBIOA3:
     case TransactionRecord::MNReward:
         return QIcon(":/icons/tx_mined");
     case TransactionRecord::RecvWithObfuscation:
@@ -542,8 +542,8 @@ QString TransactionTableModel::formatTxToAddress(const TransactionRecord* wtx, b
     case TransactionRecord::SendToOther:
         return QString::fromStdString(wtx->address) + watchAddress;
     case TransactionRecord::ZerocoinMint:
-    case TransactionRecord::ZerocoinSpend_Change_zEcos:
-    case TransactionRecord::StakeZECOS:
+    case TransactionRecord::ZerocoinSpend_Change_zBioA3:
+    case TransactionRecord::StakeZBIOA3:
         return tr("Anonymous");
     case TransactionRecord::P2CSDelegation:
     case TransactionRecord::P2CSDelegationSent:
@@ -703,7 +703,7 @@ QVariant TransactionTableModel::data(const QModelIndex& index, int role) const
     case Qt::ForegroundRole:
         // Minted
         if (rec->type == TransactionRecord::Generated || rec->type == TransactionRecord::StakeMint ||
-                rec->type == TransactionRecord::StakeZECOS || rec->type == TransactionRecord::MNReward) {
+                rec->type == TransactionRecord::StakeZBIOA3 || rec->type == TransactionRecord::MNReward) {
             if (rec->status.status == TransactionStatus::Conflicted || rec->status.status == TransactionStatus::NotAccepted)
                 return COLOR_ORPHAN;
             else

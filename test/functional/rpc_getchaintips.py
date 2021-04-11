@@ -10,10 +10,10 @@
 - verify that getchaintips now returns two chain tips.
 """
 
-from test_framework.test_framework import EcodollarTestFramework
+from test_framework.test_framework import BioA3TestFramework
 from test_framework.util import assert_equal
 
-class GetChainTipsTest (EcodollarTestFramework):
+class GetChainTipsTest (BioA3TestFramework):
     def set_test_params(self):
         self.num_nodes = 4
 

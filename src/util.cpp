@@ -1,12 +1,12 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2020 The ECODOLLAR developers
+// Copyright (c) 2015-2020 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "config/ecodollar-config.h"
+#include "config/bioa3-config.h"
 #endif
 
 #include "util.h"
@@ -52,7 +52,7 @@
 #ifdef _WIN32_WINNT
 #undef _WIN32_WINNT
 #endif
-#define _WIN32_WINNT 0x0501
+#define _WIN32_WINNT 0x0501 
 
 #ifdef _WIN32_IE
 #undef _WIN32_IE
@@ -85,7 +85,7 @@
 #include <openssl/rand.h>
 
 
-// ECODOLLAR only features
+// BIOA3 only features
 // Masternode
 bool fMasterNode = false;
 std::string strMasterNodePrivKey = "";
@@ -215,8 +215,8 @@ bool LogAcceptCategory(const char* category)
             const std::vector<std::string>& categories = mapMultiArgs["-debug"];
             ptrCategory.reset(new std::set<std::string>(categories.begin(), categories.end()));
             // thread_specific_ptr automatically deletes the set when the thread ends.
-            // "ecodollar" is a composite category enabling all ECODOLLAR-related debug output
-            if (ptrCategory->count(std::string("ecodollar"))) {
+            // "bioa3" is a composite category enabling all BIOA3-related debug output
+            if (ptrCategory->count(std::string("bioa3"))) {
                 ptrCategory->insert(std::string("obfuscation"));
                 ptrCategory->insert(std::string("swiftx"));
                 ptrCategory->insert(std::string("masternode"));
@@ -382,7 +382,7 @@ static std::string FormatException(const std::exception* pex, const char* pszThr
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "ecodollar";
+    const char* pszModule = "bioa3";
 #endif
     if (pex)
         return strprintf(
@@ -403,13 +403,13 @@ void PrintExceptionContinue(const std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-// Windows < Vista: C:\Documents and Settings\Username\Application Data\ECODOLLAR
-// Windows >= Vista: C:\Users\Username\AppData\Roaming\ECODOLLAR
-// Mac: ~/Library/Application Support/ECODOLLAR
-// Unix: ~/.ecodollar
+// Windows < Vista: C:\Documents and Settings\Username\Application Data\BIOA3
+// Windows >= Vista: C:\Users\Username\AppData\Roaming\BIOA3
+// Mac: ~/Library/Application Support/BIOA3
+// Unix: ~/.bioa3
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "ECODOLLAR";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "BIOA3";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -421,10 +421,10 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     TryCreateDirectory(pathRet);
-    return pathRet / "ECODOLLAR";
+    return pathRet / "BIOA3";
 #else
     // Unix
-    return pathRet / ".ecodollar";
+    return pathRet / ".bioa3";
 #endif
 #endif
 }
@@ -471,7 +471,7 @@ void ClearDatadirCache()
 
 boost::filesystem::path GetConfigFile()
 {
-    boost::filesystem::path pathConfigFile(GetArg("-conf", "ecodollar.conf"));
+    boost::filesystem::path pathConfigFile(GetArg("-conf", "bioa3.conf"));
     if (!pathConfigFile.is_complete())
         pathConfigFile = GetDataDir(false) / pathConfigFile;
 
@@ -490,7 +490,7 @@ void ReadConfigFile(std::map<std::string, std::string>& mapSettingsRet,
 {
     boost::filesystem::ifstream streamConfig(GetConfigFile());
     if (!streamConfig.good()) {
-        // Create empty ecodollar.conf if it does not exist
+        // Create empty bioa3.conf if it does not exist
         FILE* configFile = fopen(GetConfigFile().string().c_str(), "a");
         if (configFile != NULL) {
             unsigned char rand_pwd[32];
@@ -511,8 +511,7 @@ void ReadConfigFile(std::map<std::string, std::string>& mapSettingsRet,
             strHeader += rpc_user;
             strHeader += "\nrpcpassword=";
             strHeader += rpc_passwd;
-            //strHeader += "\naddnode=seed01.ecodollar.org\naddnode=seed02.ecodollar.org\naddnode=seed03.ecodollar.org\naddnode=seed04.ecodollar.org\naddnode=seed05.ecodollar.org\naddnode=seed06.ecodollar.org\n";
-            strHeader += "\naddnode=seed01.ecodollar.org\naddnode=seed02.ecodolar.org\naddnode=seed03.ecodollar.org\naddnode=seed04.ecodolar.org\naddnode=seed05.ecodollar.org\naddnode=seed06.ecodolar.org\n";
+            strHeader += "\naddnode=seed01.bioa3.org\naddnode=seed02.bioa3.org\naddnode=seed03.bioa3.org\naddnode=seed04.bioa3.org\naddnode=seed05.bioa3.org\naddnode=seed06.bioa3.org\n";
             strHeader += "txindex=1\nstaking=1\n";
             fwrite(strHeader.c_str(), std::strlen(strHeader.c_str()), 1, configFile);
             fclose(configFile);
@@ -525,7 +524,7 @@ void ReadConfigFile(std::map<std::string, std::string>& mapSettingsRet,
     setOptions.insert("*");
 
     for (boost::program_options::detail::config_file_iterator it(streamConfig, setOptions), end; it != end; ++it) {
-        // Don't overwrite existing settings so command line settings override ecodollar.conf
+        // Don't overwrite existing settings so command line settings override bioa3.conf
         std::string strKey = std::string("-") + it->string_key;
         std::string strValue = it->value[0];
         InterpretNegativeSetting(strKey, strValue);
@@ -540,7 +539,7 @@ void ReadConfigFile(std::map<std::string, std::string>& mapSettingsRet,
 #ifndef WIN32
 boost::filesystem::path GetPidFile()
 {
-    boost::filesystem::path pathPidFile(GetArg("-pid", "ecodollard.pid"));
+    boost::filesystem::path pathPidFile(GetArg("-pid", "bioa3d.pid"));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }

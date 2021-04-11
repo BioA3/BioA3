@@ -4,7 +4,7 @@
 
 #include "compat/sanity.h"
 #include "key.h"
-#include "test_ecodollar.h"
+#include "test_bioa3.h"
 
 #include <boost/test/unit_test.hpp>
 

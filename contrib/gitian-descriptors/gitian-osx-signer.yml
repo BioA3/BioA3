@@ -1,5 +1,5 @@
 ---
-name: "ecodollar-dmg-signer"
+name: "bioa3-dmg-signer"
 distro: "ubuntu"
 suites:
 - "bionic"
@@ -8,10 +8,10 @@ architectures:
 packages:
 - "faketime"
 remotes:
-- "url": "https://github.com/ecodollar/ecodollar-detached-sigs.git"
+- "url": "https://github.com/bioa3/bioa3-detached-sigs.git"
   "dir": "signature"
 files:
-- "ecodollar-osx-unsigned.tar.gz"
+- "bioa3-osx-unsigned.tar.gz"
 script: |
   set -e -o pipefail
 
@@ -30,8 +30,8 @@ script: |
     chmod +x ${WRAP_DIR}/${prog}
   done
 
-  UNSIGNED=ecodollar-osx-unsigned.tar.gz
-  SIGNED=ecodollar-osx-signed.dmg
+  UNSIGNED=bioa3-osx-unsigned.tar.gz
+  SIGNED=bioa3-osx-signed.dmg
 
   tar -xf ${UNSIGNED}
   OSX_VOLNAME="$(cat osx_volname)"

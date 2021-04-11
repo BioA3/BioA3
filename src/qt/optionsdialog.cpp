@@ -1,10 +1,10 @@
 // Copyright (c) 2011-2013 The Bitcoin developers
-// Copyright (c) 2017-2019 The ECODOLLAR developers
+// Copyright (c) 2017-2019 The BIOA3 developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "config/ecodollar-config.h"
+#include "config/bioa3-config.h"
 #endif
 
 #include "optionsdialog.h"
@@ -68,12 +68,12 @@ OptionsDialog::OptionsDialog(QWidget* parent, bool enableWallet) : QDialog(paren
     ui->tabWidget->removeTab(ui->tabWidget->indexOf(ui->tabWindow));
 #endif
 
-    /* remove Wallet tab and zEcos options in case of -disablewallet */
+    /* remove Wallet tab and zBioA3 options in case of -disablewallet */
     if (!enableWallet) {
         ui->tabWidget->removeTab(ui->tabWidget->indexOf(ui->tabWallet));
 
-        ui->verticalZecosOptionsWidget->hide();
-        ui->verticalZecosDisplayWidget->hide();
+        ui->verticalZbioa3OptionsWidget->hide();
+        ui->verticalZbioa3DisplayWidget->hide();
     }
 
     /* Display elements init */

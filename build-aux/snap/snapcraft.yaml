@@ -1,74 +1,74 @@
 # Copyright (c) 2018-2019 The Ion developers
-# Copyright (c) 2019 The ECODOLLAR developers
-name: ecodollar-core
+# Copyright (c) 2019 The BIOA3 developers
+name: bioa3-core
 base: core18
 version: 4.0.99
-summary:   ECODOLLAR (Private – Instant – Verified – Transaction)
+summary:   BIOA3 (Private – Instant – Verified – Transaction)
 description: |
-  ECODOLLAR is an MIT licensed,
+  BIOA3 is an MIT licensed,
   open source, blockchain-based cryptocurrency with
   ultra fast transactions, low fees, high network decentralization, and
   Zero Knowledge cryptography proofs for industry-leading
   transaction anonymity.
 
-  - [Download](https://ecodollar.org/wp-content/uploads/2018/10/ECODOLLAR-White.pdf) ECODOLLAR White Paper PDF
+  - [Download](https://bioa3.org/wp-content/uploads/2018/10/BIOA3-White.pdf) BIOA3 White Paper PDF
 grade: devel
 confinement: strict
 apps:
   daemon:
-    command: ecodollard
+    command: bioa3d
     plugs: [network, network-bind, home, removable-media]
-    desktop: ecodollard.desktop
+    desktop: bioa3d.desktop
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
       HOME: $SNAP_USER_COMMON
   daemon-testnet:
-    command: ecodollard --testnet
+    command: bioa3d --testnet
     plugs: [network, network-bind, home, removable-media]
-    desktop: ecodollard_testnet.desktop
+    desktop: bioa3d_testnet.desktop
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
       HOME: $SNAP_USER_COMMON
   qt:
-    command: ecodollar-qt
+    command: bioa3-qt
     plugs: [network, network-bind, network-status, unity7, desktop, desktop-legacy, wayland, x11, mir, opengl, home, gsettings, removable-media, screen-inhibit-control, pulseaudio, media-hub]
-    desktop: ecodollar-qt.desktop
+    desktop: bioa3-qt.desktop
     environment:
       QT_XKB_CONFIG_ROOT: $SNAP_USER_DATA:$SNAP/usr/share:$QT_XKB_CONFIG_ROOT
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
       HOME: $SNAP_USER_COMMON
   qt-testnet:
-    command: ecodollar-qt --testnet
+    command: bioa3-qt --testnet
     plugs: [network, network-bind, network-status, unity7, desktop, desktop-legacy, wayland, x11, mir, opengl, home, gsettings, removable-media, screen-inhibit-control, pulseaudio, media-hub]
-    desktop: ecodollar-qt_testnet.desktop
+    desktop: bioa3-qt_testnet.desktop
     environment:
       QT_XKB_CONFIG_ROOT: $SNAP_USER_DATA:$SNAP/usr/share:$QT_XKB_CONFIG_ROOT
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
       HOME: $SNAP_USER_COMMON
   cli:
-    command: ecodollar-cli
+    command: bioa3-cli
     plugs: [network, network-bind, home, removable-media]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
       HOME: $SNAP_USER_COMMON
   cli-testnet:
-    command: ecodollar-cli --testnet
+    command: bioa3-cli --testnet
     plugs: [network, network-bind, home, removable-media]
     environment:
       XDG_DATA_DIRS: $SNAP_USER_DATA:$SNAP/usr/share:$XDG_DATA_DIRS
       HOME: $SNAP_USER_COMMON
   tx:
-    command: ecodollar-tx
+    command: bioa3-tx
     plugs: [home]
   test:
-    command: test_ecodollar
+    command: test_bioa3
     plugs: [home]
   testqt:
-    command: test_ecodollar-qt
+    command: test_bioa3-qt
     plugs: [home]
 parts:
-  ecodollar-core:
-    source: https://github.com/ECODOLLAR-Project/ECODOLLAR
+  bioa3-core:
+    source: https://github.com/BIOA3-Project/BIOA3
     source-type: git
     source-tag: master
     plugin: nil
@@ -80,7 +80,7 @@ parts:
       #    project is called ioncore because ion exists already as package. For anybody
       #    offering non official release and using own SNAP, this variable should be used
       #    default value is "false", to enable it, use your projects binary prefix
-      OVERRIDEBINPREFIX="ecodollar"
+      OVERRIDEBINPREFIX="bioa3"
       OVERRIDEDATADIR="false"
       OVERRIDECONF="${OVERRIDEDATADIR}"
       COPYCONF=0    # copy example config into users data folder, 1 = enabled
@@ -182,8 +182,8 @@ parts:
       echo "INSTALLATION OF ${BINPREF}-${SNAPCRAFT_PROJECT_VERSION}" # run make install with a prefix where to install
       echo "+++++++++++++++++++++++++++++++++++++++++++++++"
       make install prefix=${SNAPCRAFT_PART_INSTALL}
-      install -m 0644 -D -T $SNAPCRAFT_PART_BUILD/src/qt/res/icons/bitcoin.png $SNAPCRAFT_PART_INSTALL/share/pixmaps/ecodollar.png
-      install -m 0644 -D -T $SNAPCRAFT_PART_BUILD/src/qt/res/icons/bitcoin_testnet.png $SNAPCRAFT_PART_INSTALL/share/pixmaps/ecodollar_testnet.png
+      install -m 0644 -D -T $SNAPCRAFT_PART_BUILD/src/qt/res/icons/bitcoin.png $SNAPCRAFT_PART_INSTALL/share/pixmaps/bioa3.png
+      install -m 0644 -D -T $SNAPCRAFT_PART_BUILD/src/qt/res/icons/bitcoin_testnet.png $SNAPCRAFT_PART_INSTALL/share/pixmaps/bioa3_testnet.png
       echo "-----------------------------------------------"
       echo "+++++++++++++++++++++++++++++++++++++++++++++++"
       echo "POST INSTALL SCRIPTS OF ${BINPREF}-${SNAPCRAFT_PROJECT_VERSION}" # run make install with a prefix where to install
@@ -217,7 +217,7 @@ parts:
       fi
       echo "-----------------------------------------------"
       echo "+++++++++++++++++++++++++++++++++++++++++++++++"
-      echo "CONFIG FILE" # create .ecodollar folder and copy example config - !!!warning!!!: do not copy as ecodollar.conf
+      echo "CONFIG FILE" # create .bioa3 folder and copy example config - !!!warning!!!: do not copy as bioa3.conf
       echo "+++++++++++++++++++++++++++++++++++++++++++++++"
       mkdir -p ${SNAP_USER_COMMON}/.${DATADIR}
       if [ $COPYCONF = 1 ]; then

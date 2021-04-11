@@ -5,10 +5,10 @@
 """Test bitcoind with different proxy configuration.
 
 Test plan:
-- Start ecodollard's with different proxy configurations
+- Start bioa3d's with different proxy configurations
 - Use addnode to initiate connections
 - Verify that proxies are connected to, and the right connection command is given
-- Proxy configurations to test on ecodollard side:
+- Proxy configurations to test on bioa3d side:
     - `-proxy` (proxy everything)
     - `-onion` (proxy just onions)
     - `-proxyrandomize` Circuit randomization
@@ -18,8 +18,8 @@ Test plan:
     - proxy on IPv6
 
 - Create various proxies (as threads)
-- Create ecodollards that connect to them
-- Manipulate the ecodollards using addnode (onetry) an observe effects
+- Create bioa3ds that connect to them
+- Manipulate the bioa3ds using addnode (onetry) an observe effects
 
 addnode connect to IPv4
 addnode connect to IPv6
@@ -31,7 +31,7 @@ import socket
 import os
 
 from test_framework.socks5 import Socks5Configuration, Socks5Command, Socks5Server, AddressType
-from test_framework.test_framework import EcodollarTestFramework
+from test_framework.test_framework import BioA3TestFramework
 from test_framework.util import (
     PORT_MIN,
     PORT_RANGE,
@@ -41,7 +41,7 @@ from test_framework.netutil import test_ipv6_local
 
 RANGE_BEGIN = PORT_MIN + 2 * PORT_RANGE  # Start after p2p and rpc ports
 
-class ProxyTest(EcodollarTestFramework):
+class ProxyTest(BioA3TestFramework):
     def set_test_params(self):
         self.num_nodes = 4
 

@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2020 The ECODOLLAR developers
+// Copyright (c) 2015-2020 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -77,12 +77,12 @@ UniValue importprivkey(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() < 1 || params.size() > 4)
         throw std::runtime_error(
-            "importprivkey \"ecodollarprivkey\" ( \"label\" rescan fStakingAddress )\n"
+            "importprivkey \"bioa3privkey\" ( \"label\" rescan fStakingAddress )\n"
             "\nAdds a private key (as returned by dumpprivkey) to your wallet.\n" +
             HelpRequiringPassphrase() + "\n"
 
             "\nArguments:\n"
-            "1. \"ecodollarprivkey\"      (string, required) The private key (see dumpprivkey)\n"
+            "1. \"bioa3privkey\"      (string, required) The private key (see dumpprivkey)\n"
             "2. \"label\"            (string, optional, default=\"\") An optional label\n"
             "3. rescan               (boolean, optional, default=true) Rescan the wallet for transactions\n"
             "4. fStakingAddress      (boolean, optional, default=false) Whether this key refers to a (cold) staking address\n"
@@ -183,7 +183,7 @@ UniValue importaddress(const UniValue& params, bool fHelp)
         std::vector<unsigned char> data(ParseHex(params[0].get_str()));
         script = CScript(data.begin(), data.end());
     } else {
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ECODOLLAR address or script");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid BIOA3 address or script");
     }
 
     std::string strLabel = "";
@@ -332,13 +332,13 @@ UniValue dumpprivkey(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw std::runtime_error(
-            "dumpprivkey \"ecodollaraddress\"\n"
-            "\nReveals the private key corresponding to 'ecodollaraddress'.\n"
+            "dumpprivkey \"bioa3address\"\n"
+            "\nReveals the private key corresponding to 'bioa3address'.\n"
             "Then the importprivkey can be used with this output\n" +
             HelpRequiringPassphrase() + "\n"
 
             "\nArguments:\n"
-            "1. \"ecodollaraddress\"   (string, required) The ecodollar address for the private key\n"
+            "1. \"bioa3address\"   (string, required) The bioa3 address for the private key\n"
 
             "\nResult:\n"
             "\"key\"                (string) The private key\n"
@@ -353,7 +353,7 @@ UniValue dumpprivkey(const UniValue& params, bool fHelp)
     std::string strAddress = params[0].get_str();
     CBitcoinAddress address;
     if (!address.SetString(strAddress))
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ECODOLLAR address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid BIOA3 address");
     CKeyID keyID;
     if (!address.GetKeyID(keyID))
         throw JSONRPCError(RPC_TYPE_ERROR, "Address does not refer to a key");
@@ -404,7 +404,7 @@ UniValue dumpwallet(const UniValue& params, bool fHelp)
     std::sort(vKeyBirth.begin(), vKeyBirth.end());
 
     // produce output
-    file << strprintf("# Wallet dump created by ECODOLLAR %s (%s)\n", CLIENT_BUILD, CLIENT_DATE);
+    file << strprintf("# Wallet dump created by BIOA3 %s (%s)\n", CLIENT_BUILD, CLIENT_DATE);
     file << strprintf("# * Created on %s\n", EncodeDumpTime(GetTime()));
     file << strprintf("# * Best block at time of backup was %i (%s),\n", chainActive.Height(), chainActive.Tip()->GetBlockHash().ToString());
     file << strprintf("#   mined on %s\n", EncodeDumpTime(chainActive.Tip()->GetBlockTime()));
@@ -438,12 +438,12 @@ UniValue bip38encrypt(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() != 2)
         throw std::runtime_error(
-            "bip38encrypt \"ecodollaraddress\" \"passphrase\"\n"
-            "\nEncrypts a private key corresponding to 'ecodollaraddress'.\n" +
+            "bip38encrypt \"bioa3address\" \"passphrase\"\n"
+            "\nEncrypts a private key corresponding to 'bioa3address'.\n" +
             HelpRequiringPassphrase() + "\n"
 
             "\nArguments:\n"
-            "1. \"ecodollaraddress\"   (string, required) The ecodollar address for the private key (you must hold the key already)\n"
+            "1. \"bioa3address\"   (string, required) The bioa3 address for the private key (you must hold the key already)\n"
             "2. \"passphrase\"   (string, required) The passphrase you want the private key to be encrypted with - Valid special chars: !#$%&'()*+,-./:;<=>?`{|}~ \n"
 
             "\nResult:\n"
@@ -462,7 +462,7 @@ UniValue bip38encrypt(const UniValue& params, bool fHelp)
 
     CBitcoinAddress address;
     if (!address.SetString(strAddress))
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ECODOLLAR address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid BIOA3 address");
     CKeyID keyID;
     if (!address.GetKeyID(keyID))
         throw JSONRPCError(RPC_TYPE_ERROR, "Address does not refer to a key");
@@ -484,7 +484,7 @@ UniValue bip38decrypt(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() != 2)
         throw std::runtime_error(
-            "bip38decrypt \"ecodollaraddress\" \"passphrase\"\n"
+            "bip38decrypt \"bioa3address\" \"passphrase\"\n"
             "\nDecrypts and then imports password protected private key.\n" +
             HelpRequiringPassphrase() + "\n"
 

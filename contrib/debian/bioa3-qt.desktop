@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=BIOA3 Core
+Comment=BIOA3 P2P Cryptocurrency
+Comment[fr]=BIOA3, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=BIOA3, eşten eşe kriptografik sanal para birimi
+Exec=bioa3-qt %u
+Terminal=false
+Type=Application
+Icon=bioa3128
+MimeType=x-scheme-handler/bioa3;
+Categories=Office;Finance;
+StartupWMClass=BioA3-qt

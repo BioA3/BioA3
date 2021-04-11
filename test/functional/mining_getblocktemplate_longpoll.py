@@ -4,7 +4,7 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test longpolling with getblocktemplate."""
 
-from test_framework.test_framework import EcodollarTestFramework
+from test_framework.test_framework import BioA3TestFramework
 from test_framework.util import *
 
 import threading
@@ -22,7 +22,7 @@ class LongpollThread(threading.Thread):
     def run(self):
         self.node.getblocktemplate({'longpollid':int(self.longpollid)})
 
-class GetBlockTemplateLPTest(EcodollarTestFramework):
+class GetBlockTemplateLPTest(BioA3TestFramework):
     def set_test_params(self):
         self.num_nodes = 2
 

@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-# Copyright (c) 2019 The ECODOLLAR developers
+# Copyright (c) 2019 The BIOA3 developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 # -*- coding: utf-8 -*-
 
 from time import sleep
 
-from test_framework.test_framework import EcodollarTestFramework
+from test_framework.test_framework import BioA3TestFramework
 from test_framework.util import set_node_times, assert_equal
 
 
-class ECODOLLAR_RPCSporkTest(EcodollarTestFramework):
+class BIOA3_RPCSporkTest(BioA3TestFramework):
 
     def set_test_params(self):
         self.setup_clean_chain = True
@@ -70,5 +70,5 @@ class ECODOLLAR_RPCSporkTest(EcodollarTestFramework):
 
 
 if __name__ == '__main__':
-    ECODOLLAR_RPCSporkTest().main()
+    BIOA3_RPCSporkTest().main()
 

@@ -4,10 +4,10 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test mempool limiting together/eviction with the wallet."""
 
-from test_framework.test_framework import EcodollarTestFramework
+from test_framework.test_framework import BioA3TestFramework
 from test_framework.util import *
 
-class MempoolLimitTest(EcodollarTestFramework):
+class MempoolLimitTest(BioA3TestFramework):
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 1

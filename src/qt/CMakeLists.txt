@@ -1,7 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/forms ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/forms ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings/forms)
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/forms ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/forms ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings/forms)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -92,7 +92,7 @@ SET(QT_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/addresstablemodel.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/askpassphrasedialog.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/coincontroldialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/zecoscontroldialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/zbioa3controldialog.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/coincontroltreewidget.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/proposalframe.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/editaddressdialog.cpp
@@ -106,83 +106,83 @@ SET(QT_SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/transactiontablemodel.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/walletmodel.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/walletmodeltransaction.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/zecoscontroldialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/ecodollargui.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/loadingdialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/pwidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/guitransactionsutils.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/snackbar.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/navmenuwidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/lockunlock.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/receivedialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/furabstractlistitemdelegate.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/txviewholder.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/qtutils.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/expandablebutton.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/walletpassworddialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/topbar.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/txrow.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/addressfilterproxymodel.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/dashboardwidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/coincontrolecoswidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/addresslabelrow.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/contactdropdownrow.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/contactsdropdown.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/optionbutton.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/mninfodialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/coldstakingmodel.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/mnmodel.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/masternodewizarddialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/mnrow.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/masternodeswidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/sendchangeaddressdialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/sendconfirmdialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/sendcustomfeedialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/sendchangeaddressdialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/sendmultirow.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/send.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/addnewaddressdialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/addnewcontactdialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/requestdialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/receivewidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/myaddressrow.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/csrow.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/addressholder.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/tooltipmenu.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/addresseswidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/defaultdialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/denomgenerationdialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/privacywidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/coldstakingwidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings/settingsbackupwallet.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings/settingsbittoolwidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings/settingsconsolewidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings/settingsdisplayoptionswidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings/settingsfaqwidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings/settingsinformationwidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings/settingsmainoptionswidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings/settingsmultisenddialog.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings/settingsmultisendwidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings/settingssignmessagewidgets.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings/settingswalletoptionswidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings/settingswalletrepairwidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings/settingswidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/welcomecontentwidget.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/splash.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/zbioa3controldialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/bioa3gui.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/loadingdialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/pwidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/guitransactionsutils.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/snackbar.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/navmenuwidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/lockunlock.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/receivedialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/furabstractlistitemdelegate.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/txviewholder.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/qtutils.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/expandablebutton.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/walletpassworddialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/topbar.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/txrow.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/addressfilterproxymodel.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/dashboardwidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/coincontrolbioa3widget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/addresslabelrow.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/contactdropdownrow.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/contactsdropdown.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/optionbutton.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/mninfodialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/coldstakingmodel.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/mnmodel.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/masternodewizarddialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/mnrow.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/masternodeswidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/sendchangeaddressdialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/sendconfirmdialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/sendcustomfeedialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/sendchangeaddressdialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/sendmultirow.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/send.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/addnewaddressdialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/addnewcontactdialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/requestdialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/receivewidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/myaddressrow.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/csrow.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/addressholder.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/tooltipmenu.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/addresseswidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/defaultdialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/denomgenerationdialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/privacywidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/coldstakingwidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings/settingsbackupwallet.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings/settingsbittoolwidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings/settingsconsolewidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings/settingsdisplayoptionswidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings/settingsfaqwidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings/settingsinformationwidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings/settingsmainoptionswidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings/settingsmultisenddialog.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings/settingsmultisendwidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings/settingssignmessagewidgets.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings/settingswalletoptionswidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings/settingswalletrepairwidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings/settingswidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/welcomecontentwidget.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/splash.cpp
         )
 
 # Workaround until the old rpcconsole UI window is fully removed
-set_property(SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings/settingsconsolewidget.cpp PROPERTY SKIP_AUTOMOC ON)
+set_property(SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings/settingsconsolewidget.cpp PROPERTY SKIP_AUTOMOC ON)
 execute_process(
         COMMAND ${MOC_BIN} -o moc_settingsconsolewidget.cpp settingsconsolewidget.h
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings
 )
 
 execute_process(
         COMMAND ${MOC_BIN} -o moc_pfborderimage.cpp pfborderimage.h
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bioa3
 )
-list(APPEND QT_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/moc_pfborderimage.cpp)
+list(APPEND QT_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/moc_pfborderimage.cpp)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     list(APPEND QT_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/macdockiconhandler.mm)
@@ -195,8 +195,8 @@ target_include_directories(qt_stuff PUBLIC ${CMAKE_SOURCE_DIR}/src
         ${CMAKE_SOURCE_DIR}/src/univalue/include
         ${CMAKE_SOURCE_DIR}/src/secp256k1/include
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar
-        ${CMAKE_CURRENT_SOURCE_DIR}/ecodollar/settings
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3
+        ${CMAKE_CURRENT_SOURCE_DIR}/bioa3/settings
         ${OPENSSL_INCLUDE_DIR}
         ${BerkeleyDB_INCLUDE_DIRS}
         )
@@ -210,13 +210,13 @@ set_source_files_properties(${QT_TRANSLATIONS_FILES} PROPERTIES OUTPUT_LOCATION 
 QT5_ADD_TRANSLATION(QM ${QT_TRANSLATIONS_FILES})
 add_custom_target(translations_target ALL DEPENDS ${QM})
 
-QT5_ADD_RESOURCES(QRC_RESOURCE ecodollar.qrc)
-QT5_ADD_RESOURCES(QRC_LOCALE_RESOURCE ecodollar_locale.qrc)
+QT5_ADD_RESOURCES(QRC_RESOURCE bioa3.qrc)
+QT5_ADD_RESOURCES(QRC_LOCALE_RESOURCE bioa3_locale.qrc)
 
-add_executable(ecodollar-qt ecodollar.cpp ${QM} ${QRC_RESOURCE} ${QRC_LOCALE_RESOURCE})
-add_dependencies(ecodollar-qt translations_target libunivalue libsecp256k1 leveldb leveldb_sse42 memenv)
-target_include_directories(ecodollar-qt PUBLIC ${ENDIAN_INCLUDES})
-target_link_libraries(ecodollar-qt
+add_executable(bioa3-qt bioa3.cpp ${QM} ${QRC_RESOURCE} ${QRC_LOCALE_RESOURCE})
+add_dependencies(bioa3-qt translations_target libunivalue libsecp256k1 leveldb leveldb_sse42 memenv)
+target_include_directories(bioa3-qt PUBLIC ${ENDIAN_INCLUDES})
+target_link_libraries(bioa3-qt
         qt_stuff
         univalue
         SERVER_A UTIL_A WALLET_A CLI_A COMMON_A BITCOIN_CRYPTO_A ZEROCOIN_A
@@ -225,30 +225,30 @@ target_link_libraries(ecodollar-qt
         pthread
         )
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    target_link_libraries(ecodollar-qt "-framework Cocoa")
+    target_link_libraries(bioa3-qt "-framework Cocoa")
 endif()
 if(GMP_FOUND)
-    target_link_libraries(ecodollar-qt ${GMP_LIBRARY})
-    target_include_directories(ecodollar-qt PUBLIC ${GMP_INCLUDE_DIR})
+    target_link_libraries(bioa3-qt ${GMP_LIBRARY})
+    target_include_directories(bioa3-qt PUBLIC ${GMP_INCLUDE_DIR})
 endif()
 if(ZMQ_FOUND)
-    target_link_libraries(ecodollar-qt ZMQ_A ${ZMQ_LIB})
-    target_include_directories(ecodollar-qt PUBLIC ${ZMQ_INCLUDE_DIR})
+    target_link_libraries(bioa3-qt ZMQ_A ${ZMQ_LIB})
+    target_include_directories(bioa3-qt PUBLIC ${ZMQ_INCLUDE_DIR})
 endif()
 if (QRCODE_FOUND)
-    target_link_libraries(ecodollar-qt ${QRCODE_LIB})
-    target_include_directories(ecodollar-qt PUBLIC ${QRCODE_INCLUDE_DIR})
+    target_link_libraries(bioa3-qt ${QRCODE_LIB})
+    target_include_directories(bioa3-qt PUBLIC ${QRCODE_INCLUDE_DIR})
 endif()
 if(MINIUPNP_FOUND)
-    target_compile_definitions(ecodollar-qt PUBLIC "-DSTATICLIB -DMINIUPNP_STATICLIB")
-    target_link_libraries(ecodollar-qt ${MINIUPNP_LIBRARY})
-    target_include_directories(ecodollar-qt PUBLIC ${MINIUPNP_INCLUDE_DIR})
+    target_compile_definitions(bioa3-qt PUBLIC "-DSTATICLIB -DMINIUPNP_STATICLIB")
+    target_link_libraries(bioa3-qt ${MINIUPNP_LIBRARY})
+    target_include_directories(bioa3-qt PUBLIC ${MINIUPNP_INCLUDE_DIR})
 endif()
 
-target_link_libraries(ecodollar-qt Qt5::Gui Qt5::Core Qt5::Widgets Qt5::Network Qt5::Svg ${QT_LIBRARIES})
+target_link_libraries(bioa3-qt Qt5::Gui Qt5::Core Qt5::Widgets Qt5::Network Qt5::Svg ${QT_LIBRARIES})
 if (Qt5DBus_FOUND)
-    target_link_libraries(ecodollar-qt Qt5::DBus ${QT_LIBRARIES})
+    target_link_libraries(bioa3-qt Qt5::DBus ${QT_LIBRARIES})
 endif()
 if (Qt5Charts_FOUND)
-    target_link_libraries(ecodollar-qt Qt5::Charts ${QT_LIBRARIES})
+    target_link_libraries(bioa3-qt Qt5::Charts ${QT_LIBRARIES})
 endif()

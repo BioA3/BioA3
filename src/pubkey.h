@@ -1,11 +1,11 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2016-2018 The ECODOLLAR developers
+// Copyright (c) 2016-2018 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef ECODOLLAR_PUBKEY_H
-#define ECODOLLAR_PUBKEY_H
+#ifndef BIOA3_PUBKEY_H
+#define BIOA3_PUBKEY_H
 
 #include "hash.h"
 #include "serialize.h"
@@ -263,4 +263,4 @@ public:
     ~ECCVerifyHandle();
 };
 
-#endif // ECODOLLAR_PUBKEY_H
+#endif // BIOA3_PUBKEY_H

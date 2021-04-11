@@ -1,11 +1,11 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2015-2019 The ECODOLLAR developers
+// Copyright (c) 2015-2019 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef ECODOLLAR_SERIALIZE_H
-#define ECODOLLAR_SERIALIZE_H
+#ifndef BIOA3_SERIALIZE_H
+#define BIOA3_SERIALIZE_H
 
 #include <algorithm>
 #include <assert.h>
@@ -954,4 +954,4 @@ public:
     }
 };
 
-#endif // ECODOLLAR_SERIALIZE_H
+#endif // BIOA3_SERIALIZE_H

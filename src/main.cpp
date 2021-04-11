@@ -4,14 +4,14 @@
 // Copyright (c) 2011-2013 The PPCoin developers
 // Copyright (c) 2013-2014 The NovaCoin Developers
 // Copyright (c) 2014-2018 The BlackCoin Developers 
-// Copyright (c) 2015-2020 The ECODOLLAR developers
+// Copyright (c) 2015-2020 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "main.h"
 
-#include "zecos/accumulators.h"
-#include "zecos/accumulatormap.h"
+#include "zbioa3/accumulators.h"
+#include "zbioa3/accumulatormap.h"
 #include "addrman.h"
 #include "alert.h"
 #include "blocksignature.h"
@@ -38,9 +38,9 @@
 #include "util.h"
 #include "utilmoneystr.h"
 #include "validationinterface.h"
-#include "zecoschain.h"
+#include "zbioa3chain.h"
 
-#include "zecos/zerocoin.h"
+#include "zbioa3/zerocoin.h"
 #include "libzerocoin/Denominations.h"
 #include "invalid.h"
 #include <sstream>
@@ -55,7 +55,7 @@
 
 
 #if defined(NDEBUG)
-#error "ECODOLLAR cannot be compiled without assertions."
+#error "BIOA3 cannot be compiled without assertions."
 #endif
 
 /**
@@ -89,7 +89,7 @@ int64_t nMaxTipAge = DEFAULT_MAX_TIP_AGE;
 
 int64_t nReserveBalance = 0;
 
-/** Fees smaller than this (in uecos) are considered zero fee (for relaying and mining)
+/** Fees smaller than this (in ubioa3) are considered zero fee (for relaying and mining)
  * We are ~100 times smaller then bitcoin now (2015-06-23), set minRelayTxFee only 10 times higher
  * so it's still 10 times lower comparing to bitcoin.
  */
@@ -1011,7 +1011,7 @@ bool ContextualCheckZerocoinSpend(const CTransaction& tx, const libzerocoin::Coi
     //Reject serial's that are already in the blockchain
     int nHeightTx = 0;
     if (IsSerialInBlockchain(spend->getCoinSerialNumber(), nHeightTx))
-        return error("%s : zECOS spend with serial %s is already in block %d\n", __func__,
+        return error("%s : zBIOA3 spend with serial %s is already in block %d\n", __func__,
                      spend->getCoinSerialNumber().GetHex(), nHeightTx);
 
     return true;
@@ -1019,11 +1019,11 @@ bool ContextualCheckZerocoinSpend(const CTransaction& tx, const libzerocoin::Coi
 
 bool ContextualCheckZerocoinSpendNoSerialCheck(const CTransaction& tx, const libzerocoin::CoinSpend* spend, CBlockIndex* pindex, const uint256& hashBlock)
 {
-    //Check to see if the zECOS is properly signed
+    //Check to see if the zBIOA3 is properly signed
     if (pindex->nHeight >= Params().Zerocoin_Block_V2_Start()) {
         try {
             if (!spend->HasValidSignature())
-                return error("%s: V2 zECOS spend does not have a valid signature\n", __func__);
+                return error("%s: V2 zBIOA3 spend does not have a valid signature\n", __func__);
         } catch (const libzerocoin::InvalidSerialException& e) {
             // Check if we are in the range of the attack
             if(!isBlockBetweenFakeSerialAttackRange(pindex->nHeight))
@@ -1036,7 +1036,7 @@ bool ContextualCheckZerocoinSpendNoSerialCheck(const CTransaction& tx, const lib
         if (tx.IsCoinStake())
             expectedType = libzerocoin::SpendType::STAKE;
         if (spend->getSpendType() != expectedType) {
-            return error("%s: trying to spend zECOS without the correct spend type. txid=%s\n", __func__,
+            return error("%s: trying to spend zBIOA3 without the correct spend type. txid=%s\n", __func__,
                          tx.GetHash().GetHex());
         }
     }
@@ -1047,7 +1047,7 @@ bool ContextualCheckZerocoinSpendNoSerialCheck(const CTransaction& tx, const lib
     if (!spend->HasValidSerial(Params().Zerocoin_Params(fUseV1Params)))  {
         // Up until this block our chain was not checking serials correctly..
         if (!isBlockBetweenFakeSerialAttackRange(pindex->nHeight))
-            return error("%s : zECOS spend with serial %s from tx %s is not in valid range\n", __func__,
+            return error("%s : zBIOA3 spend with serial %s from tx %s is not in valid range\n", __func__,
                      spend->getCoinSerialNumber().GetHex(), tx.GetHash().GetHex());
         else
             LogPrintf("%s:: HasValidSerial :: Invalid serial detected within range in block %d\n", __func__, pindex->nHeight);
@@ -1096,7 +1096,7 @@ bool CheckZerocoinSpend(const CTransaction& tx, bool fVerifySignature, CValidati
             }
             libzerocoin::ZerocoinParams* params = Params().Zerocoin_Params(false);
             PublicCoinSpend publicSpend(params);
-            if (!ZECOSModule::parseCoinSpend(txin, tx, prevOut, publicSpend)){
+            if (!ZBIOA3Module::parseCoinSpend(txin, tx, prevOut, publicSpend)){
                 return state.DoS(100, error("CheckZerocoinSpend(): public zerocoin spend parse failed"));
             }
             newSpend = publicSpend;
@@ -1119,7 +1119,7 @@ bool CheckZerocoinSpend(const CTransaction& tx, bool fVerifySignature, CValidati
         if (isPublicSpend) {
             libzerocoin::ZerocoinParams* params = Params().Zerocoin_Params(false);
             PublicCoinSpend ret(params);
-            if (!ZECOSModule::validateInput(txin, prevOut, tx, ret)){
+            if (!ZBIOA3Module::validateInput(txin, prevOut, tx, ret)){
                 return state.DoS(100, error("CheckZerocoinSpend(): public zerocoin spend did not verify"));
             }
         } else
@@ -1409,7 +1409,7 @@ bool AcceptToMemoryPool(CTxMemPool& pool, CValidationState& state, const CTransa
             //Check that txid is not already in the chain
             int nHeightTx = 0;
             if (IsTransactionInChain(tx.GetHash(), nHeightTx))
-                return state.Invalid(error("%s : zECOS spend tx %s already in block %d",
+                return state.Invalid(error("%s : zBIOA3 spend tx %s already in block %d",
                         __func__, tx.GetHash().GetHex(), nHeightTx), REJECT_DUPLICATE, "bad-txns-inputs-spent");
 
             //Check for double spending of serial #'s
@@ -1419,36 +1419,36 @@ bool AcceptToMemoryPool(CTxMemPool& pool, CValidationState& state, const CTransa
                 bool isPrivZerocoinSpend = txIn.IsZerocoinSpend();
                 if (!isPrivZerocoinSpend && !isPublicSpend) {
                     return state.Invalid(error("%s: failed for tx %s, every input must be a zcspend or zcpublicspend",
-                            __func__, tx.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zecos");
+                            __func__, tx.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zbioa3");
                 }
 
                 // Check enforcement
                 if (!CheckPublicCoinSpendEnforced(chainActive.Height(), isPublicSpend)){
                     return state.Invalid(error("%s: CheckPublicCoinSpendEnforced failed for tx %s",
-                            __func__, tx.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zecos");
+                            __func__, tx.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zbioa3");
                 }
 
                 if (isPublicSpend) {
                     libzerocoin::ZerocoinParams* params = Params().Zerocoin_Params(false);
                     PublicCoinSpend publicSpend(params);
-                    if (!ZECOSModule::ParseZerocoinPublicSpend(txIn, tx, state, publicSpend)){
+                    if (!ZBIOA3Module::ParseZerocoinPublicSpend(txIn, tx, state, publicSpend)){
                         return false;
                     }
                     if (!ContextualCheckZerocoinSpend(tx, &publicSpend, chainActive.Tip(), 0))
                         return state.Invalid(error("%s: ContextualCheckZerocoinSpend failed for tx %s",
-                                __func__, tx.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zecos");
+                                __func__, tx.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zbioa3");
 
                     // Check that the version matches the one enforced with SPORK_18
                     if (!CheckPublicCoinSpendVersion(publicSpend.getVersion())) {
                         return state.Invalid(error("%s : Public Zerocoin spend version %d not accepted. must be version %d.",
-                                __func__, publicSpend.getVersion(), CurrentPublicCoinSpendVersion()), REJECT_INVALID, "bad-txns-invalid-zecos");
+                                __func__, publicSpend.getVersion(), CurrentPublicCoinSpendVersion()), REJECT_INVALID, "bad-txns-invalid-zbioa3");
                     }
 
                 } else {
                     libzerocoin::CoinSpend spend = TxInToZerocoinSpend(txIn);
                     if (!ContextualCheckZerocoinSpend(tx, &spend, chainActive.Tip(), 0))
                         return state.Invalid(error("%s: ContextualCheckZerocoinSpend failed for tx %s",
-                                __func__, tx.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zecos");
+                                __func__, tx.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zbioa3");
                 }
 
             }
@@ -1478,7 +1478,7 @@ bool AcceptToMemoryPool(CTxMemPool& pool, CValidationState& state, const CTransa
                 }
             }
 
-            // Check that zECOS mints (if included) are not already known
+            // Check that zBIOA3 mints (if included) are not already known
             for (auto& out : tx.vout) {
                 if (!out.IsZerocoinMint())
                     continue;
@@ -2001,11 +2001,11 @@ int64_t GetBlockValue(int nHeight)
     if (Params().NetworkID() == CBaseChainParams::TESTNET) {
         
         if (nHeight < 1) {
-            nSubsidy = 1000000000 * COIN;
+            nSubsidy = 300000000 * COIN;
         } else if (nHeight < Params().LAST_POW_BLOCK()) {
-        nSubsidy = 22.83105 * COIN;
+        nSubsidy = 86 * COIN;
         } else
-        nSubsidy = 22.83105 * COIN;
+        nSubsidy = 86 * COIN;
 
         return nSubsidy;
 
@@ -2013,18 +2013,18 @@ int64_t GetBlockValue(int nHeight)
 
     if (Params().NetworkID() == CBaseChainParams::REGTEST) {
         if (nHeight == 0)
-            return 250 * COIN;
+            return 86 * COIN;
 
     }
 
     
 
     if (nHeight < 1) {
-        nSubsidy = 100000000000 * COIN;
+        nSubsidy = 3000000000 * COIN;
     } else if (nHeight < Params().LAST_POW_BLOCK()) {
-       nSubsidy = 22.83105 * COIN;
+       nSubsidy = 86 * COIN;
     } else
-       nSubsidy = 22.83105 * COIN;
+       nSubsidy = 86 * COIN;
 
     return nSubsidy;
     
@@ -2037,7 +2037,7 @@ int64_t GetBackbonePayment(int nHeight, int64_t blockValue)
     if (nHeight == 0) {
         ret_val = blockValue;
     } else {
-        ret_val = blockValue * 40 / 100; //40% of the reward while POS
+        ret_val = blockValue * 10 / 100; //10% of the reward while POS
     }
 
     return ret_val;
@@ -2278,16 +2278,16 @@ CAmount GetSeeSaw(const CAmount& blockValue, int nMasternodeCount, int nHeight)
     return ret;
 }
 
-int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCount, bool isZECOSStake)
+int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCount, bool isZBIOA3Stake)
 {
     int64_t ret = 0;
 
     if (Params().NetworkID() == CBaseChainParams::TESTNET) {
-        ret = blockValue * 20 / 100;    //20% of block value.
+        ret = blockValue * 50 / 100;    //50% of block value.
         return ret;
     }
 
-    ret = blockValue * 20 / 100;    //20% of block value.
+    ret = blockValue * 50 / 100;    //50% of block value.
     return ret;
 }
 
@@ -2476,7 +2476,7 @@ void AddInvalidSpendsToMap(const CBlock& block)
                     libzerocoin::ZerocoinParams* params = Params().Zerocoin_Params(false);
                     PublicCoinSpend publicSpend(params);
                     CValidationState state;
-                    if (!ZECOSModule::ParseZerocoinPublicSpend(in, tx, state, publicSpend)){
+                    if (!ZBIOA3Module::ParseZerocoinPublicSpend(in, tx, state, publicSpend)){
                         throw std::runtime_error("Failed to parse public spend");
                     }
                     spend = &publicSpend;
@@ -2668,7 +2668,7 @@ bool DisconnectBlock(CBlock& block, CValidationState& state, CBlockIndex* pindex
         const CTransaction& tx = block.vtx[i];
 
         /** UNDO ZEROCOIN DATABASING
-         * note we only undo zerocoin databasing in the following statement, value to and from ECODOLLAR
+         * note we only undo zerocoin databasing in the following statement, value to and from BIOA3
          * addresses should still be handled by the typical bitcoin based undo code
          * */
         if (tx.ContainsZerocoins()) {
@@ -2682,7 +2682,7 @@ bool DisconnectBlock(CBlock& block, CValidationState& state, CBlockIndex* pindex
                             libzerocoin::ZerocoinParams *params = Params().Zerocoin_Params(false);
                             PublicCoinSpend publicSpend(params);
                             CValidationState state;
-                            if (!ZECOSModule::ParseZerocoinPublicSpend(txin, tx, state, publicSpend)) {
+                            if (!ZBIOA3Module::ParseZerocoinPublicSpend(txin, tx, state, publicSpend)) {
                                 return error("Failed to parse public spend");
                             }
                             serial = publicSpend.getCoinSerialNumber();
@@ -2825,7 +2825,7 @@ static CCheckQueue<CScriptCheck> scriptcheckqueue(128);
 
 void ThreadScriptCheck()
 {
-    RenameThread("ecodollar-scriptch");
+    RenameThread("bioa3-scriptch");
     scriptcheckqueue.Thread();
 }
 
@@ -2858,16 +2858,16 @@ void AddWrappedSerialsInflation()
     uiInterface.ShowProgress("", 100);
 }
 
-void RecalculateZECOSMinted()
+void RecalculateZBIOA3Minted()
 {
     CBlockIndex *pindex = chainActive[Params().Zerocoin_StartHeight()];
-    uiInterface.ShowProgress(_("Recalculating minted ZECOS..."), 0);
+    uiInterface.ShowProgress(_("Recalculating minted ZBIOA3..."), 0);
     while (true) {
         // Log Message and feedback message every 1000 blocks
         if (pindex->nHeight % 1000 == 0) {
             LogPrintf("%s : block %d...\n", __func__, pindex->nHeight);
             int percent = std::max(1, std::min(99, (int)((double)(pindex->nHeight - Params().Zerocoin_StartHeight()) * 100 / (chainActive.Height() - Params().Zerocoin_StartHeight()))));
-            uiInterface.ShowProgress(_("Recalculating minted ZECOS..."), percent);
+            uiInterface.ShowProgress(_("Recalculating minted ZBIOA3..."), percent);
         }
 
         //overwrite possibly wrong vMintsInBlock data
@@ -2890,18 +2890,18 @@ void RecalculateZECOSMinted()
     uiInterface.ShowProgress("", 100);
 }
 
-void RecalculateZECOSSpent()
+void RecalculateZBIOA3Spent()
 {
     CBlockIndex* pindex = chainActive[Params().Zerocoin_StartHeight()];
-    uiInterface.ShowProgress(_("Recalculating spent ZECOS..."), 0);
+    uiInterface.ShowProgress(_("Recalculating spent ZBIOA3..."), 0);
     while (true) {
         if (pindex->nHeight % 1000 == 0) {
             LogPrintf("%s : block %d...\n", __func__, pindex->nHeight);
             int percent = std::max(1, std::min(99, (int)((double)(pindex->nHeight - Params().Zerocoin_StartHeight()) * 100 / (chainActive.Height() - Params().Zerocoin_StartHeight()))));
-            uiInterface.ShowProgress(_("Recalculating spent ZECOS..."), percent);
+            uiInterface.ShowProgress(_("Recalculating spent ZBIOA3..."), percent);
         }
 
-        //Rewrite zECOS supply
+        //Rewrite zBIOA3 supply
         CBlock block;
         assert(ReadBlockFromDisk(block, pindex));
 
@@ -2910,13 +2910,13 @@ void RecalculateZECOSSpent()
         //Reset the supply to previous block
         pindex->mapZerocoinSupply = pindex->pprev->mapZerocoinSupply;
 
-        //Add mints to zECOS supply
+        //Add mints to zBIOA3 supply
         for (auto denom : libzerocoin::zerocoinDenomList) {
             long nDenomAdded = count(pindex->vMintDenominationsInBlock.begin(), pindex->vMintDenominationsInBlock.end(), denom);
             pindex->mapZerocoinSupply.at(denom) += nDenomAdded;
         }
 
-        //Remove spends from zECOS supply
+        //Remove spends from zBIOA3 supply
         for (auto denom : listDenomsSpent)
             pindex->mapZerocoinSupply.at(denom)--;
 
@@ -2937,7 +2937,7 @@ void RecalculateZECOSSpent()
     uiInterface.ShowProgress("", 100);
 }
 
-bool RecalculateECOSSupply(int nHeightStart)
+bool RecalculateBIOA3Supply(int nHeightStart)
 {
     if (nHeightStart > chainActive.Height())
         return false;
@@ -2947,12 +2947,12 @@ bool RecalculateECOSSupply(int nHeightStart)
     //if (nHeightStart == Params().Zerocoin_StartHeight())
     //    nSupplyPrev = CAmount(5449796547496199);
 
-    uiInterface.ShowProgress(_("Recalculating ECOS supply..."), 0);
+    uiInterface.ShowProgress(_("Recalculating BIOA3 supply..."), 0);
     while (true) {
         if (pindex->nHeight % 1000 == 0) {
             LogPrintf("%s : block %d...\n", __func__, pindex->nHeight);
             int percent = std::max(1, std::min(99, (int)((double)((pindex->nHeight - nHeightStart) * 100) / (chainActive.Height() - nHeightStart))));
-            uiInterface.ShowProgress(_("Recalculating ECOS supply..."), percent);
+            uiInterface.ShowProgress(_("Recalculating BIOA3 supply..."), percent);
         }
 
         CBlock block;
@@ -3014,7 +3014,7 @@ bool RecalculateECOSSupply(int nHeightStart)
 
 bool ReindexAccumulators(std::list<uint256>& listMissingCheckpoints, std::string& strError)
 {
-    // ECODOLLAR: recalculate Accumulator Checkpoints that failed to database properly
+    // BIOA3: recalculate Accumulator Checkpoints that failed to database properly
     if (!listMissingCheckpoints.empty()) {
         uiInterface.ShowProgress(_("Calculating missing accumulators..."), 0);
         LogPrintf("%s : finding missing checkpoints\n", __func__);
@@ -3062,7 +3062,7 @@ bool ReindexAccumulators(std::list<uint256>& listMissingCheckpoints, std::string
     return true;
 }
 
-bool UpdateZECOSSupply(const CBlock& block, CBlockIndex* pindex, bool fJustCheck)
+bool UpdateZBIOA3Supply(const CBlock& block, CBlockIndex* pindex, bool fJustCheck)
 {
     std::list<CZerocoinMint> listMints;
     bool fFilterInvalid = pindex->nHeight >= Params().Zerocoin_Block_RecalculateAccumulators();
@@ -3122,7 +3122,7 @@ bool UpdateZECOSSupply(const CBlock& block, CBlockIndex* pindex, bool fJustCheck
         LogPrint("zero", "%s coins for denomination %d pubcoin %s\n", __func__, denom, pindex->mapZerocoinSupply.at(denom));
 
     // Update Wrapped Serials amount
-    // A one-time event where only the zECOS supply was off (due to serial duplication off-chain on main net)
+    // A one-time event where only the zBIOA3 supply was off (due to serial duplication off-chain on main net)
     if (Params().NetworkID() == CBaseChainParams::MAIN && pindex->nHeight == Params().Zerocoin_Block_EndFakeSerial() + 1
             && pindex->GetZerocoinSupply() < Params().GetSupplyBeforeFakeSerial() + GetWrapppedSerialInflationAmount()) {
         for (auto denom : libzerocoin::zerocoinDenomList) {
@@ -3247,7 +3247,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
                 if (isPublicSpend) {
                     libzerocoin::ZerocoinParams* params = Params().Zerocoin_Params(false);
                     PublicCoinSpend publicSpend(params);
-                    if (!ZECOSModule::ParseZerocoinPublicSpend(txIn, tx, state, publicSpend)){
+                    if (!ZBIOA3Module::ParseZerocoinPublicSpend(txIn, tx, state, publicSpend)){
                         return false;
                     }
                     nValueIn += publicSpend.getDenomination() * COIN;
@@ -3265,7 +3265,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
                 }
             }
 
-            // Check that zECOS mints are not already known
+            // Check that zBIOA3 mints are not already known
             if (tx.HasZerocoinMintOutputs()) {
                 for (auto& out : tx.vout) {
                     if (!out.IsZerocoinMint())
@@ -3294,7 +3294,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
                 }
             }
 
-            // Check that zECOS mints are not already known
+            // Check that zBIOA3 mints are not already known
             if (tx.HasZerocoinMintOutputs()) {
                 for (auto& out : tx.vout) {
                     if (!out.IsZerocoinMint())
@@ -3345,14 +3345,14 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
 
     //A one-time event where money supply counts were off and recalculated on a certain block.
     if (pindex->nHeight == Params().Zerocoin_Block_RecalculateAccumulators() + 1) {
-        RecalculateZECOSMinted();
-        RecalculateZECOSSpent();
-        RecalculateECOSSupply(Params().Zerocoin_StartHeight());
+        RecalculateZBIOA3Minted();
+        RecalculateZBIOA3Spent();
+        RecalculateBIOA3Supply(Params().Zerocoin_StartHeight());
     }
 
-    //Track zECOS money supply in the block index
-    if (!UpdateZECOSSupply(block, pindex, fJustCheck))
-        return state.DoS(100, error("%s: Failed to calculate new zECOS supply for block=%s height=%d", __func__,
+    //Track zBIOA3 money supply in the block index
+    if (!UpdateZBIOA3Supply(block, pindex, fJustCheck))
+        return state.DoS(100, error("%s: Failed to calculate new zBIOA3 supply for block=%s height=%d", __func__,
                                     block.GetHash().GetHex(), pindex->nHeight), REJECT_INVALID);
 
     // track money supply and mint amount info
@@ -3415,7 +3415,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
         setDirtyBlockIndex.insert(pindex);
     }
 
-    //Record zECOS serials
+    //Record zBIOA3 serials
     if (pwalletMain) {
         std::set<uint256> setAddedTx;
         for (const std::pair<libzerocoin::CoinSpend, uint256>& pSpend : vSpends) {
@@ -3563,7 +3563,7 @@ void static UpdateTip(CBlockIndex* pindexNew)
         /* Zerocoin minting is disabled
      *
 #ifdef ENABLE_WALLET
-    // If turned on AutoZeromint will automatically convert ECOS to zECOS
+    // If turned on AutoZeromint will automatically convert BIOA3 to zBIOA3
     if (pwalletMain && pwalletMain->isZeromintEnabled())
         pwalletMain->AutoZeromint();
 #endif // ENABLE_WALLET
@@ -4352,7 +4352,7 @@ bool CheckColdStakeFreeOutput(const CTransaction& tx, const int nHeight)
     const CTxOut& lastOut = tx.vout[outs-1];
     if (outs >=3 && lastOut.scriptPubKey != tx.vout[outs-2].scriptPubKey) {
         // last output can either be a mn reward or a budget payment
-        // cold staking is active much after nPublicZCSpends so GetMasternodePayment is always 3 ECOS.
+        // cold staking is active much after nPublicZCSpends so GetMasternodePayment is always 3 BIOA3.
         // TODO: double check this if/when MN rewards change
         //if (lastOut.nValue == 3 * COIN)
         if (lastOut.nValue == 4.56621 * COIN)
@@ -4473,7 +4473,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
                 nHeight = (*mi).second->nHeight + 1;
         }
 
-        // ECODOLLAR
+        // BIOA3
         // It is entierly possible that we don't have enough data and this could fail
         // (i.e. the block could indeed be valid). Store the block for later consideration
         // but issue an initial reject message.
@@ -4551,7 +4551,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
         ))
             return error("%s : CheckTransaction failed", __func__);
 
-        // double check that there are no double spent zECOS spends in this block
+        // double check that there are no double spent zBIOA3 spends in this block
         if (tx.HasZerocoinSpendInputs()) {
             for (const CTxIn& txIn : tx.vin) {
                 bool isPublicSpend = txIn.IsZerocoinPublicSpend();
@@ -4560,7 +4560,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
                     if (isPublicSpend) {
                         libzerocoin::ZerocoinParams* params = Params().Zerocoin_Params(false);
                         PublicCoinSpend publicSpend(params);
-                        if (!ZECOSModule::ParseZerocoinPublicSpend(txIn, tx, state, publicSpend)){
+                        if (!ZBIOA3Module::ParseZerocoinPublicSpend(txIn, tx, state, publicSpend)){
                             return false;
                         }
                         spend = publicSpend;
@@ -4573,7 +4573,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
                         spend = TxInToZerocoinSpend(txIn);
                     }
                     if (std::count(vBlockSerials.begin(), vBlockSerials.end(), spend.getCoinSerialNumber()))
-                        return state.DoS(100, error("%s : Double spending of zECOS serial %s in block\n Block: %s",
+                        return state.DoS(100, error("%s : Double spending of zBIOA3 serial %s in block\n Block: %s",
                                                     __func__, spend.getCoinSerialNumber().GetHex(), block.ToString()));
                     vBlockSerials.emplace_back(spend.getCoinSerialNumber());
                 }
@@ -4614,9 +4614,9 @@ bool CheckWork(const CBlock block, CBlockIndex* const pindexPrev)
     }
 
     if (block.nBits != nBitsRequired) {
-        // Ecodollar Specific reference to the block with the wrong threshold was used.
-        if ((block.nTime == (uint32_t) Params().EcodollarBadBlockTime()) && (block.nBits == (uint32_t) Params().EcodollarBadBlocknBits())) {
-            // accept ECODOLLAR block minted with incorrect proof of work threshold
+        // BioA3 Specific reference to the block with the wrong threshold was used.
+        if ((block.nTime == (uint32_t) Params().BioA3BadBlockTime()) && (block.nBits == (uint32_t) Params().BioA3BadBlocknBits())) {
+            // accept BIOA3 block minted with incorrect proof of work threshold
             return true;
         }
 
@@ -4882,18 +4882,18 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
         CTransaction &stakeTxIn = block.vtx[1];
 
         // Inputs
-        std::vector<CTxIn> ecosInputs;
-        std::vector<CTxIn> zECOSInputs;
+        std::vector<CTxIn> bioa3Inputs;
+        std::vector<CTxIn> zBIOA3Inputs;
 
         for (const CTxIn& stakeIn : stakeTxIn.vin) {
             if(stakeIn.IsZerocoinSpend()){
-                zECOSInputs.push_back(stakeIn);
+                zBIOA3Inputs.push_back(stakeIn);
             }else{
-                ecosInputs.push_back(stakeIn);
+                bioa3Inputs.push_back(stakeIn);
             }
         }
-        const bool hasECOSInputs = !ecosInputs.empty();
-        const bool hasZECOSInputs = !zECOSInputs.empty();
+        const bool hasBIOA3Inputs = !bioa3Inputs.empty();
+        const bool hasZBIOA3Inputs = !zBIOA3Inputs.empty();
 
         // ZC started after PoS.
         // Check for serial double spent on the same block, TODO: Move this to the proper method..
@@ -4915,7 +4915,7 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
                         if (isPublicSpend) {
                             libzerocoin::ZerocoinParams* params = Params().Zerocoin_Params(false);
                             PublicCoinSpend publicSpend(params);
-                            if (!ZECOSModule::ParseZerocoinPublicSpend(in, tx, state, publicSpend)){
+                            if (!ZBIOA3Module::ParseZerocoinPublicSpend(in, tx, state, publicSpend)){
                                 return false;
                             }
                             spend = publicSpend;
@@ -4931,10 +4931,10 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
                     }
                 }
                 if(tx.IsCoinStake()) continue;
-                if(hasECOSInputs) {
+                if(hasBIOA3Inputs) {
                     // Check if coinstake input is double spent inside the same block
-                    for (const CTxIn& ecosIn : ecosInputs)
-                        if(ecosIn.prevout == in.prevout)
+                    for (const CTxIn& bioa3In : bioa3Inputs)
+                        if(bioa3In.prevout == in.prevout)
                             // double spent coinstake input inside block
                             return error("%s: double spent coinstake input inside block", __func__);
                 }
@@ -4973,12 +4973,12 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
                     for (const CTxIn& in: t.vin) {
                         // If this input is a zerocoin spend, and the coinstake has zerocoin inputs
                         // then store the serials for later check
-                        if(hasZECOSInputs && in.IsZerocoinSpend())
+                        if(hasZBIOA3Inputs && in.IsZerocoinSpend())
                             vBlockSerials.push_back(TxInToZerocoinSpend(in).getCoinSerialNumber());
 
                         // Loop through every input of the staking tx
-                        if (hasECOSInputs) {
-                            for (const CTxIn& stakeIn : ecosInputs)
+                        if (hasBIOA3Inputs) {
+                            for (const CTxIn& stakeIn : bioa3Inputs)
                                 // check if the tx input is double spending any coinstake input
                                 if (stakeIn.prevout == in.prevout)
                                     return state.DoS(100, error("%s: input already spent on a previous block", __func__));
@@ -4997,10 +4997,10 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
             // Split height
             splitHeight = prev->nHeight;
 
-            // Now that this loop if completed. Check if we have zECOS inputs.
-            if(hasZECOSInputs) {
-                for (const CTxIn& zEcosInput : zECOSInputs) {
-                    libzerocoin::CoinSpend spend = TxInToZerocoinSpend(zEcosInput);
+            // Now that this loop if completed. Check if we have zBIOA3 inputs.
+            if(hasZBIOA3Inputs) {
+                for (const CTxIn& zBioA3Input : zBIOA3Inputs) {
+                    libzerocoin::CoinSpend spend = TxInToZerocoinSpend(zBioA3Input);
 
                     // First check if the serials were not already spent on the forked blocks.
                     CBigNum coinSerial = spend.getCoinSerialNumber();
@@ -5020,7 +5020,7 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
 
                     if (!ContextualCheckZerocoinSpendNoSerialCheck(stakeTxIn, &spend, pindex, 0))
                         return state.DoS(100,error("%s: forked chain ContextualCheckZerocoinSpend failed for tx %s", __func__,
-                                                   stakeTxIn.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zecos");
+                                                   stakeTxIn.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zbioa3");
 
                     // Now only the ZKP left..
                     // As the spend maturity is 200, the acc value must be accumulated, otherwise it's not ready to be spent
@@ -5062,11 +5062,11 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
             }
         } else {
             if(!isBlockFromFork)
-                for (const CTxIn& zEcosInput : zECOSInputs) {
-                        libzerocoin::CoinSpend spend = TxInToZerocoinSpend(zEcosInput);
+                for (const CTxIn& zBioA3Input : zBIOA3Inputs) {
+                        libzerocoin::CoinSpend spend = TxInToZerocoinSpend(zBioA3Input);
                         if (!ContextualCheckZerocoinSpend(stakeTxIn, &spend, pindex, 0))
                             return state.DoS(100,error("%s: main chain ContextualCheckZerocoinSpend failed for tx %s", __func__,
-                                    stakeTxIn.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zecos");
+                                    stakeTxIn.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zbioa3");
                 }
 
         }
@@ -5254,14 +5254,22 @@ bool TestBlockValidity(CValidationState& state, const CBlock& block, CBlockIndex
     indexDummy.nHeight = pindexPrev->nHeight + 1;
 
     // NOTE: CheckBlockHeader is called by CheckBlock
-    if (!ContextualCheckBlockHeader(block, state, pindexPrev))
+    if (!ContextualCheckBlockHeader(block, state, pindexPrev)){
+        LogPrintf("TestBlockValidity: failed ContextualCheckBlockHeader\n");
         return false;
-    if (!CheckBlock(block, state, fCheckPOW, fCheckMerkleRoot))
+    }
+    if (!CheckBlock(block, state, fCheckPOW, fCheckMerkleRoot)){
+        LogPrintf("TestBlockValidity: failed CheckBlock\n");
         return false;
-    if (!ContextualCheckBlock(block, state, pindexPrev))
+    }
+    if (!ContextualCheckBlock(block, state, pindexPrev)){
+        LogPrintf("TestBlockValidity: failed ContextualCheckBlock\n");
         return false;
-    if (!ConnectBlock(block, state, &indexDummy, viewNew, true))
+    }
+    if (!ConnectBlock(block, state, &indexDummy, viewNew, true)){
+        LogPrintf("TestBlockValidity: failed ConnectBlock\n");
         return false;
+    }
     assert(state.IsValid());
 
     return true;
@@ -6311,7 +6319,7 @@ bool static ProcessMessage(CNode* pfrom, std::string strCommand, CDataStream& vR
             return true;
         }
 
-        // ECODOLLAR: We use certain sporks during IBD, so check to see if they are
+        // BIOA3: We use certain sporks during IBD, so check to see if they are
         // available. If not, ask the first peer connected for them.
         // TODO: Move this to an instant broadcast of the sporks.
         bool fMissingSporks = !pSporkDB->SporkExists(SPORK_14_NEW_PROTOCOL_ENFORCEMENT) ||
@@ -6893,7 +6901,7 @@ bool static ProcessMessage(CNode* pfrom, std::string strCommand, CDataStream& vR
                 CBigNum bnAccValue = 0;
                 //std::cout << "asking for checkpoint value in height: " << height << ", den: " << den << std::endl;
                 if (!GetAccumulatorValue(height, den, bnAccValue)) {
-                    LogPrint("zecos", "peer misbehaving for request an invalid acc checkpoint \n", __func__);
+                    LogPrint("zbioa3", "peer misbehaving for request an invalid acc checkpoint \n", __func__);
                     Misbehaving(pfrom->GetId(), 50);
                 } else {
                     //std::cout << "Sending acc value, with checksum: " << GetChecksum(bnAccValue) << " for "
@@ -6918,7 +6926,7 @@ bool static ProcessMessage(CNode* pfrom, std::string strCommand, CDataStream& vR
                 gen.setPfrom(pfrom);
                 if (gen.isValid(chainActive.Height())) {
                     if (!lightWorker.addWitWork(gen)) {
-                        LogPrint("zecos", "%s : add genwit request failed \n", __func__);
+                        LogPrint("zbioa3", "%s : add genwit request failed \n", __func__);
                         CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
                         // Invalid request only returns the message without a result.
                         ss << gen.getRequestNum();

@@ -4,11 +4,11 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test the wallet accounts properly when there is a double-spend conflict."""
 
-from test_framework.test_framework import EcodollarTestFramework
+from test_framework.test_framework import BioA3TestFramework
 from test_framework.util import *
 import time
 
-class TxnMallTest(EcodollarTestFramework):
+class TxnMallTest(BioA3TestFramework):
     def set_test_params(self):
         self.num_nodes = 4
 
@@ -23,7 +23,7 @@ class TxnMallTest(EcodollarTestFramework):
         disconnect_nodes(self.nodes[2], 1)
 
     def run_test(self):
-        # All nodes should start with 6,250 ECOS:
+        # All nodes should start with 6,250 BIOA3:
         starting_balance = 6250
         for i in range(4):
             assert_equal(self.nodes[i].getbalance(), starting_balance)

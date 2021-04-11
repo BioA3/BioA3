@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2017-2019 The ECODOLLAR developers
+// Copyright (c) 2017-2019 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -11,7 +11,7 @@
 
 class CScheduler;
 class CWallet;
-class CzECOSWallet;
+class CzBIOA3Wallet;
 
 namespace boost
 {
@@ -19,7 +19,7 @@ class thread_group;
 } // namespace boost
 
 extern CWallet* pwalletMain;
-extern CzECOSWallet* zwalletMain;
+extern CzBIOA3Wallet* zwalletMain;
 
 void StartShutdown();
 bool ShutdownRequested();
@@ -29,7 +29,7 @@ void Shutdown();
 void PrepareShutdown();
 bool AppInit2();
 
-/** Initialize ECODOLLAR core: Basic context setup.
+/** Initialize BIOA3 core: Basic context setup.
  *  @note This can be done before daemonization. Do not call Shutdown() if this function fails.
  *  @pre Parameters should be parsed and config file should be read.
  */

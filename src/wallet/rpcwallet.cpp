@@ -1,7 +1,7 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2020 The ECODOLLAR developers
+// Copyright (c) 2015-2020 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -18,13 +18,13 @@
 #include "utilmoneystr.h"
 #include "wallet.h"
 #include "walletdb.h"
-#include "zecoschain.h"
+#include "zbioa3chain.h"
 
 #include <stdint.h>
 
 #include "libzerocoin/Coin.h"
 #include "spork.h"
-#include "zecos/deterministicmint.h"
+#include "zbioa3/deterministicmint.h"
 #include <boost/assign/list_of.hpp>
 #include <boost/thread/thread.hpp>
 
@@ -102,7 +102,7 @@ UniValue getnewaddress(const UniValue& params, bool fHelp)
     if (fHelp || params.size() > 1)
         throw std::runtime_error(
             "getnewaddress ( \"account\" )\n"
-            "\nReturns a new ECODOLLAR address for receiving payments.\n"
+            "\nReturns a new BIOA3 address for receiving payments.\n"
             "If 'account' is specified (DEPRECATED), it is added to the address book \n"
             "so payments received with the address will be credited to 'account'.\n"
 
@@ -110,7 +110,7 @@ UniValue getnewaddress(const UniValue& params, bool fHelp)
             "1. \"account\"        (string, optional) DEPRECATED. The account name for the address to be linked to. if not provided, the default account \"\" is used. It can also be set to the empty string \"\" to represent the default account. The account does not need to exist, it will be created if there is no account by the given name.\n"
 
             "\nResult:\n"
-            "\"ecodollaraddress\"    (string) The new ecodollar address\n"
+            "\"bioa3address\"    (string) The new bioa3 address\n"
 
             "\nExamples:\n" +
             HelpExampleCli("getnewaddress", "") + HelpExampleRpc("getnewaddress", ""));
@@ -124,14 +124,14 @@ UniValue getnewstakingaddress(const UniValue& params, bool fHelp)
     if (fHelp || params.size() > 1)
         throw std::runtime_error(
             "getnewstakingaddress ( \"account\" )\n"
-            "\nReturns a new ECODOLLAR cold staking address for receiving delegated cold stakes.\n"
+            "\nReturns a new BIOA3 cold staking address for receiving delegated cold stakes.\n"
 
             "\nArguments:\n"
             "1. \"account\"        (string, optional) DEPRECATED. The account name for the address to be linked to. if not provided, the default account \"\" is used. It can also be set to the empty string \"\" to represent the default account. The account does not need to exist, it will be created if there is no account by the given name.\n"
 
 
             "\nResult:\n"
-            "\"ecodollaraddress\"    (string) The new ecodollar address\n"
+            "\"bioa3address\"    (string) The new bioa3 address\n"
 
             "\nExamples:\n" +
             HelpExampleCli("getnewstakingaddress", "") + HelpExampleRpc("getnewstakingaddress", ""));
@@ -161,13 +161,13 @@ UniValue delegatoradd(const UniValue& params, bool fHelp)
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid() || address.IsStakingAddress())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ECODOLLAR address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid BIOA3 address");
 
     const std::string strLabel = (params.size() > 1 ? params[1].get_str() : "");
 
     CKeyID keyID;
     if (!address.GetKeyID(keyID))
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Unable to get KeyID from ECODOLLAR address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Unable to get KeyID from BIOA3 address");
 
     return pwalletMain->SetAddressBook(keyID, strLabel, AddressBook::AddressBookPurpose::DELEGATOR);
 }
@@ -192,14 +192,14 @@ UniValue delegatorremove(const UniValue& params, bool fHelp)
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid() || address.IsStakingAddress())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ECODOLLAR address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid BIOA3 address");
 
     CKeyID keyID;
     if (!address.GetKeyID(keyID))
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Unable to get KeyID from ECODOLLAR address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Unable to get KeyID from BIOA3 address");
 
     if (!pwalletMain->HasAddressBook(keyID))
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Unable to get ECODOLLAR address from addressBook");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Unable to get BIOA3 address from addressBook");
 
     std::string label = "";
     {
@@ -249,7 +249,7 @@ UniValue listdelegators(const UniValue& params, bool fHelp)
             "[\n"
             "   {\n"
             "   \"label\": \"yyy\",    (string) account label\n"
-            "   \"address\": \"xxx\",  (string) ECODOLLAR address string\n"
+            "   \"address\": \"xxx\",  (string) BIOA3 address string\n"
             "   }\n"
             "  ...\n"
             "]\n"
@@ -275,7 +275,7 @@ UniValue liststakingaddresses(const UniValue& params, bool fHelp)
             "[\n"
             "   {\n"
             "   \"label\": \"yyy\",  (string) account label\n"
-            "   \"address\": \"xxx\",  (string) ECODOLLAR address string\n"
+            "   \"address\": \"xxx\",  (string) BIOA3 address string\n"
             "   }\n"
             "  ...\n"
             "]\n"
@@ -326,13 +326,13 @@ UniValue getaccountaddress(const UniValue& params, bool fHelp)
     if (fHelp || params.size() != 1)
         throw std::runtime_error(
             "getaccountaddress \"account\"\n"
-            "\nDEPRECATED. Returns the current ECODOLLAR address for receiving payments to this account.\n"
+            "\nDEPRECATED. Returns the current BIOA3 address for receiving payments to this account.\n"
 
             "\nArguments:\n"
             "1. \"account\"       (string, required) The account name for the address. It can also be set to the empty string \"\" to represent the default account. The account does not need to exist, it will be created and a new address created  if there is no account by the given name.\n"
 
             "\nResult:\n"
-            "\"ecodollaraddress\"   (string) The account ecodollar address\n"
+            "\"bioa3address\"   (string) The account bioa3 address\n"
 
             "\nExamples:\n" +
             HelpExampleCli("getaccountaddress", "") + HelpExampleCli("getaccountaddress", "\"\"") +
@@ -355,7 +355,7 @@ UniValue getrawchangeaddress(const UniValue& params, bool fHelp)
     if (fHelp || params.size() > 1)
         throw std::runtime_error(
             "getrawchangeaddress\n"
-            "\nReturns a new ECODOLLAR address, for receiving change.\n"
+            "\nReturns a new BIOA3 address, for receiving change.\n"
             "This is for use with raw transactions, NOT normal use.\n"
 
             "\nResult:\n"
@@ -386,11 +386,11 @@ UniValue setaccount(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() < 1 || params.size() > 2)
         throw std::runtime_error(
-            "setaccount \"ecodollaraddress\" \"account\"\n"
+            "setaccount \"bioa3address\" \"account\"\n"
             "\nDEPRECATED. Sets the account associated with the given address.\n"
 
             "\nArguments:\n"
-            "1. \"ecodollaraddress\"  (string, required) The ecodollar address to be associated with an account.\n"
+            "1. \"bioa3address\"  (string, required) The bioa3 address to be associated with an account.\n"
             "2. \"account\"         (string, required) The account to assign the address to.\n"
 
             "\nExamples:\n" +
@@ -400,7 +400,7 @@ UniValue setaccount(const UniValue& params, bool fHelp)
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ECODOLLAR address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid BIOA3 address");
 
 
     std::string strAccount;
@@ -427,11 +427,11 @@ UniValue getaccount(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw std::runtime_error(
-            "getaccount \"ecodollaraddress\"\n"
+            "getaccount \"bioa3address\"\n"
             "\nDEPRECATED. Returns the account associated with the given address.\n"
 
             "\nArguments:\n"
-            "1. \"ecodollaraddress\"  (string, required) The ecodollar address for account lookup.\n"
+            "1. \"bioa3address\"  (string, required) The bioa3 address for account lookup.\n"
 
             "\nResult:\n"
             "\"accountname\"        (string) the account address\n"
@@ -443,7 +443,7 @@ UniValue getaccount(const UniValue& params, bool fHelp)
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ECODOLLAR address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid BIOA3 address");
 
     std::string strAccount;
     std::map<CTxDestination, AddressBook::CAddressBookData>::iterator mi = pwalletMain->mapAddressBook.find(address.Get());
@@ -465,7 +465,7 @@ UniValue getaddressesbyaccount(const UniValue& params, bool fHelp)
 
             "\nResult:\n"
             "[                     (json array of string)\n"
-            "  \"ecodollaraddress\"  (string) a ecodollar address associated with the given account\n"
+            "  \"bioa3address\"  (string) a bioa3 address associated with the given account\n"
             "  ,...\n"
             "]\n"
 
@@ -503,7 +503,7 @@ void SendMoney(const CTxDestination& address, CAmount nValue, CWalletTx& wtxNew,
         throw JSONRPCError(RPC_WALLET_ERROR, strError);
     }
 
-    // Parse ECODOLLAR address
+    // Parse BIOA3 address
     CScript scriptPubKey = GetScriptForDestination(address);
 
     // Create and send the transaction
@@ -523,13 +523,13 @@ UniValue sendtoaddress(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() < 2 || params.size() > 4)
         throw std::runtime_error(
-            "sendtoaddress \"ecodollaraddress\" amount ( \"comment\" \"comment-to\" )\n"
+            "sendtoaddress \"bioa3address\" amount ( \"comment\" \"comment-to\" )\n"
             "\nSend an amount to a given address. The amount is a real and is rounded to the nearest 0.00000001\n" +
             HelpRequiringPassphrase() + "\n"
 
             "\nArguments:\n"
-            "1. \"ecodollaraddress\"  (string, required) The ecodollar address to send to.\n"
-            "2. \"amount\"      (numeric, required) The amount in ECOS to send. eg 0.1\n"
+            "1. \"bioa3address\"  (string, required) The bioa3 address to send to.\n"
+            "2. \"amount\"      (numeric, required) The amount in BIOA3 to send. eg 0.1\n"
             "3. \"comment\"     (string, optional) A comment used to store what the transaction is for. \n"
             "                             This is not part of the transaction, just kept in your wallet.\n"
             "4. \"comment-to\"  (string, optional) A comment to store the name of the person or organization \n"
@@ -548,7 +548,7 @@ UniValue sendtoaddress(const UniValue& params, bool fHelp)
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid() || address.IsStakingAddress())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ECODOLLAR address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid BIOA3 address");
 
     // Amount
     CAmount nAmount = AmountFromValue(params[1]);
@@ -587,7 +587,7 @@ UniValue CreateColdStakeDelegation(const UniValue& params, CWalletTx& wtxNew, CR
     CBitcoinAddress stakeAddr(params[0].get_str());
     CKeyID stakeKey;
     if (!stakeAddr.IsValid() || !stakeAddr.IsStakingAddress())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ECODOLLAR staking address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid BIOA3 staking address");
     if (!stakeAddr.GetKeyID(stakeKey))
         throw JSONRPCError(RPC_WALLET_ERROR, "Unable to get stake pubkey hash from stakingaddress");
 
@@ -617,7 +617,7 @@ UniValue CreateColdStakeDelegation(const UniValue& params, CWalletTx& wtxNew, CR
         // Address provided
         ownerAddr.SetString(params[2].get_str());
         if (!ownerAddr.IsValid() || ownerAddr.IsStakingAddress())
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ECODOLLAR spending address");
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid BIOA3 spending address");
         if (!ownerAddr.GetKeyID(ownerKey))
             throw JSONRPCError(RPC_WALLET_ERROR, "Unable to get spend pubkey hash from owneraddress");
         // Check that the owner address belongs to this wallet, or fForceExternalAddr is true
@@ -665,9 +665,9 @@ UniValue delegatestake(const UniValue& params, bool fHelp)
             HelpRequiringPassphrase() + "\n"
 
             "\nArguments:\n"
-            "1. \"stakingaddress\"      (string, required) The ecodollar staking address to delegate.\n"
-            "2. \"amount\"              (numeric, required) The amount in ECOS to delegate for staking. eg 100\n"
-            "3. \"owneraddress\"        (string, optional) The ecodollar address corresponding to the key that will be able to spend the stake. \n"
+            "1. \"stakingaddress\"      (string, required) The bioa3 staking address to delegate.\n"
+            "2. \"amount\"              (numeric, required) The amount in BIOA3 to delegate for staking. eg 100\n"
+            "3. \"owneraddress\"        (string, optional) The bioa3 address corresponding to the key that will be able to spend the stake. \n"
             "                               If not provided, or empty string, a new wallet address is generated.\n"
             "4. \"fExternalOwner\"      (boolean, optional, default = false) use the provided 'owneraddress' anyway, even if not present in this wallet.\n"
             "                               WARNING: The owner of the keys to 'owneraddress' will be the only one allowed to spend these coins.\n"
@@ -709,9 +709,9 @@ UniValue rawdelegatestake(const UniValue& params, bool fHelp)
             HelpRequiringPassphrase() + "\n"
 
             "\nArguments:\n"
-            "1. \"stakingaddress\"      (string, required) The ecodollar staking address to delegate.\n"
-            "2. \"amount\"              (numeric, required) The amount in ECOS to delegate for staking. eg 100\n"
-            "3. \"owneraddress\"        (string, optional) The ecodollar address corresponding to the key that will be able to spend the stake. \n"
+            "1. \"stakingaddress\"      (string, required) The bioa3 staking address to delegate.\n"
+            "2. \"amount\"              (numeric, required) The amount in BIOA3 to delegate for staking. eg 100\n"
+            "3. \"owneraddress\"        (string, optional) The bioa3 address corresponding to the key that will be able to spend the stake. \n"
             "                               If not provided, or empty string, a new wallet address is generated.\n"
             "4. \"fExternalOwner\"      (boolean, optional, default = false) use the provided 'owneraddress' anyway, even if not present in this wallet.\n"
             "                               WARNING: The owner of the keys to 'owneraddress' will be the only one allowed to spend these coins.\n"
@@ -745,7 +745,7 @@ UniValue rawdelegatestake(const UniValue& params, bool fHelp)
             "         \"reqSigs\" : n,            (numeric) The required sigs\n"
             "         \"type\" : \"pubkeyhash\",  (string) The type, eg 'pubkeyhash'\n"
             "         \"addresses\" : [           (json array of string)\n"
-            "           \"ecodollaraddress\"        (string) ecodollar address\n"
+            "           \"bioa3address\"        (string) bioa3 address\n"
             "           ,...\n"
             "         ]\n"
             "       }\n"
@@ -776,13 +776,13 @@ UniValue sendtoaddressix(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() < 2 || params.size() > 4)
         throw std::runtime_error(
-            "sendtoaddressix \"ecodollaraddress\" amount ( \"comment\" \"comment-to\" )\n"
+            "sendtoaddressix \"bioa3address\" amount ( \"comment\" \"comment-to\" )\n"
             "\nSend an amount to a given address. The amount is a real and is rounded to the nearest 0.00000001\n" +
             HelpRequiringPassphrase() + "\n"
 
             "\nArguments:\n"
-            "1. \"ecodollaraddress\"  (string, required) The ecodollar address to send to.\n"
-            "2. \"amount\"      (numeric, required) The amount in ECOS to send. eg 0.1\n"
+            "1. \"bioa3address\"  (string, required) The bioa3 address to send to.\n"
+            "2. \"amount\"      (numeric, required) The amount in BIOA3 to send. eg 0.1\n"
             "3. \"comment\"     (string, optional) A comment used to store what the transaction is for. \n"
             "                             This is not part of the transaction, just kept in your wallet.\n"
             "4. \"comment-to\"  (string, optional) A comment to store the name of the person or organization \n"
@@ -801,7 +801,7 @@ UniValue sendtoaddressix(const UniValue& params, bool fHelp)
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid() || address.IsStakingAddress())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ECODOLLAR address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid BIOA3 address");
 
     // Amount
     CAmount nAmount = AmountFromValue(params[1]);
@@ -833,8 +833,8 @@ UniValue listaddressgroupings(const UniValue& params, bool fHelp)
             "[\n"
             "  [\n"
             "    [\n"
-            "      \"ecodollaraddress\",     (string) The ecodollar address\n"
-            "      amount,                 (numeric) The amount in ECOS\n"
+            "      \"bioa3address\",     (string) The bioa3 address\n"
+            "      amount,                 (numeric) The amount in BIOA3\n"
             "      \"account\"             (string, optional) The account (DEPRECATED)\n"
             "    ]\n"
             "    ,...\n"
@@ -870,12 +870,12 @@ UniValue signmessage(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() != 2)
         throw std::runtime_error(
-            "signmessage \"ecodollaraddress\" \"message\"\n"
+            "signmessage \"bioa3address\" \"message\"\n"
             "\nSign a message with the private key of an address" +
             HelpRequiringPassphrase() + "\n"
 
             "\nArguments:\n"
-            "1. \"ecodollaraddress\"  (string, required) The ecodollar address to use for the private key.\n"
+            "1. \"bioa3address\"  (string, required) The bioa3 address to use for the private key.\n"
             "2. \"message\"         (string, required) The message to create a signature of.\n"
 
             "\nResult:\n"
@@ -925,15 +925,15 @@ UniValue getreceivedbyaddress(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() < 1 || params.size() > 2)
         throw std::runtime_error(
-            "getreceivedbyaddress \"ecodollaraddress\" ( minconf )\n"
-            "\nReturns the total amount received by the given ecodollaraddress in transactions with at least minconf confirmations.\n"
+            "getreceivedbyaddress \"bioa3address\" ( minconf )\n"
+            "\nReturns the total amount received by the given bioa3address in transactions with at least minconf confirmations.\n"
 
             "\nArguments:\n"
-            "1. \"ecodollaraddress\"  (string, required) The ecodollar address for transactions.\n"
+            "1. \"bioa3address\"  (string, required) The bioa3 address for transactions.\n"
             "2. minconf             (numeric, optional, default=1) Only include transactions confirmed at least this many times.\n"
 
             "\nResult:\n"
-            "amount   (numeric) The total amount in ECOS received at this address.\n"
+            "amount   (numeric) The total amount in BIOA3 received at this address.\n"
 
             "\nExamples:\n"
             "\nThe amount from transactions with at least 1 confirmation\n" +
@@ -947,10 +947,10 @@ UniValue getreceivedbyaddress(const UniValue& params, bool fHelp)
 
     LOCK2(cs_main, pwalletMain->cs_wallet);
 
-    // ecodollar address
+    // bioa3 address
     CBitcoinAddress address = CBitcoinAddress(params[0].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ECODOLLAR address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid BIOA3 address");
     CScript scriptPubKey = GetScriptForDestination(address.Get());
     if (!IsMine(*pwalletMain, scriptPubKey))
         throw JSONRPCError(RPC_WALLET_ERROR, "Address not found in wallet");
@@ -989,7 +989,7 @@ UniValue getreceivedbyaccount(const UniValue& params, bool fHelp)
             "2. minconf          (numeric, optional, default=1) Only include transactions confirmed at least this many times.\n"
 
             "\nResult:\n"
-            "amount              (numeric) The total amount in ECOS received for this account.\n"
+            "amount              (numeric) The total amount in BIOA3 received for this account.\n"
 
             "\nExamples:\n"
             "\nAmount received by the default account with at least 1 confirmation\n" +
@@ -1102,7 +1102,7 @@ UniValue getbalance(const UniValue& params, bool fHelp)
             "4. includeDelegated (bool, optional, default=true) Also include balance delegated to cold stakers\n"
 
             "\nResult:\n"
-            "amount              (numeric) The total amount in ECOS received for this account.\n"
+            "amount              (numeric) The total amount in BIOA3 received for this account.\n"
 
             "\nExamples:\n"
             "\nThe total amount in the wallet\n" +
@@ -1144,7 +1144,7 @@ UniValue getcoldstakingbalance(const UniValue& params, bool fHelp)
             "1. \"account\"      (string, optional) DEPRECATED. The selected account, or \"*\" for entire wallet. It may be the default account using \"\".\n"
 
             "\nResult:\n"
-            "amount              (numeric) The total amount in ECOS received for this account in P2CS contracts.\n"
+            "amount              (numeric) The total amount in BIOA3 received for this account in P2CS contracts.\n"
 
             "\nExamples:\n"
             "\nThe total amount in the wallet\n" +
@@ -1176,7 +1176,7 @@ UniValue getdelegatedbalance(const UniValue& params, bool fHelp)
             "1. \"account\"      (string, optional) DEPRECATED. The selected account, or \"*\" for entire wallet. It may be the default account using \"\".\n"
 
             "\nResult:\n"
-            "amount              (numeric) The total amount in ECOS received for this account in P2CS contracts.\n"
+            "amount              (numeric) The total amount in BIOA3 received for this account in P2CS contracts.\n"
 
             "\nExamples:\n"
             "\nThe total amount in the wallet\n" +
@@ -1216,7 +1216,7 @@ UniValue movecmd(const UniValue& params, bool fHelp)
             "\nArguments:\n"
             "1. \"fromaccount\"   (string, required) The name of the account to move funds from. May be the default account using \"\".\n"
             "2. \"toaccount\"     (string, required) The name of the account to move funds to. May be the default account using \"\".\n"
-            "3. amount            (numeric, required) Quantity of ECOS to move between accounts.\n"
+            "3. amount            (numeric, required) Quantity of BIOA3 to move between accounts.\n"
             "4. minconf           (numeric, optional, default=1) Only use funds with at least this many confirmations.\n"
             "5. \"comment\"       (string, optional) An optional comment, stored in the wallet only.\n"
 
@@ -1224,9 +1224,9 @@ UniValue movecmd(const UniValue& params, bool fHelp)
             "true|false           (boolean) true if successful.\n"
 
             "\nExamples:\n"
-            "\nMove 0.01 ECOS from the default account to the account named tabby\n" +
+            "\nMove 0.01 BIOA3 from the default account to the account named tabby\n" +
             HelpExampleCli("move", "\"\" \"tabby\" 0.01") +
-            "\nMove 0.01 ECOS from timotei to akiko with a comment\n" +
+            "\nMove 0.01 BIOA3 from timotei to akiko with a comment\n" +
             HelpExampleCli("move", "\"timotei\" \"akiko\" 0.01 1 \"happy birthday!\"") +
             "\nAs a json rpc call\n" +
             HelpExampleRpc("move", "\"timotei\", \"akiko\", 0.01, 1, \"happy birthday!\""));
@@ -1280,15 +1280,15 @@ UniValue sendfrom(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() < 3 || params.size() > 7)
         throw std::runtime_error(
-            "sendfrom \"fromaccount\" \"toecodollaraddress\" amount ( minconf \"comment\" \"comment-to\" includeDelegated)\n"
-            "\nDEPRECATED (use sendtoaddress). Send an amount from an account to a ecodollar address.\n"
+            "sendfrom \"fromaccount\" \"tobioa3address\" amount ( minconf \"comment\" \"comment-to\" includeDelegated)\n"
+            "\nDEPRECATED (use sendtoaddress). Send an amount from an account to a bioa3 address.\n"
             "The amount is a real and is rounded to the nearest 0.00000001." +
             HelpRequiringPassphrase() + "\n"
 
             "\nArguments:\n"
             "1. \"fromaccount\"       (string, required) The name of the account to send funds from. May be the default account using \"\".\n"
-            "2. \"toecodollaraddress\"  (string, required) The ecodollar address to send funds to.\n"
-            "3. amount                (numeric, required) The amount in ECOS. (transaction fee is added on top).\n"
+            "2. \"tobioa3address\"  (string, required) The bioa3 address to send funds to.\n"
+            "3. amount                (numeric, required) The amount in BIOA3. (transaction fee is added on top).\n"
             "4. minconf               (numeric, optional, default=1) Only use funds with at least this many confirmations.\n"
             "5. \"comment\"           (string, optional) A comment used to store what the transaction is for. \n"
             "                                     This is not part of the transaction, just kept in your wallet.\n"
@@ -1301,7 +1301,7 @@ UniValue sendfrom(const UniValue& params, bool fHelp)
             "\"transactionid\"        (string) The transaction id.\n"
 
             "\nExamples:\n"
-            "\nSend 0.01 ECOS from the default account to the address, must have at least 1 confirmation\n" +
+            "\nSend 0.01 BIOA3 from the default account to the address, must have at least 1 confirmation\n" +
             HelpExampleCli("sendfrom", "\"\" \"DMJRSsuU9zfyrvxVaAEFQqK4MxZg6vgeS6\" 0.01") +
             "\nSend 0.01 from the tabby account to the given address, funds must have at least 6 confirmations\n" +
             HelpExampleCli("sendfrom", "\"tabby\" \"DMJRSsuU9zfyrvxVaAEFQqK4MxZg6vgeS6\" 0.01 6 \"donation\" \"seans outpost\"") +
@@ -1313,7 +1313,7 @@ UniValue sendfrom(const UniValue& params, bool fHelp)
     std::string strAccount = AccountFromValue(params[0]);
     CBitcoinAddress address(params[1].get_str());
     if (!address.IsValid() || address.IsStakingAddress())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ECODOLLAR address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid BIOA3 address");
     CAmount nAmount = AmountFromValue(params[2]);
     int nMinDepth = 1;
     if (params.size() > 3)
@@ -1355,7 +1355,7 @@ UniValue sendmany(const UniValue& params, bool fHelp)
             "1. \"fromaccount\"         (string, required) DEPRECATED. The account to send the funds from. Should be \"\" for the default account\n"
             "2. \"amounts\"             (string, required) A json object with addresses and amounts\n"
             "    {\n"
-            "      \"address\":amount   (numeric) The ecodollar address is the key, the numeric amount in ECOS is the value\n"
+            "      \"address\":amount   (numeric) The bioa3 address is the key, the numeric amount in BIOA3 is the value\n"
             "      ,...\n"
             "    }\n"
             "3. minconf                 (numeric, optional, default=1) Only use the balance confirmed at least this many times.\n"
@@ -1395,7 +1395,7 @@ UniValue sendmany(const UniValue& params, bool fHelp)
     for (const std::string& name_ : keys) {
         CBitcoinAddress address(name_);
         if (!address.IsValid() || address.IsStakingAddress())
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid ECODOLLAR address: ")+name_);
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid BIOA3 address: ")+name_);
 
         if (setAddress.count(address))
             throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplicated address: ")+name_);
@@ -1441,20 +1441,20 @@ UniValue addmultisigaddress(const UniValue& params, bool fHelp)
         throw std::runtime_error(
             "addmultisigaddress nrequired [\"key\",...] ( \"account\" )\n"
             "\nAdd a nrequired-to-sign multisignature address to the wallet.\n"
-            "Each key is a ECODOLLAR address or hex-encoded public key.\n"
+            "Each key is a BIOA3 address or hex-encoded public key.\n"
             "If 'account' is specified (DEPRECATED), assign address to that account.\n"
 
             "\nArguments:\n"
             "1. nrequired        (numeric, required) The number of required signatures out of the n keys or addresses.\n"
-            "2. \"keysobject\"   (string, required) A json array of ecodollar addresses or hex-encoded public keys\n"
+            "2. \"keysobject\"   (string, required) A json array of bioa3 addresses or hex-encoded public keys\n"
             "     [\n"
-            "       \"address\"  (string) ecodollar address or hex-encoded public key\n"
+            "       \"address\"  (string) bioa3 address or hex-encoded public key\n"
             "       ...,\n"
             "     ]\n"
             "3. \"account\"      (string, optional) DEPRECATED. An account to assign the addresses to.\n"
 
             "\nResult:\n"
-            "\"ecodollaraddress\"  (string) A ecodollar address associated with the keys.\n"
+            "\"bioa3address\"  (string) A bioa3 address associated with the keys.\n"
 
             "\nExamples:\n"
             "\nAdd a multisig address from 2 addresses\n" +
@@ -1626,7 +1626,7 @@ UniValue listreceivedbyaddress(const UniValue& params, bool fHelp)
             "    \"involvesWatchonly\" : \"true\",    (bool) Only returned if imported addresses were involved in transaction\n"
             "    \"address\" : \"receivingaddress\",  (string) The receiving address\n"
             "    \"account\" : \"accountname\",       (string) DEPRECATED. The account of the receiving address. The default account is \"\".\n"
-            "    \"amount\" : x.xxx,                  (numeric) The total amount in ECOS received by the address\n"
+            "    \"amount\" : x.xxx,                  (numeric) The total amount in BIOA3 received by the address\n"
             "    \"confirmations\" : n                (numeric) The number of confirmations of the most recent transaction included\n"
             "    \"bcconfirmations\" : n              (numeric) The number of blockchain confirmations of the most recent transaction included\n"
             "  }\n"
@@ -1853,17 +1853,17 @@ UniValue listtransactions(const UniValue& params, bool fHelp)
             "  {\n"
             "    \"account\":\"accountname\",       (string) DEPRECATED. The account name associated with the transaction. \n"
             "                                                It will be \"\" for the default account.\n"
-            "    \"address\":\"ecodollaraddress\",    (string) The ecodollar address of the transaction. Not present for \n"
+            "    \"address\":\"bioa3address\",    (string) The bioa3 address of the transaction. Not present for \n"
             "                                                move transactions (category = move).\n"
             "    \"category\":\"send|receive|move\", (string) The transaction category. 'move' is a local (off blockchain)\n"
             "                                                transaction between accounts, and not associated with an address,\n"
             "                                                transaction id or block. 'send' and 'receive' transactions are \n"
             "                                                associated with an address, transaction id and block details\n"
-            "    \"amount\": x.xxx,          (numeric) The amount in ECOS. This is negative for the 'send' category, and for the\n"
+            "    \"amount\": x.xxx,          (numeric) The amount in BIOA3. This is negative for the 'send' category, and for the\n"
             "                                         'move' category for moves outbound. It is positive for the 'receive' category,\n"
             "                                         and for the 'move' category for inbound funds.\n"
             "    \"vout\" : n,               (numeric) the vout value\n"
-            "    \"fee\": x.xxx,             (numeric) The amount of the fee in ECOS. This is negative and only available for the \n"
+            "    \"fee\": x.xxx,             (numeric) The amount of the fee in BIOA3. This is negative and only available for the \n"
             "                                         'send' category of transactions.\n"
             "    \"confirmations\": n,       (numeric) The number of confirmations for the transaction. Available for 'send' and \n"
             "                                         'receive' category of transactions.\n"
@@ -2053,12 +2053,12 @@ UniValue listsinceblock(const UniValue& params, bool fHelp)
             "{\n"
             "  \"transactions\": [\n"
             "    \"account\":\"accountname\",       (string) DEPRECATED. The account name associated with the transaction. Will be \"\" for the default account.\n"
-            "    \"address\":\"ecodollaraddress\",    (string) The ecodollar address of the transaction. Not present for move transactions (category = move).\n"
+            "    \"address\":\"bioa3address\",    (string) The bioa3 address of the transaction. Not present for move transactions (category = move).\n"
             "    \"category\":\"send|receive\",     (string) The transaction category. 'send' has negative amounts, 'receive' has positive amounts.\n"
-            "    \"amount\": x.xxx,          (numeric) The amount in ECOS. This is negative for the 'send' category, and for the 'move' category for moves \n"
+            "    \"amount\": x.xxx,          (numeric) The amount in BIOA3. This is negative for the 'send' category, and for the 'move' category for moves \n"
             "                                          outbound. It is positive for the 'receive' category, and for the 'move' category for inbound funds.\n"
             "    \"vout\" : n,               (numeric) the vout value\n"
-            "    \"fee\": x.xxx,             (numeric) The amount of the fee in ECOS. This is negative and only available for the 'send' category of transactions.\n"
+            "    \"fee\": x.xxx,             (numeric) The amount of the fee in BIOA3. This is negative and only available for the 'send' category of transactions.\n"
             "    \"confirmations\": n,       (numeric) The number of confirmations for the transaction. Available for 'send' and 'receive' category of transactions.\n"
             "    \"bcconfirmations\" : n,    (numeric) The number of blockchain confirmations for the transaction. Available for 'send' and 'receive' category of transactions.\n"
             "    \"blockhash\": \"hashvalue\",     (string) The block hash containing the transaction. Available for 'send' and 'receive' category of transactions.\n"
@@ -2138,7 +2138,7 @@ UniValue gettransaction(const UniValue& params, bool fHelp)
 
             "\nResult:\n"
             "{\n"
-            "  \"amount\" : x.xxx,        (numeric) The transaction amount in ECOS\n"
+            "  \"amount\" : x.xxx,        (numeric) The transaction amount in BIOA3\n"
             "  \"confirmations\" : n,     (numeric) The number of confirmations\n"
             "  \"bcconfirmations\" : n,   (numeric) The number of blockchain confirmations\n"
             "  \"blockhash\" : \"hash\",  (string) The block hash\n"
@@ -2150,9 +2150,9 @@ UniValue gettransaction(const UniValue& params, bool fHelp)
             "  \"details\" : [\n"
             "    {\n"
             "      \"account\" : \"accountname\",  (string) DEPRECATED. The account name involved in the transaction, can be \"\" for the default account.\n"
-            "      \"address\" : \"ecodollaraddress\",   (string) The ecodollar address involved in the transaction\n"
+            "      \"address\" : \"bioa3address\",   (string) The bioa3 address involved in the transaction\n"
             "      \"category\" : \"send|receive\",    (string) The category, either 'send' or 'receive'\n"
-            "      \"amount\" : x.xxx                  (numeric) The amount in ECOS\n"
+            "      \"amount\" : x.xxx                  (numeric) The amount in BIOA3\n"
             "      \"vout\" : n,                       (numeric) the vout value\n"
             "    }\n"
             "    ,...\n"
@@ -2306,7 +2306,7 @@ UniValue walletpassphrase(const UniValue& params, bool fHelp)
         throw std::runtime_error(
             "walletpassphrase \"passphrase\" timeout ( anonymizeonly )\n"
             "\nStores the wallet decryption key in memory for 'timeout' seconds.\n"
-            "This is needed prior to performing transactions related to private keys such as sending ECOSs\n"
+            "This is needed prior to performing transactions related to private keys such as sending BIOA3s\n"
 
             "\nArguments:\n"
             "1. \"passphrase\"     (string, required) The wallet passphrase\n"
@@ -2471,10 +2471,10 @@ UniValue encryptwallet(const UniValue& params, bool fHelp)
             "\nExamples:\n"
             "\nEncrypt you wallet\n" +
             HelpExampleCli("encryptwallet", "\"my pass phrase\"") +
-            "\nNow set the passphrase to use the wallet, such as for signing or sending ECOSs\n" +
+            "\nNow set the passphrase to use the wallet, such as for signing or sending BIOA3s\n" +
             HelpExampleCli("walletpassphrase", "\"my pass phrase\"") +
             "\nNow we can so something like sign\n" +
-            HelpExampleCli("signmessage", "\"ecodollaraddress\" \"test message\"") +
+            HelpExampleCli("signmessage", "\"bioa3address\" \"test message\"") +
             "\nNow lock the wallet again by removing the passphrase\n" +
             HelpExampleCli("walletlock", "") +
             "\nAs a json rpc call\n" +
@@ -2505,7 +2505,7 @@ UniValue encryptwallet(const UniValue& params, bool fHelp)
     // slack space in .dat files; that is bad if the old data is
     // unencrypted private keys. So:
     StartShutdown();
-    return "wallet encrypted; ecodollar server stopping, restart to run with encrypted wallet. The keypool has been flushed, you need to make a new backup.";
+    return "wallet encrypted; bioa3 server stopping, restart to run with encrypted wallet. The keypool has been flushed, you need to make a new backup.";
 }
 
 UniValue lockunspent(const UniValue& params, bool fHelp)
@@ -2515,7 +2515,7 @@ UniValue lockunspent(const UniValue& params, bool fHelp)
             "lockunspent unlock [{\"txid\":\"txid\",\"vout\":n},...]\n"
             "\nUpdates list of temporarily unspendable outputs.\n"
             "Temporarily lock (unlock=false) or unlock (unlock=true) specified transaction outputs.\n"
-            "A locked transaction output will not be chosen by automatic coin selection, when spending ECOSs.\n"
+            "A locked transaction output will not be chosen by automatic coin selection, when spending BIOA3s.\n"
             "Locks are stored in memory only. Nodes start with zero locked outputs, and the locked output list\n"
             "is always cleared (by virtue of process exit) when a node stops or fails.\n"
             "Also see the listunspent call\n"
@@ -2679,7 +2679,7 @@ UniValue settxfee(const UniValue& params, bool fHelp)
             "\nSet the transaction fee per kB.\n"
 
             "\nArguments:\n"
-            "1. amount         (numeric, required) The transaction fee in ECOS/kB rounded to the nearest 0.00000001\n"
+            "1. amount         (numeric, required) The transaction fee in BIOA3/kB rounded to the nearest 0.00000001\n"
 
             "\nResult\n"
             "true|false        (boolean) Returns true if successful\n"
@@ -2707,18 +2707,18 @@ UniValue getwalletinfo(const UniValue& params, bool fHelp)
             "\nResult:\n"
             "{\n"
             "  \"walletversion\": xxxxx,                  (numeric) the wallet version\n"
-            "  \"balance\": xxxxxxx,                      (numeric) the total ECOS balance of the wallet (cold balance excluded)\n"
-            "  \"delegated_balance\": xxxxx,              (numeric) the ECOS balance held in P2CS (cold staking) contracts\n"
-            "  \"cold_staking_balance\": xx,              (numeric) the ECOS balance held in cold staking addresses\n"
-            "  \"unconfirmed_balance\": xxx,              (numeric) the total unconfirmed balance of the wallet in ECOS\n"
-            "  \"immature_delegated_balance\": xxxxxx,    (numeric) the delegated immature balance of the wallet in ECOS\n"
-            "  \"immature_cold_staking_balance\": xxxxxx, (numeric) the cold-staking immature balance of the wallet in ECOS\n"
-            "  \"immature_balance\": xxxxxx,              (numeric) the total immature balance of the wallet in ECOS\n"
+            "  \"balance\": xxxxxxx,                      (numeric) the total BIOA3 balance of the wallet (cold balance excluded)\n"
+            "  \"delegated_balance\": xxxxx,              (numeric) the BIOA3 balance held in P2CS (cold staking) contracts\n"
+            "  \"cold_staking_balance\": xx,              (numeric) the BIOA3 balance held in cold staking addresses\n"
+            "  \"unconfirmed_balance\": xxx,              (numeric) the total unconfirmed balance of the wallet in BIOA3\n"
+            "  \"immature_delegated_balance\": xxxxxx,    (numeric) the delegated immature balance of the wallet in BIOA3\n"
+            "  \"immature_cold_staking_balance\": xxxxxx, (numeric) the cold-staking immature balance of the wallet in BIOA3\n"
+            "  \"immature_balance\": xxxxxx,              (numeric) the total immature balance of the wallet in BIOA3\n"
             "  \"txcount\": xxxxxxx,                      (numeric) the total number of transactions in the wallet\n"
             "  \"keypoololdest\": xxxxxx,                 (numeric) the timestamp (seconds since GMT epoch) of the oldest pre-generated key in the key pool\n"
             "  \"keypoolsize\": xxxx,                     (numeric) how many new keys are pre-generated\n"
             "  \"unlocked_until\": ttt,                   (numeric) the timestamp in seconds since epoch (midnight Jan 1 1970 GMT) that the wallet is unlocked for transfers, or 0 if the wallet is locked\n"
-            "  \"paytxfee\": x.xxxx,                      (numeric) the transaction fee configuration, set in ECOS/kB\n"
+            "  \"paytxfee\": x.xxxx,                      (numeric) the transaction fee configuration, set in BIOA3/kB\n"
             "  \"automintaddresses\": status              (boolean) the status of automint addresses (true if enabled, false if disabled)\n"
             "}\n"
 
@@ -2863,7 +2863,7 @@ UniValue autocombinerewards(const UniValue& params, bool fHelp)
     if (fHelp || params.size() < 1 || (fEnable && params.size() != 2) || params.size() > 2)
         throw std::runtime_error(
             "autocombinerewards enable ( threshold )\n"
-            "\nWallet will automatically monitor for any coins with value below the threshold amount, and combine them if they reside with the same ECODOLLAR address\n"
+            "\nWallet will automatically monitor for any coins with value below the threshold amount, and combine them if they reside with the same BIOA3 address\n"
             "When autocombinerewards runs it will create a transaction, and therefore will be subject to transaction fees.\n"
 
             "\nArguments:\n"
@@ -3072,7 +3072,7 @@ UniValue multisend(const UniValue& params, bool fHelp)
             "The MultiSend transaction is sent when the staked coins mature (100 confirmations)\n"
             "****************************************************************\n"
             "TO CREATE OR ADD TO THE MULTISEND VECTOR:\n"
-            "multisend <ECODOLLAR Address> <percent>\n"
+            "multisend <BIOA3 Address> <percent>\n"
             "This will add a new address to the MultiSend vector\n"
             "Percent is a whole number 1 to 100.\n"
             "****************************************************************\n"
@@ -3091,7 +3091,7 @@ UniValue multisend(const UniValue& params, bool fHelp)
     std::string strAddress = params[0].get_str();
     CBitcoinAddress address(strAddress);
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid ECOS address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid BIOA3 address");
     if (std::stoi(params[1].get_str().c_str()) < 0)
         throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, expected valid percentage");
     if (pwalletMain->IsLocked())
@@ -3137,12 +3137,12 @@ UniValue generatemintlist(const UniValue& params, bool fHelp)
     if(fHelp || params.size() != 2)
         throw std::runtime_error(
             "generatemintlist\n"
-            "\nShow mints that are derived from the deterministic zECOS seed.\n" +
+            "\nShow mints that are derived from the deterministic zBIOA3 seed.\n" +
             HelpRequiringPassphrase() + "\n"
 
             "\nArguments\n"
-            "1. \"count\"  : n,  (numeric) Which sequential zECOS to start with.\n"
-            "2. \"range\"  : n,  (numeric) How many zECOS to generate.\n"
+            "1. \"count\"  : n,  (numeric) Which sequential zBIOA3 to start with.\n"
+            "2. \"range\"  : n,  (numeric) How many zBIOA3 to generate.\n"
 
             "\nResult:\n"
             "[\n"
@@ -3162,7 +3162,7 @@ UniValue generatemintlist(const UniValue& params, bool fHelp)
 
     int nCount = params[0].get_int();
     int nRange = params[1].get_int();
-    CzECOSWallet* zwallet = pwalletMain->zwalletMain;
+    CzBIOA3Wallet* zwallet = pwalletMain->zwalletMain;
 
     UniValue arrRet(UniValue::VARR);
     for (int i = nCount; i < nCount + nRange; i++) {
@@ -3181,28 +3181,28 @@ UniValue generatemintlist(const UniValue& params, bool fHelp)
     return arrRet;
 }
 
-UniValue dzecosstate(const UniValue& params, bool fHelp) {
+UniValue dzbioa3state(const UniValue& params, bool fHelp) {
     if (fHelp || params.size() != 0)
         throw std::runtime_error(
-                "dzecosstate\n"
-                        "\nThe current state of the mintpool of the deterministic zECOS wallet.\n" +
+                "dzbioa3state\n"
+                        "\nThe current state of the mintpool of the deterministic zBIOA3 wallet.\n" +
                 HelpRequiringPassphrase() + "\n"
 
                         "\nExamples\n" +
                 HelpExampleCli("mintpoolstatus", "") + HelpExampleRpc("mintpoolstatus", ""));
 
-    CzECOSWallet* zwallet = pwalletMain->zwalletMain;
+    CzBIOA3Wallet* zwallet = pwalletMain->zwalletMain;
     UniValue obj(UniValue::VOBJ);
     int nCount, nCountLastUsed;
     zwallet->GetState(nCount, nCountLastUsed);
-    obj.push_back(Pair("dzecos_count", nCount));
+    obj.push_back(Pair("dzbioa3_count", nCount));
     obj.push_back(Pair("mintpool_count", nCountLastUsed));
 
     return obj;
 }
 
 
-void static SearchThread(CzECOSWallet* zwallet, int nCountStart, int nCountEnd)
+void static SearchThread(CzBIOA3Wallet* zwallet, int nCountStart, int nCountEnd)
 {
     LogPrintf("%s: start=%d end=%d\n", __func__, nCountStart, nCountEnd);
     CWalletDB walletDB(pwalletMain->strWalletFile);
@@ -3219,7 +3219,7 @@ void static SearchThread(CzECOSWallet* zwallet, int nCountStart, int nCountEnd)
             CBigNum bnSerial;
             CBigNum bnRandomness;
             CKey key;
-            zwallet->SeedToZECOS(zerocoinSeed, bnValue, bnSerial, bnRandomness, key);
+            zwallet->SeedToZBIOA3(zerocoinSeed, bnValue, bnSerial, bnRandomness, key);
 
             uint256 hashPubcoin = GetPubCoinHash(bnValue);
             zwallet->AddToMintPool(std::make_pair(hashPubcoin, i), true);
@@ -3232,21 +3232,21 @@ void static SearchThread(CzECOSWallet* zwallet, int nCountStart, int nCountEnd)
     }
 }
 
-UniValue searchdzecos(const UniValue& params, bool fHelp)
+UniValue searchdzbioa3(const UniValue& params, bool fHelp)
 {
     if(fHelp || params.size() != 3)
         throw std::runtime_error(
-            "searchdzecos\n"
-            "\nMake an extended search for deterministically generated zECOS that have not yet been recognized by the wallet.\n" +
+            "searchdzbioa3\n"
+            "\nMake an extended search for deterministically generated zBIOA3 that have not yet been recognized by the wallet.\n" +
             HelpRequiringPassphrase() + "\n"
 
             "\nArguments\n"
-            "1. \"count\"       (numeric) Which sequential zECOS to start with.\n"
-            "2. \"range\"       (numeric) How many zECOS to generate.\n"
+            "1. \"count\"       (numeric) Which sequential zBIOA3 to start with.\n"
+            "2. \"range\"       (numeric) How many zBIOA3 to generate.\n"
             "3. \"threads\"     (numeric) How many threads should this operation consume.\n"
 
             "\nExamples\n" +
-            HelpExampleCli("searchdzecos", "1, 100, 2") + HelpExampleRpc("searchdzecos", "1, 100, 2"));
+            HelpExampleCli("searchdzbioa3", "1, 100, 2") + HelpExampleRpc("searchdzbioa3", "1, 100, 2"));
 
     EnsureWalletIsUnlocked();
 
@@ -3260,9 +3260,9 @@ UniValue searchdzecos(const UniValue& params, bool fHelp)
 
     int nThreads = params[2].get_int();
 
-    CzECOSWallet* zwallet = pwalletMain->zwalletMain;
+    CzBIOA3Wallet* zwallet = pwalletMain->zwalletMain;
 
-    boost::thread_group* dzecosThreads = new boost::thread_group();
+    boost::thread_group* dzbioa3Threads = new boost::thread_group();
     int nRangePerThread = nRange / nThreads;
 
     int nPrevThreadEnd = nCount - 1;
@@ -3270,12 +3270,12 @@ UniValue searchdzecos(const UniValue& params, bool fHelp)
         int nStart = nPrevThreadEnd + 1;;
         int nEnd = nStart + nRangePerThread;
         nPrevThreadEnd = nEnd;
-        dzecosThreads->create_thread(boost::bind(&SearchThread, zwallet, nStart, nEnd));
+        dzbioa3Threads->create_thread(boost::bind(&SearchThread, zwallet, nStart, nEnd));
     }
 
-    dzecosThreads->join_all();
+    dzbioa3Threads->join_all();
 
-    zwallet->RemoveMintsFromPool(pwalletMain->zecosTracker->GetSerialHashes());
+    zwallet->RemoveMintsFromPool(pwalletMain->zbioa3Tracker->GetSerialHashes());
     zwallet->SyncWithChain(false);
 
     //todo: better response
@@ -3309,7 +3309,7 @@ UniValue createautomintaddress(const UniValue& params, bool fHelp)
                 HelpRequiringPassphrase() + "\n"
 
                 "\nResult\n"
-                "\"address\"     (string) ECODOLLAR address for auto minting\n" +
+                "\"address\"     (string) BIOA3 address for auto minting\n" +
                 HelpExampleCli("createautomintaddress", "") +
                 HelpExampleRpc("createautomintaddress", ""));
 

@@ -1,6 +1,6 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2019 The ECODOLLAR developers
+// Copyright (c) 2015-2019 The BIOA3 developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -11,10 +11,10 @@
 #include "guiconstants.h"
 #include "guiutil.h"
 #include "walletmodel.h"
-#include "qt/ecodollar/qtutils.h"
-#include "qt/ecodollar/loadingdialog.h"
-#include "qt/ecodollar/defaultdialog.h"
-#include "qt/ecodollar/ecodollargui.h"
+#include "qt/bioa3/qtutils.h"
+#include "qt/bioa3/loadingdialog.h"
+#include "qt/bioa3/defaultdialog.h"
+#include "qt/bioa3/bioa3gui.h"
 #include <QDebug>
 
 #include <QKeyEvent>
@@ -183,13 +183,13 @@ void AskPassphraseDialog::accept()
         hide();
         bool ret = openStandardDialog(
                 tr("Confirm wallet encryption"),
-                tr("Warning: If you encrypt your wallet and lose your passphrase, you will <b>LOSE ALL OF YOUR ECOS</b>!") + "<br><br>" + tr("Are you sure you wish to encrypt your wallet?"),
+                tr("Warning: If you encrypt your wallet and lose your passphrase, you will <b>LOSE ALL OF YOUR BIOA3</b>!") + "<br><br>" + tr("Are you sure you wish to encrypt your wallet?"),
                 tr("ENCRYPT"), tr("CANCEL")
         );
         if (ret) {
             if (newpass1 == newpass2) {
                 newpassCache = newpass1;
-                ECODOLLARGUI* window = static_cast<ECODOLLARGUI*>(parentWidget());
+                BIOA3GUI* window = static_cast<BIOA3GUI*>(parentWidget());
                 LoadingDialog *dialog = new LoadingDialog(window);
                 dialog->execute(this, 1);
                 openDialogWithOpaqueBackgroundFullScreen(dialog, window);
@@ -311,7 +311,7 @@ bool AskPassphraseDialog::eventFilter(QObject* object, QEvent* event)
 
 bool AskPassphraseDialog::openStandardDialog(QString title, QString body, QString okBtn, QString cancelBtn)
 {
-    ECODOLLARGUI* gui = static_cast<ECODOLLARGUI*>(parentWidget());
+    BIOA3GUI* gui = static_cast<BIOA3GUI*>(parentWidget());
     DefaultDialog *confirmDialog = new DefaultDialog(gui);
     confirmDialog->setText(title, body, okBtn, cancelBtn);
     confirmDialog->adjustSize();
@@ -324,13 +324,13 @@ bool AskPassphraseDialog::openStandardDialog(QString title, QString body, QStrin
 void AskPassphraseDialog::warningMessage()
 {
     hide();
-    static_cast<ECODOLLARGUI*>(parentWidget())->showHide(true);
+    static_cast<BIOA3GUI*>(parentWidget())->showHide(true);
     openStandardDialog(
             tr("Wallet encrypted"),
             "<qt>" +
-            tr("ECODOLLAR will close now to finish the encryption process. "
+            tr("BIOA3 will close now to finish the encryption process. "
                "Remember that encrypting your wallet cannot fully protect "
-               "your ECOSs from being stolen by malware infecting your computer.") +
+               "your BIOA3s from being stolen by malware infecting your computer.") +
             "<br><br><b>" +
             tr("IMPORTANT: Any previous backups you have made of your wallet file "
                "should be replaced with the newly generated, encrypted wallet file. "

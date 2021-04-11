@@ -1,4 +1,4 @@
-// Copyright (c) 2019 The ECODOLLAR developers
+// Copyright (c) 2019 The BIOA3 developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -7,7 +7,7 @@
 
 #include "guiutil.h"
 #include "walletmodel.h"
-#include "qt/ecodollar/qtutils.h"
+#include "qt/bioa3/qtutils.h"
 
 #include <QUrl>
 #include <QFile>
@@ -17,7 +17,7 @@ OpenURIDialog::OpenURIDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystem
 {
     ui->setupUi(this);
     this->setStyleSheet(parent->styleSheet());
-    ui->uriEdit->setPlaceholderText("ecodollar:");
+    ui->uriEdit->setPlaceholderText("bioa3:");
 
     ui->labelSubtitle->setText("URI");
     setCssProperty(ui->labelSubtitle, "text-title2-dialog");
@@ -79,8 +79,8 @@ void OpenURIDialog::on_selectFileButton_clicked()
         }
 
         QString str = QString::fromStdString(std::string(r.constData(), r.length()));
-        if (!str.startsWith("ecodollar")) {
-            inform(tr("Invalid URI, not starting with \"ecodollar\" prefix"));
+        if (!str.startsWith("bioa3")) {
+            inform(tr("Invalid URI, not starting with \"bioa3\" prefix"));
         }
         ui->uriEdit->setText(str);
     }

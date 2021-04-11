@@ -1,5 +1,5 @@
 // Copyright (c) 2014 The Bitcoin developers
-// Copyright (c) 2017-2019 The ECODOLLAR developers
+// Copyright (c) 2017-2019 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,8 +10,8 @@
 #include <vector>
 
 /**
- * CBaseChainParams defines the base parameters (shared between ecodollar-cli and ecodollard)
- * of a given instance of the Ecodollar system.
+ * CBaseChainParams defines the base parameters (shared between bioa3-cli and bioa3d)
+ * of a given instance of the BioA3 system.
  */
 class CBaseChainParams
 {

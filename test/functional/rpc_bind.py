@@ -7,11 +7,11 @@
 import socket
 import sys
 
-from test_framework.test_framework import EcodollarTestFramework, SkipTest
+from test_framework.test_framework import BioA3TestFramework, SkipTest
 from test_framework.util import *
 from test_framework.netutil import *
 
-class RPCBindTest(EcodollarTestFramework):
+class RPCBindTest(BioA3TestFramework):
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 1

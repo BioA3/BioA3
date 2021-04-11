@@ -2,44 +2,44 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-bin_PROGRAMS += qt/ecodollar-qt
+bin_PROGRAMS += qt/bioa3-qt
 EXTRA_LIBRARIES += qt/libbitcoinqt.a
 
-# ecodollar qt core #
+# bioa3 qt core #
 QT_TS = \
-  qt/locale/ecodollar_bg.ts \
-  qt/locale/ecodollar_ca.ts \
-  qt/locale/ecodollar_cs.ts \
-  qt/locale/ecodollar_da.ts \
-  qt/locale/ecodollar_de.ts \
-  qt/locale/ecodollar_en.ts \
-  qt/locale/ecodollar_en_GB.ts \
-  qt/locale/ecodollar_en_US.ts \
-  qt/locale/ecodollar_eo.ts \
-  qt/locale/ecodollar_es.ts \
-  qt/locale/ecodollar_es_ES.ts \
-  qt/locale/ecodollar_fi.ts \
-  qt/locale/ecodollar_fr_FR.ts \
-  qt/locale/ecodollar_hi_IN.ts \
-  qt/locale/ecodollar_hr.ts \
-  qt/locale/ecodollar_hr_HR.ts \
-  qt/locale/ecodollar_it.ts \
-  qt/locale/ecodollar_ja.ts \
-  qt/locale/ecodollar_ko_KR.ts \
-  qt/locale/ecodollar_lt_LT.ts \
-  qt/locale/ecodollar_nl.ts \
-  qt/locale/ecodollar_pl.ts \
-  qt/locale/ecodollar_pt.ts \
-  qt/locale/ecodollar_pt_BR.ts \
-  qt/locale/ecodollar_ro_RO.ts \
-  qt/locale/ecodollar_ru.ts \
-  qt/locale/ecodollar_sk.ts \
-  qt/locale/ecodollar_sv.ts \
-  qt/locale/ecodollar_tr.ts \
-  qt/locale/ecodollar_uk.ts \
-  qt/locale/ecodollar_vi.ts \
-  qt/locale/ecodollar_zh_CN.ts \
-  qt/locale/ecodollar_zh_TW.ts
+  qt/locale/bioa3_bg.ts \
+  qt/locale/bioa3_ca.ts \
+  qt/locale/bioa3_cs.ts \
+  qt/locale/bioa3_da.ts \
+  qt/locale/bioa3_de.ts \
+  qt/locale/bioa3_en.ts \
+  qt/locale/bioa3_en_GB.ts \
+  qt/locale/bioa3_en_US.ts \
+  qt/locale/bioa3_eo.ts \
+  qt/locale/bioa3_es.ts \
+  qt/locale/bioa3_es_ES.ts \
+  qt/locale/bioa3_fi.ts \
+  qt/locale/bioa3_fr_FR.ts \
+  qt/locale/bioa3_hi_IN.ts \
+  qt/locale/bioa3_hr.ts \
+  qt/locale/bioa3_hr_HR.ts \
+  qt/locale/bioa3_it.ts \
+  qt/locale/bioa3_ja.ts \
+  qt/locale/bioa3_ko_KR.ts \
+  qt/locale/bioa3_lt_LT.ts \
+  qt/locale/bioa3_nl.ts \
+  qt/locale/bioa3_pl.ts \
+  qt/locale/bioa3_pt.ts \
+  qt/locale/bioa3_pt_BR.ts \
+  qt/locale/bioa3_ro_RO.ts \
+  qt/locale/bioa3_ru.ts \
+  qt/locale/bioa3_sk.ts \
+  qt/locale/bioa3_sv.ts \
+  qt/locale/bioa3_tr.ts \
+  qt/locale/bioa3_uk.ts \
+  qt/locale/bioa3_vi.ts \
+  qt/locale/bioa3_zh_CN.ts \
+  qt/locale/bioa3_zh_TW.ts
 
 QT_FORMS_UI = \
   qt/forms/addressbookpage.ui \
@@ -53,58 +53,58 @@ QT_FORMS_UI = \
   qt/forms/openuridialog.ui \
   qt/forms/optionsdialog.ui \
   qt/forms/rpcconsole.ui \
-  qt/ecodollar/forms/loadingdialog.ui \
-  qt/forms/zecoscontroldialog.ui \
-  qt/ecodollar/forms/snackbar.ui \
-  qt/ecodollar/forms/navmenuwidget.ui \
-  qt/ecodollar/forms/lockunlock.ui \
-  qt/ecodollar/forms/expandablebutton.ui \
-  qt/ecodollar/forms/receivedialog.ui \
-  qt/ecodollar/forms/walletpassworddialog.ui \
-  qt/ecodollar/forms/topbar.ui \
-  qt/ecodollar/forms/txrow.ui \
-  qt/ecodollar/forms/dashboardwidget.ui \
-  qt/ecodollar/forms/coincontrolecoswidget.ui \
-  qt/ecodollar/forms/addresslabelrow.ui \
-  qt/ecodollar/forms/contactdropdownrow.ui \
-  qt/ecodollar/forms/mninfodialog.ui \
-  qt/ecodollar/forms/optionbutton.ui \
-  qt/ecodollar/forms/masternodewizarddialog.ui \
-  qt/ecodollar/forms/mnrow.ui \
-  qt/ecodollar/forms/masternodeswidget.ui \
-  qt/ecodollar/forms/myaddressrow.ui \
-  qt/ecodollar/forms/csrow.ui \
-  qt/ecodollar/forms/sendchangeaddressdialog.ui \
-  qt/ecodollar/forms/sendconfirmdialog.ui \
-  qt/ecodollar/forms/sendcustomfeedialog.ui \
-  qt/ecodollar/forms/sendchangeaddressdialog.ui \
-  qt/ecodollar/forms/sendmultirow.ui \
-  qt/ecodollar/forms/send.ui \
-  qt/ecodollar/forms/addnewaddressdialog.ui \
-  qt/ecodollar/forms/addnewcontactdialog.ui \
-  qt/ecodollar/forms/requestdialog.ui \
-  qt/ecodollar/forms/receivewidget.ui \
-  qt/ecodollar/forms/tooltipmenu.ui \
-  qt/ecodollar/forms/addresseswidget.ui \
-  qt/ecodollar/forms/defaultdialog.ui \
-  qt/ecodollar/forms/denomgenerationdialog.ui \
-  qt/ecodollar/forms/privacywidget.ui \
-  qt/ecodollar/forms/coldstakingwidget.ui \
-  qt/ecodollar/settings/forms/settingsbackupwallet.ui \
-  qt/ecodollar/settings/forms/settingsbittoolwidget.ui \
-  qt/ecodollar/settings/forms/settingsconsolewidget.ui \
-  qt/ecodollar/settings/forms/settingsdisplayoptionswidget.ui \
-  qt/ecodollar/settings/forms/settingsfaqwidget.ui \
-  qt/ecodollar/settings/forms/settingsinformationwidget.ui \
-  qt/ecodollar/settings/forms/settingsmainoptionswidget.ui \
-  qt/ecodollar/settings/forms/settingsmultisenddialog.ui \
-  qt/ecodollar/settings/forms/settingsmultisendwidget.ui \
-  qt/ecodollar/settings/forms/settingssignmessagewidgets.ui \
-  qt/ecodollar/settings/forms/settingswalletoptionswidget.ui \
-  qt/ecodollar/settings/forms/settingswalletrepairwidget.ui \
-  qt/ecodollar/settings/forms/settingswidget.ui \
-  qt/ecodollar/forms/welcomecontentwidget.ui \
-  qt/ecodollar/forms/splash.ui
+  qt/bioa3/forms/loadingdialog.ui \
+  qt/forms/zbioa3controldialog.ui \
+  qt/bioa3/forms/snackbar.ui \
+  qt/bioa3/forms/navmenuwidget.ui \
+  qt/bioa3/forms/lockunlock.ui \
+  qt/bioa3/forms/expandablebutton.ui \
+  qt/bioa3/forms/receivedialog.ui \
+  qt/bioa3/forms/walletpassworddialog.ui \
+  qt/bioa3/forms/topbar.ui \
+  qt/bioa3/forms/txrow.ui \
+  qt/bioa3/forms/dashboardwidget.ui \
+  qt/bioa3/forms/coincontrolbioa3widget.ui \
+  qt/bioa3/forms/addresslabelrow.ui \
+  qt/bioa3/forms/contactdropdownrow.ui \
+  qt/bioa3/forms/mninfodialog.ui \
+  qt/bioa3/forms/optionbutton.ui \
+  qt/bioa3/forms/masternodewizarddialog.ui \
+  qt/bioa3/forms/mnrow.ui \
+  qt/bioa3/forms/masternodeswidget.ui \
+  qt/bioa3/forms/myaddressrow.ui \
+  qt/bioa3/forms/csrow.ui \
+  qt/bioa3/forms/sendchangeaddressdialog.ui \
+  qt/bioa3/forms/sendconfirmdialog.ui \
+  qt/bioa3/forms/sendcustomfeedialog.ui \
+  qt/bioa3/forms/sendchangeaddressdialog.ui \
+  qt/bioa3/forms/sendmultirow.ui \
+  qt/bioa3/forms/send.ui \
+  qt/bioa3/forms/addnewaddressdialog.ui \
+  qt/bioa3/forms/addnewcontactdialog.ui \
+  qt/bioa3/forms/requestdialog.ui \
+  qt/bioa3/forms/receivewidget.ui \
+  qt/bioa3/forms/tooltipmenu.ui \
+  qt/bioa3/forms/addresseswidget.ui \
+  qt/bioa3/forms/defaultdialog.ui \
+  qt/bioa3/forms/denomgenerationdialog.ui \
+  qt/bioa3/forms/privacywidget.ui \
+  qt/bioa3/forms/coldstakingwidget.ui \
+  qt/bioa3/settings/forms/settingsbackupwallet.ui \
+  qt/bioa3/settings/forms/settingsbittoolwidget.ui \
+  qt/bioa3/settings/forms/settingsconsolewidget.ui \
+  qt/bioa3/settings/forms/settingsdisplayoptionswidget.ui \
+  qt/bioa3/settings/forms/settingsfaqwidget.ui \
+  qt/bioa3/settings/forms/settingsinformationwidget.ui \
+  qt/bioa3/settings/forms/settingsmainoptionswidget.ui \
+  qt/bioa3/settings/forms/settingsmultisenddialog.ui \
+  qt/bioa3/settings/forms/settingsmultisendwidget.ui \
+  qt/bioa3/settings/forms/settingssignmessagewidgets.ui \
+  qt/bioa3/settings/forms/settingswalletoptionswidget.ui \
+  qt/bioa3/settings/forms/settingswalletrepairwidget.ui \
+  qt/bioa3/settings/forms/settingswidget.ui \
+  qt/bioa3/forms/welcomecontentwidget.ui \
+  qt/bioa3/forms/splash.ui
 
 QT_MOC_CPP = \
   qt/moc_addressbookpage.cpp \
@@ -113,7 +113,7 @@ QT_MOC_CPP = \
   qt/moc_bantablemodel.cpp \
   qt/moc_bitcoinaddressvalidator.cpp \
   qt/moc_bitcoinamountfield.cpp \
-  qt/ecodollar/moc_ecodollargui.cpp \
+  qt/bioa3/moc_bioa3gui.cpp \
   qt/moc_bitcoinunits.cpp \
   qt/moc_blockexplorer.cpp \
   qt/moc_clientmodel.cpp \
@@ -144,80 +144,80 @@ QT_MOC_CPP = \
   qt/moc_transactiontablemodel.cpp \
   qt/moc_utilitydialog.cpp \
   qt/moc_walletmodel.cpp \
-  qt/ecodollar/moc_loadingdialog.cpp \
-  qt/moc_zecoscontroldialog.cpp \
-  qt/ecodollar/moc_pwidget.cpp \
-  qt/ecodollar/moc_snackbar.cpp \
-  qt/ecodollar/moc_navmenuwidget.cpp \
-  qt/ecodollar/moc_lockunlock.cpp \
-  qt/ecodollar/moc_expandablebutton.cpp \
-  qt/ecodollar/moc_furabstractlistitemdelegate.cpp \
-  qt/ecodollar/moc_receivedialog.cpp \
-  qt/ecodollar/moc_walletpassworddialog.cpp \
-  qt/ecodollar/moc_pfborderimage.cpp \
-  qt/ecodollar/moc_topbar.cpp \
-  qt/ecodollar/moc_txrow.cpp \
-  qt/ecodollar/moc_dashboardwidget.cpp \
-  qt/ecodollar/moc_coincontrolecoswidget.cpp \
-  qt/ecodollar/moc_addresslabelrow.cpp \
-  qt/ecodollar/moc_contactdropdownrow.cpp \
-  qt/ecodollar/moc_mninfodialog.cpp \
-  qt/ecodollar/moc_optionbutton.cpp \
-  qt/ecodollar/moc_coldstakingmodel.cpp \
-  qt/ecodollar/moc_mnmodel.cpp \
-  qt/ecodollar/moc_masternodewizarddialog.cpp \
-  qt/ecodollar/moc_mnrow.cpp \
-  qt/ecodollar/moc_masternodeswidget.cpp \
-  qt/ecodollar/moc_myaddressrow.cpp \
-  qt/ecodollar/moc_csrow.cpp \
-  qt/ecodollar/moc_contactsdropdown.cpp \
-  qt/ecodollar/moc_sendchangeaddressdialog.cpp \
-  qt/ecodollar/moc_sendconfirmdialog.cpp \
-  qt/ecodollar/moc_sendcustomfeedialog.cpp \
-  qt/ecodollar/moc_sendchangeaddressdialog.cpp \
-  qt/ecodollar/moc_sendmultirow.cpp \
-  qt/ecodollar/moc_send.cpp \
-  qt/ecodollar/moc_addnewaddressdialog.cpp \
-  qt/ecodollar/moc_addnewcontactdialog.cpp \
-  qt/ecodollar/moc_requestdialog.cpp \
-  qt/ecodollar/moc_receivewidget.cpp \
-  qt/ecodollar/moc_tooltipmenu.cpp \
-  qt/ecodollar/moc_addresseswidget.cpp \
-  qt/ecodollar/moc_defaultdialog.cpp \
-  qt/ecodollar/moc_denomgenerationdialog.cpp \
-  qt/ecodollar/moc_privacywidget.cpp \
-  qt/ecodollar/moc_coldstakingwidget.cpp \
-  qt/ecodollar/settings/moc_settingsbackupwallet.cpp \
-  qt/ecodollar/settings/moc_settingsbittoolwidget.cpp \
-  qt/ecodollar/settings/moc_settingsconsolewidget.cpp \
-  qt/ecodollar/settings/moc_settingsdisplayoptionswidget.cpp \
-  qt/ecodollar/settings/moc_settingsfaqwidget.cpp \
-  qt/ecodollar/settings/moc_settingsinformationwidget.cpp \
-  qt/ecodollar/settings/moc_settingsmainoptionswidget.cpp \
-  qt/ecodollar/settings/moc_settingsmultisenddialog.cpp \
-  qt/ecodollar/settings/moc_settingsmultisendwidget.cpp \
-  qt/ecodollar/settings/moc_settingssignmessagewidgets.cpp \
-  qt/ecodollar/settings/moc_settingswalletoptionswidget.cpp \
-  qt/ecodollar/settings/moc_settingswalletrepairwidget.cpp \
-  qt/ecodollar/settings/moc_settingswidget.cpp \
-  qt/ecodollar/moc_welcomecontentwidget.cpp \
-  qt/ecodollar/moc_splash.cpp
+  qt/bioa3/moc_loadingdialog.cpp \
+  qt/moc_zbioa3controldialog.cpp \
+  qt/bioa3/moc_pwidget.cpp \
+  qt/bioa3/moc_snackbar.cpp \
+  qt/bioa3/moc_navmenuwidget.cpp \
+  qt/bioa3/moc_lockunlock.cpp \
+  qt/bioa3/moc_expandablebutton.cpp \
+  qt/bioa3/moc_furabstractlistitemdelegate.cpp \
+  qt/bioa3/moc_receivedialog.cpp \
+  qt/bioa3/moc_walletpassworddialog.cpp \
+  qt/bioa3/moc_pfborderimage.cpp \
+  qt/bioa3/moc_topbar.cpp \
+  qt/bioa3/moc_txrow.cpp \
+  qt/bioa3/moc_dashboardwidget.cpp \
+  qt/bioa3/moc_coincontrolbioa3widget.cpp \
+  qt/bioa3/moc_addresslabelrow.cpp \
+  qt/bioa3/moc_contactdropdownrow.cpp \
+  qt/bioa3/moc_mninfodialog.cpp \
+  qt/bioa3/moc_optionbutton.cpp \
+  qt/bioa3/moc_coldstakingmodel.cpp \
+  qt/bioa3/moc_mnmodel.cpp \
+  qt/bioa3/moc_masternodewizarddialog.cpp \
+  qt/bioa3/moc_mnrow.cpp \
+  qt/bioa3/moc_masternodeswidget.cpp \
+  qt/bioa3/moc_myaddressrow.cpp \
+  qt/bioa3/moc_csrow.cpp \
+  qt/bioa3/moc_contactsdropdown.cpp \
+  qt/bioa3/moc_sendchangeaddressdialog.cpp \
+  qt/bioa3/moc_sendconfirmdialog.cpp \
+  qt/bioa3/moc_sendcustomfeedialog.cpp \
+  qt/bioa3/moc_sendchangeaddressdialog.cpp \
+  qt/bioa3/moc_sendmultirow.cpp \
+  qt/bioa3/moc_send.cpp \
+  qt/bioa3/moc_addnewaddressdialog.cpp \
+  qt/bioa3/moc_addnewcontactdialog.cpp \
+  qt/bioa3/moc_requestdialog.cpp \
+  qt/bioa3/moc_receivewidget.cpp \
+  qt/bioa3/moc_tooltipmenu.cpp \
+  qt/bioa3/moc_addresseswidget.cpp \
+  qt/bioa3/moc_defaultdialog.cpp \
+  qt/bioa3/moc_denomgenerationdialog.cpp \
+  qt/bioa3/moc_privacywidget.cpp \
+  qt/bioa3/moc_coldstakingwidget.cpp \
+  qt/bioa3/settings/moc_settingsbackupwallet.cpp \
+  qt/bioa3/settings/moc_settingsbittoolwidget.cpp \
+  qt/bioa3/settings/moc_settingsconsolewidget.cpp \
+  qt/bioa3/settings/moc_settingsdisplayoptionswidget.cpp \
+  qt/bioa3/settings/moc_settingsfaqwidget.cpp \
+  qt/bioa3/settings/moc_settingsinformationwidget.cpp \
+  qt/bioa3/settings/moc_settingsmainoptionswidget.cpp \
+  qt/bioa3/settings/moc_settingsmultisenddialog.cpp \
+  qt/bioa3/settings/moc_settingsmultisendwidget.cpp \
+  qt/bioa3/settings/moc_settingssignmessagewidgets.cpp \
+  qt/bioa3/settings/moc_settingswalletoptionswidget.cpp \
+  qt/bioa3/settings/moc_settingswalletrepairwidget.cpp \
+  qt/bioa3/settings/moc_settingswidget.cpp \
+  qt/bioa3/moc_welcomecontentwidget.cpp \
+  qt/bioa3/moc_splash.cpp
 
 BITCOIN_MM = \
   qt/macdockiconhandler.mm \
   qt/macnotificationhandler.mm
 
 QT_MOC = \
-  qt/ecodollar.moc \
+  qt/bioa3.moc \
   qt/bitcoinamountfield.moc \
   qt/intro.moc \
   qt/rpcconsole.moc \
-  qt/ecodollar/settings/moc_settingsconsolewidget.cpp
+  qt/bioa3/settings/moc_settingsconsolewidget.cpp
 
-QT_QRC_CPP = qt/qrc_ecodollar.cpp
-QT_QRC = qt/ecodollar.qrc
-QT_QRC_LOCALE_CPP = qt/qrc_ecodollar_locale.cpp
-QT_QRC_LOCALE = qt/ecodollar_locale.qrc
+QT_QRC_CPP = qt/qrc_bioa3.cpp
+QT_QRC = qt/bioa3.qrc
+QT_QRC_LOCALE_CPP = qt/qrc_bioa3_locale.cpp
+QT_QRC_LOCALE = qt/bioa3_locale.qrc
 
 PROTOBUF_CC = qt/paymentrequest.pb.cc
 PROTOBUF_H = qt/paymentrequest.pb.h
@@ -230,7 +230,7 @@ BITCOIN_QT_H = \
   qt/bantablemodel.h \
   qt/bitcoinaddressvalidator.h \
   qt/bitcoinamountfield.h \
-  qt/ecodollar/ecodollargui.h \
+  qt/bioa3/bioa3gui.h \
   qt/bitcoinunits.h \
   qt/blockexplorer.h \
   qt/clientmodel.h \
@@ -267,72 +267,72 @@ BITCOIN_QT_H = \
   qt/utilitydialog.h \
   qt/walletmodel.h \
   qt/walletmodeltransaction.h \
-  qt/ecodollar/prunnable.h \
-  qt/ecodollar/pfborderimage.h \
-  qt/ecodollar/loadingdialog.h \
+  qt/bioa3/prunnable.h \
+  qt/bioa3/pfborderimage.h \
+  qt/bioa3/loadingdialog.h \
   qt/winshutdownmonitor.h \
-  qt/zecoscontroldialog.h \
-  qt/ecodollar/pwidget.h \
-  qt/ecodollar/guitransactionsutils.h \
-  qt/ecodollar/snackbar.h \
-  qt/ecodollar/navmenuwidget.h \
-  qt/ecodollar/lockunlock.h \
-  qt/ecodollar/receivedialog.h \
-  qt/ecodollar/furlistrow.h \
-  qt/ecodollar/furabstractlistitemdelegate.h \
-  qt/ecodollar/txviewholder.h \
-  qt/ecodollar/qtutils.h \
-  qt/ecodollar/expandablebutton.h \
-  qt/ecodollar/walletpassworddialog.h \
-  qt/ecodollar/topbar.h \
-  qt/ecodollar/txrow.h \
-  qt/ecodollar/addressholder.h \
-  qt/ecodollar/addressfilterproxymodel.h \
-  qt/ecodollar/dashboardwidget.h \
-  qt/ecodollar/coincontrolecoswidget.h \
-  qt/ecodollar/addresslabelrow.h \
-  qt/ecodollar/contactdropdownrow.h \
-  qt/ecodollar/mninfodialog.h \
-  qt/ecodollar/optionbutton.h \
-  qt/ecodollar/coldstakingmodel.h \
-  qt/ecodollar/mnmodel.h \
-  qt/ecodollar/masternodewizarddialog.h \
-  qt/ecodollar/mnrow.h \
-  qt/ecodollar/masternodeswidget.h \
-  qt/ecodollar/myaddressrow.h \
-  qt/ecodollar/csrow.h \
-  qt/ecodollar/contactsdropdown.h \
-  qt/ecodollar/sendchangeaddressdialog.h \
-  qt/ecodollar/sendconfirmdialog.h \
-  qt/ecodollar/sendcustomfeedialog.h \
-  qt/ecodollar/sendchangeaddressdialog.h \
-  qt/ecodollar/sendmultirow.h \
-  qt/ecodollar/send.h \
-  qt/ecodollar/addnewaddressdialog.h \
-  qt/ecodollar/addnewcontactdialog.h \
-  qt/ecodollar/requestdialog.h \
-  qt/ecodollar/receivewidget.h \
-  qt/ecodollar/tooltipmenu.h \
-  qt/ecodollar/addresseswidget.h \
-  qt/ecodollar/defaultdialog.h \
-  qt/ecodollar/denomgenerationdialog.h \
-  qt/ecodollar/privacywidget.h \
-  qt/ecodollar/coldstakingwidget.h \
-  qt/ecodollar/settings/settingsbackupwallet.h \
-  qt/ecodollar/settings/settingsbittoolwidget.h \
-  qt/ecodollar/settings/settingsconsolewidget.h \
-  qt/ecodollar/settings/settingsdisplayoptionswidget.h \
-  qt/ecodollar/settings/settingsfaqwidget.h \
-  qt/ecodollar/settings/settingsinformationwidget.h \
-  qt/ecodollar/settings/settingsmainoptionswidget.h \
-  qt/ecodollar/settings/settingsmultisenddialog.h \
-  qt/ecodollar/settings/settingsmultisendwidget.h \
-  qt/ecodollar/settings/settingssignmessagewidgets.h \
-  qt/ecodollar/settings/settingswalletoptionswidget.h \
-  qt/ecodollar/settings/settingswalletrepairwidget.h \
-  qt/ecodollar/settings/settingswidget.h \
-  qt/ecodollar/welcomecontentwidget.h \
-  qt/ecodollar/splash.h
+  qt/zbioa3controldialog.h \
+  qt/bioa3/pwidget.h \
+  qt/bioa3/guitransactionsutils.h \
+  qt/bioa3/snackbar.h \
+  qt/bioa3/navmenuwidget.h \
+  qt/bioa3/lockunlock.h \
+  qt/bioa3/receivedialog.h \
+  qt/bioa3/furlistrow.h \
+  qt/bioa3/furabstractlistitemdelegate.h \
+  qt/bioa3/txviewholder.h \
+  qt/bioa3/qtutils.h \
+  qt/bioa3/expandablebutton.h \
+  qt/bioa3/walletpassworddialog.h \
+  qt/bioa3/topbar.h \
+  qt/bioa3/txrow.h \
+  qt/bioa3/addressholder.h \
+  qt/bioa3/addressfilterproxymodel.h \
+  qt/bioa3/dashboardwidget.h \
+  qt/bioa3/coincontrolbioa3widget.h \
+  qt/bioa3/addresslabelrow.h \
+  qt/bioa3/contactdropdownrow.h \
+  qt/bioa3/mninfodialog.h \
+  qt/bioa3/optionbutton.h \
+  qt/bioa3/coldstakingmodel.h \
+  qt/bioa3/mnmodel.h \
+  qt/bioa3/masternodewizarddialog.h \
+  qt/bioa3/mnrow.h \
+  qt/bioa3/masternodeswidget.h \
+  qt/bioa3/myaddressrow.h \
+  qt/bioa3/csrow.h \
+  qt/bioa3/contactsdropdown.h \
+  qt/bioa3/sendchangeaddressdialog.h \
+  qt/bioa3/sendconfirmdialog.h \
+  qt/bioa3/sendcustomfeedialog.h \
+  qt/bioa3/sendchangeaddressdialog.h \
+  qt/bioa3/sendmultirow.h \
+  qt/bioa3/send.h \
+  qt/bioa3/addnewaddressdialog.h \
+  qt/bioa3/addnewcontactdialog.h \
+  qt/bioa3/requestdialog.h \
+  qt/bioa3/receivewidget.h \
+  qt/bioa3/tooltipmenu.h \
+  qt/bioa3/addresseswidget.h \
+  qt/bioa3/defaultdialog.h \
+  qt/bioa3/denomgenerationdialog.h \
+  qt/bioa3/privacywidget.h \
+  qt/bioa3/coldstakingwidget.h \
+  qt/bioa3/settings/settingsbackupwallet.h \
+  qt/bioa3/settings/settingsbittoolwidget.h \
+  qt/bioa3/settings/settingsconsolewidget.h \
+  qt/bioa3/settings/settingsdisplayoptionswidget.h \
+  qt/bioa3/settings/settingsfaqwidget.h \
+  qt/bioa3/settings/settingsinformationwidget.h \
+  qt/bioa3/settings/settingsmainoptionswidget.h \
+  qt/bioa3/settings/settingsmultisenddialog.h \
+  qt/bioa3/settings/settingsmultisendwidget.h \
+  qt/bioa3/settings/settingssignmessagewidgets.h \
+  qt/bioa3/settings/settingswalletoptionswidget.h \
+  qt/bioa3/settings/settingswalletrepairwidget.h \
+  qt/bioa3/settings/settingswidget.h \
+  qt/bioa3/welcomecontentwidget.h \
+  qt/bioa3/splash.h
 
 RES_ICONS = \
   qt/res/icons/add.png \
@@ -398,218 +398,218 @@ RES_ICONS = \
   qt/res/icons/ic-transaction-mint.svg \
   qt/res/icons/ic-transaction-sent.svg \
   qt/res/icons/ic-transaction-staked.svg \
-  qt/res/icons/unit_ecodollar.png \
-  qt/res/icons/unit_mecodollar.png \
-  qt/res/icons/unit_uecodollar.png \
-  qt/res/icons/unit_tecodollar.png \
-  qt/res/icons/unit_tmecodollar.png \
-  qt/res/icons/unit_tuecodollar.png \
+  qt/res/icons/unit_bioa3.png \
+  qt/res/icons/unit_mbioa3.png \
+  qt/res/icons/unit_ubioa3.png \
+  qt/res/icons/unit_tbioa3.png \
+  qt/res/icons/unit_tmbioa3.png \
+  qt/res/icons/unit_tubioa3.png \
   qt/res/icons/yesvote.png \
   qt/res/icons/novote.png \
   qt/res/icons/abstainvote.png \
-  qt/ecodollar/res/img/bg-dashboard-banner.png \
-  qt/ecodollar/res/img/bg-multi-number-dark.svg \
-  qt/ecodollar/res/img/ic-check-locked.svg \
-  qt/ecodollar/res/img/ic-nav-address.svg \
-  qt/ecodollar/res/img/ic-update.svg \
-  qt/ecodollar/res/img/bg-multi-number.svg \
-  qt/ecodollar/res/img/ic-check-mint-off.svg \
-  qt/ecodollar/res/img/ic-nav-cold-staking.svg \
-  qt/ecodollar/res/img/ic-nav-cold-staking-active.svg \
-  qt/ecodollar/res/img/ic-nav-dashboard-active.svg \
-  qt/ecodollar/res/img/ic-wallet-status-locked.svg \
-  qt/ecodollar/res/img/bg-splash.svg \
-  qt/ecodollar/res/img/bg-splash.png \
-  qt/ecodollar/res/img/ic-check-mint.svg \
-  qt/ecodollar/res/img/ic-nav-dashboard-hover.svg \
-  qt/ecodollar/res/img/ic-wallet-status-staking.svg \
-  qt/ecodollar/res/img/ic-check-peers-off.svg \
-  qt/ecodollar/res/img/ic-nav-dashboard.svg \
-  qt/ecodollar/res/img/ic-wallet-status-unlocked.svg \
-  qt/ecodollar/res/img/ic-check-peers.svg \
-  qt/ecodollar/res/img/ic-nav-master-active.svg \
-  qt/ecodollar/res/img/ic-watch-password-white.svg \
-  qt/ecodollar/res/img/bg-welcome-container.jpg \
-  qt/ecodollar/res/img/bg-welcome-container.png \
-  qt/ecodollar/res/img/bg-welcome-container.svg \
-  qt/ecodollar/res/img/bg-welcome-container@2x.png \
-  qt/ecodollar/res/img/bg-welcome-container@3x.png \
-  qt/ecodollar/res/img/ic-check-staking-off.svg \
-  qt/ecodollar/res/img/ic-nav-master-hover.svg \
-  qt/ecodollar/res/img/ic-watch-password.svg \
-  qt/ecodollar/res/img/bg-welcome.jpg \
-  qt/ecodollar/res/img/bg-welcome.svg \
-  qt/ecodollar/res/img/bg-welcome@2x.jpg \
-  qt/ecodollar/res/img/bg-welcome@3x.jpg \
-  qt/ecodollar/res/img/bg-welcome.png \
-  qt/ecodollar/res/img/ic-check-staking.svg \
-  qt/ecodollar/res/img/ic-nav-master.svg \
-  qt/ecodollar/res/img/img-dashboard-banner.jpg \
-  qt/ecodollar/res/img/btn-radio-active.svg \
-  qt/ecodollar/res/img/ic-check-sync-off.svg \
-  qt/ecodollar/res/img/ic-nav-privacy-active.svg \
-  qt/ecodollar/res/img/img-empty-contacts.svg \
-  qt/ecodollar/res/img/btn-radio-off.svg \
-  qt/ecodollar/res/img/ic-check-sync.png \
-  qt/ecodollar/res/img/ic-nav-privacy-hover.svg \
-  qt/ecodollar/res/img/img-empty-dark-contacts.svg \
-  qt/ecodollar/res/img/ic-contact-arrow-down.svg \
-  qt/ecodollar/res/img/ic-contact-arrow-down-white.svg \
-  qt/ecodollar/res/img/ic-check-sync.svg \
-  qt/ecodollar/res/img/ic-check-faq.svg \
-  qt/ecodollar/res/img/ic-nav-privacy.svg \
-  qt/ecodollar/res/img/img-empty-dark-error.svg \
-  qt/ecodollar/res/img/ic-add-label.svg \
-  qt/ecodollar/res/img/ic-pending.svg \
-  qt/ecodollar/res/img/ic-check-theme-dark.svg \
-  qt/ecodollar/res/img/ic-nav-receive-active.svg \
-  qt/ecodollar/res/img/img-empty-dark-masternode.svg \
-  qt/ecodollar/res/img/ic-add-liliac.svg \
-  qt/ecodollar/res/img/ic-check-theme-light.svg \
-  qt/ecodollar/res/img/ic-nav-receive-hover.svg \
-  qt/ecodollar/res/img/img-empty-dark-multisend.svg \
-  qt/ecodollar/res/img/ic-add-purple.svg \
-  qt/ecodollar/res/img/ic-check-white.svg \
-  qt/ecodollar/res/img/ic-nav-receive.svg \
-  qt/ecodollar/res/img/img-empty-dark-peers.svg \
-  qt/ecodollar/res/img/ic-add.svg \
-  qt/ecodollar/res/img/ic-check.svg \
-  qt/ecodollar/res/img/ic-nav-send-active.svg \
-  qt/ecodollar/res/img/img-empty-dark-staking-off.svg \
-  qt/ecodollar/res/img/img-empty-dark-staking-on.svg \
-  qt/ecodollar/res/img/ic-address-book-grey.svg \
-  qt/ecodollar/res/img/ic-chevron-left.svg \
-  qt/ecodollar/res/img/ic-nav-send-hover.svg \
-  qt/ecodollar/res/img/img-empty-dark-transactions.svg \
-  qt/ecodollar/res/img/ic-address-book-white.svg \
-  qt/ecodollar/res/img/ic-chevron-right.svg \
-  qt/ecodollar/res/img/ic-nav-send.svg \
-  qt/ecodollar/res/img/img-empty-error.svg \
-  qt/ecodollar/res/img/ic-address-book.svg \
-  qt/ecodollar/res/img/ic-clear-liliac.svg \
-  qt/ecodollar/res/img/ic-nav-settings-active.svg \
-  qt/ecodollar/res/img/img-empty-masternode.svg \
-  qt/ecodollar/res/img/ic-address-send-white.svg \
-  qt/ecodollar/res/img/ic-clear-purple.svg \
-  qt/ecodollar/res/img/ic-nav-settings-hover.svg \
-  qt/ecodollar/res/img/img-empty-multisend.svg \
-  qt/ecodollar/res/img/ic-address-send.svg \
-  qt/ecodollar/res/img/ic-close-white.svg \
-  qt/ecodollar/res/img/ic-nav-settings.svg \
-  qt/ecodollar/res/img/img-empty-peers.svg \
-  qt/ecodollar/res/img/img-empty-privacy.svg \
-  qt/ecodollar/res/img/img-empty-privacy-dark.svg \
-  qt/ecodollar/res/img/ic-arrow-drop-down-white.svg \
-  qt/ecodollar/res/img/ic-close.svg \
-  qt/ecodollar/res/img/ic-radio-liliac-on.svg \
-  qt/ecodollar/res/img/img-empty-staking-off.svg \
-  qt/ecodollar/res/img/ic-arrow-drop-down.svg \
-  qt/ecodollar/res/img/ic-coin-ecos.svg \
-  qt/ecodollar/res/img/ic-receive-off.svg \
-  qt/ecodollar/res/img/img-empty-staking-on.svg \
-  qt/ecodollar/res/img/ic-arrow-drop-up-white.svg \
-  qt/ecodollar/res/img/ic-coin-zecos.png \
-  qt/ecodollar/res/img/ic-receive-on.svg \
-  qt/ecodollar/res/img/img-empty-transactions.svg \
-  qt/ecodollar/res/img/ic-arrow-drop-up.svg \
-  qt/ecodollar/res/img/ic-coin-zecos.svg \
-  qt/ecodollar/res/img/ic-received.svg \
-  qt/ecodollar/res/img/img-logo-ecodollar.png \
-  qt/ecodollar/res/img/ic-arrow-drop-white-down.svg \
-  qt/ecodollar/res/img/ic-combo-box.svg \
-  qt/ecodollar/res/img/ic-send.svg \
-  qt/ecodollar/res/img/img-logo-ecodollar@2x.png \
-  qt/ecodollar/res/img/ic-arrow-purple-down.svg \
-  qt/ecodollar/res/img/ic-connect.svg \
-  qt/ecodollar/res/img/ic-submenu-lock.svg \
-  qt/ecodollar/res/img/img-logo-ecodollar@3x.png \
-  qt/ecodollar/res/img/img-logo-ecodollar.svg \
-  qt/ecodollar/res/img/ic-arrow-right-white.svg \
-  qt/ecodollar/res/img/ic-arrow-left-white.svg \
-  qt/ecodollar/res/img/ic-arrow-left.svg \
-  qt/ecodollar/res/img/ic-copy-liliac.svg \
-  qt/ecodollar/res/img/ic-submenu-staking.svg \
-  qt/ecodollar/res/img/img-nav-logo-ecodollar.png \
-  qt/ecodollar/res/img/ic-arrow-right.svg \
-  qt/ecodollar/res/img/ic-copy.svg \
-  qt/ecodollar/res/img/ic-copy-big.svg \
-  qt/ecodollar/res/img/ic-copy-big-white.svg \
-  qt/ecodollar/res/img/ic-submenu-unlock.svg \
-  qt/ecodollar/res/img/img-nav-logo.png \
-  qt/ecodollar/res/img/ic-arrow-white-left.svg \
-  qt/ecodollar/res/img/ic-exit.svg \
-  qt/ecodollar/res/img/ic-switch-liliac-on.svg \
-  qt/ecodollar/res/img/img-nav-logo.svg \
-  qt/ecodollar/res/img/ic-arrow-white-right.svg \
-  qt/ecodollar/res/img/ic-expand.svg \
-  qt/ecodollar/res/img/ic-switch-off.svg \
-  qt/ecodollar/res/img/img-qr-test-big.png \
-  qt/ecodollar/res/img/ic-check-active.svg \
-  qt/ecodollar/res/img/ic-folder.svg \
-  qt/ecodollar/res/img/ic-switch-on.svg \
-  qt/ecodollar/res/img/img-qr-test.png \
-  qt/ecodollar/res/img/ic-check-box.svg \
-  qt/ecodollar/res/img/ic-check-box-dark-active.svg \
-  qt/ecodollar/res/img/ic-check-box-indeterminate.svg \
-  qt/ecodollar/res/img/ic-check-box-liliac-indeterminate.svg \
-  qt/ecodollar/res/img/ic-label-liliac.svg \
-  qt/ecodollar/res/img/ic-transaction-warning.svg \
-  qt/ecodollar/res/img/ic-transaction-mint.svg \
-  qt/ecodollar/res/img/ic-transaction-mint-inactive.svg \
-  qt/ecodollar/res/img/ic-check-cold-staking.svg \
-  qt/ecodollar/res/img/ic-check-cold-staking-off.svg \
-  qt/ecodollar/res/img/ic-check-cold-staking-enabled.svg \
-  qt/ecodollar/res/img/dark/ic-transaction-cs-contract.svg \
-  qt/ecodollar/res/img/dark/ic-transaction-cs-contract-inactive.svg \
-  qt/ecodollar/res/img/img-qr.svg \
-  qt/ecodollar/res/img/ic-check-connect-off.svg \
-  qt/ecodollar/res/img/ic-label.svg \
-  qt/ecodollar/res/img/ic-transaction-received.svg \
-  qt/ecodollar/res/img/dark/ic-transaction-received.svg \
-  qt/ecodollar/res/img/dark/ic-transaction-warning.svg \
-  qt/ecodollar/res/img/dark/ic-transaction-mint.svg \
-  qt/ecodollar/res/img/dark/ic-transaction-mint-inactive.svg \
-  qt/ecodollar/res/img/ic-transaction-received-inactive.svg \
-  qt/ecodollar/res/img/dark/ic-transaction-received-inactive.svg \
-  qt/ecodollar/res/img/img-welcome-step1.png \
-  qt/ecodollar/res/img/ic-check-connect.svg \
-  qt/ecodollar/res/img/ic-menu-hover.svg \
-  qt/ecodollar/res/img/ic-transaction-sent.svg \
-  qt/ecodollar/res/img/ic-transaction-sent-inactive.svg \
-  qt/ecodollar/res/img/dark/ic-transaction-sent.svg \
-  qt/ecodollar/res/img/dark/ic-transaction-sent-inactive.svg \
-  qt/ecodollar/res/img/img-welcome-step2.png \
-  qt/ecodollar/res/img/ic-check-dark.svg \
-  qt/ecodollar/res/img/ic-mint.svg \
-  qt/ecodollar/res/img/ic-transaction-staked.svg \
-  qt/ecodollar/res/img/ic-transaction-staked-inactive.svg \
-  qt/ecodollar/res/img/dark/ic-transaction-staked.svg \
-  qt/ecodollar/res/img/dark/ic-transaction-staked-inactive.svg \
-  qt/ecodollar/res/img/img-welcome-step3.png \
-  qt/ecodollar/res/img/ic-check-liliac-on.svg \
-  qt/ecodollar/res/img/ic-nav-address-active.svg \
-  qt/ecodollar/res/img/ic-unlock-staking.svg \
-  qt/ecodollar/res/img/img-welcome-step4.png \
-  qt/ecodollar/res/img/ic-check-locked-off.svg \
-  qt/ecodollar/res/img/ic-nav-address-hover.svg \
-  qt/ecodollar/res/img/ic-update-liliac.svg \
-  qt/ecodollar/res/img/ic-arrow-drop-down-purple.svg \
-  qt/ecodollar/res/img/ic-arrow-drop-up-purple.svg \
-  qt/ecodollar/res/img/ic-check-liliac-indeterminate.svg \
-  qt/ecodollar/res/img/ic-check-box-liliac-indeterminate.svg \
-  qt/ecodollar/res/img/ic-transaction-stake-delegated.svg \
-  qt/ecodollar/res/img/ic-transaction-stake-delegated-inactive.svg \
-  qt/ecodollar/res/img/ic-transaction-stake-hot.svg \
-  qt/ecodollar/res/img/ic-transaction-stake-hot-inactive.svg \
-  qt/ecodollar/res/img/dark/ic-transaction-stake-hot.svg \
-  qt/ecodollar/res/img/dark/ic-transaction-stake-hot-inactive.svg \
-  qt/ecodollar/res/img/dark/ic-transaction-stake-delegated.svg \
-  qt/ecodollar/res/img/dark/ic-transaction-stake-delegated-inactive.svg \
-  qt/ecodollar/res/img/ic-transaction-cs-contract.svg \
-  qt/ecodollar/res/img/ic-transaction-cs-contract-inactive.svg \
-  qt/ecodollar/res/img/ic-check-box-indeterminate.svg \
-  qt/ecodollar/res/img/ani-loading-dark.gif \
-  qt/ecodollar/res/img/ani-loading.gif
+  qt/bioa3/res/img/bg-dashboard-banner.png \
+  qt/bioa3/res/img/bg-multi-number-dark.svg \
+  qt/bioa3/res/img/ic-check-locked.svg \
+  qt/bioa3/res/img/ic-nav-address.svg \
+  qt/bioa3/res/img/ic-update.svg \
+  qt/bioa3/res/img/bg-multi-number.svg \
+  qt/bioa3/res/img/ic-check-mint-off.svg \
+  qt/bioa3/res/img/ic-nav-cold-staking.svg \
+  qt/bioa3/res/img/ic-nav-cold-staking-active.svg \
+  qt/bioa3/res/img/ic-nav-dashboard-active.svg \
+  qt/bioa3/res/img/ic-wallet-status-locked.svg \
+  qt/bioa3/res/img/bg-splash.svg \
+  qt/bioa3/res/img/bg-splash.png \
+  qt/bioa3/res/img/ic-check-mint.svg \
+  qt/bioa3/res/img/ic-nav-dashboard-hover.svg \
+  qt/bioa3/res/img/ic-wallet-status-staking.svg \
+  qt/bioa3/res/img/ic-check-peers-off.svg \
+  qt/bioa3/res/img/ic-nav-dashboard.svg \
+  qt/bioa3/res/img/ic-wallet-status-unlocked.svg \
+  qt/bioa3/res/img/ic-check-peers.svg \
+  qt/bioa3/res/img/ic-nav-master-active.svg \
+  qt/bioa3/res/img/ic-watch-password-white.svg \
+  qt/bioa3/res/img/bg-welcome-container.jpg \
+  qt/bioa3/res/img/bg-welcome-container.png \
+  qt/bioa3/res/img/bg-welcome-container.svg \
+  qt/bioa3/res/img/bg-welcome-container@2x.png \
+  qt/bioa3/res/img/bg-welcome-container@3x.png \
+  qt/bioa3/res/img/ic-check-staking-off.svg \
+  qt/bioa3/res/img/ic-nav-master-hover.svg \
+  qt/bioa3/res/img/ic-watch-password.svg \
+  qt/bioa3/res/img/bg-welcome.jpg \
+  qt/bioa3/res/img/bg-welcome.svg \
+  qt/bioa3/res/img/bg-welcome@2x.jpg \
+  qt/bioa3/res/img/bg-welcome@3x.jpg \
+  qt/bioa3/res/img/bg-welcome.png \
+  qt/bioa3/res/img/ic-check-staking.svg \
+  qt/bioa3/res/img/ic-nav-master.svg \
+  qt/bioa3/res/img/img-dashboard-banner.jpg \
+  qt/bioa3/res/img/btn-radio-active.svg \
+  qt/bioa3/res/img/ic-check-sync-off.svg \
+  qt/bioa3/res/img/ic-nav-privacy-active.svg \
+  qt/bioa3/res/img/img-empty-contacts.svg \
+  qt/bioa3/res/img/btn-radio-off.svg \
+  qt/bioa3/res/img/ic-check-sync.png \
+  qt/bioa3/res/img/ic-nav-privacy-hover.svg \
+  qt/bioa3/res/img/img-empty-dark-contacts.svg \
+  qt/bioa3/res/img/ic-contact-arrow-down.svg \
+  qt/bioa3/res/img/ic-contact-arrow-down-white.svg \
+  qt/bioa3/res/img/ic-check-sync.svg \
+  qt/bioa3/res/img/ic-check-faq.svg \
+  qt/bioa3/res/img/ic-nav-privacy.svg \
+  qt/bioa3/res/img/img-empty-dark-error.svg \
+  qt/bioa3/res/img/ic-add-label.svg \
+  qt/bioa3/res/img/ic-pending.svg \
+  qt/bioa3/res/img/ic-check-theme-dark.svg \
+  qt/bioa3/res/img/ic-nav-receive-active.svg \
+  qt/bioa3/res/img/img-empty-dark-masternode.svg \
+  qt/bioa3/res/img/ic-add-liliac.svg \
+  qt/bioa3/res/img/ic-check-theme-light.svg \
+  qt/bioa3/res/img/ic-nav-receive-hover.svg \
+  qt/bioa3/res/img/img-empty-dark-multisend.svg \
+  qt/bioa3/res/img/ic-add-purple.svg \
+  qt/bioa3/res/img/ic-check-white.svg \
+  qt/bioa3/res/img/ic-nav-receive.svg \
+  qt/bioa3/res/img/img-empty-dark-peers.svg \
+  qt/bioa3/res/img/ic-add.svg \
+  qt/bioa3/res/img/ic-check.svg \
+  qt/bioa3/res/img/ic-nav-send-active.svg \
+  qt/bioa3/res/img/img-empty-dark-staking-off.svg \
+  qt/bioa3/res/img/img-empty-dark-staking-on.svg \
+  qt/bioa3/res/img/ic-address-book-grey.svg \
+  qt/bioa3/res/img/ic-chevron-left.svg \
+  qt/bioa3/res/img/ic-nav-send-hover.svg \
+  qt/bioa3/res/img/img-empty-dark-transactions.svg \
+  qt/bioa3/res/img/ic-address-book-white.svg \
+  qt/bioa3/res/img/ic-chevron-right.svg \
+  qt/bioa3/res/img/ic-nav-send.svg \
+  qt/bioa3/res/img/img-empty-error.svg \
+  qt/bioa3/res/img/ic-address-book.svg \
+  qt/bioa3/res/img/ic-clear-liliac.svg \
+  qt/bioa3/res/img/ic-nav-settings-active.svg \
+  qt/bioa3/res/img/img-empty-masternode.svg \
+  qt/bioa3/res/img/ic-address-send-white.svg \
+  qt/bioa3/res/img/ic-clear-purple.svg \
+  qt/bioa3/res/img/ic-nav-settings-hover.svg \
+  qt/bioa3/res/img/img-empty-multisend.svg \
+  qt/bioa3/res/img/ic-address-send.svg \
+  qt/bioa3/res/img/ic-close-white.svg \
+  qt/bioa3/res/img/ic-nav-settings.svg \
+  qt/bioa3/res/img/img-empty-peers.svg \
+  qt/bioa3/res/img/img-empty-privacy.svg \
+  qt/bioa3/res/img/img-empty-privacy-dark.svg \
+  qt/bioa3/res/img/ic-arrow-drop-down-white.svg \
+  qt/bioa3/res/img/ic-close.svg \
+  qt/bioa3/res/img/ic-radio-liliac-on.svg \
+  qt/bioa3/res/img/img-empty-staking-off.svg \
+  qt/bioa3/res/img/ic-arrow-drop-down.svg \
+  qt/bioa3/res/img/ic-coin-bioa3.svg \
+  qt/bioa3/res/img/ic-receive-off.svg \
+  qt/bioa3/res/img/img-empty-staking-on.svg \
+  qt/bioa3/res/img/ic-arrow-drop-up-white.svg \
+  qt/bioa3/res/img/ic-coin-zbioa3.png \
+  qt/bioa3/res/img/ic-receive-on.svg \
+  qt/bioa3/res/img/img-empty-transactions.svg \
+  qt/bioa3/res/img/ic-arrow-drop-up.svg \
+  qt/bioa3/res/img/ic-coin-zbioa3.svg \
+  qt/bioa3/res/img/ic-received.svg \
+  qt/bioa3/res/img/img-logo-bioa3.png \
+  qt/bioa3/res/img/ic-arrow-drop-white-down.svg \
+  qt/bioa3/res/img/ic-combo-box.svg \
+  qt/bioa3/res/img/ic-send.svg \
+  qt/bioa3/res/img/img-logo-bioa3@2x.png \
+  qt/bioa3/res/img/ic-arrow-purple-down.svg \
+  qt/bioa3/res/img/ic-connect.svg \
+  qt/bioa3/res/img/ic-submenu-lock.svg \
+  qt/bioa3/res/img/img-logo-bioa3@3x.png \
+  qt/bioa3/res/img/img-logo-bioa3.svg \
+  qt/bioa3/res/img/ic-arrow-right-white.svg \
+  qt/bioa3/res/img/ic-arrow-left-white.svg \
+  qt/bioa3/res/img/ic-arrow-left.svg \
+  qt/bioa3/res/img/ic-copy-liliac.svg \
+  qt/bioa3/res/img/ic-submenu-staking.svg \
+  qt/bioa3/res/img/img-nav-logo-bioa3.png \
+  qt/bioa3/res/img/ic-arrow-right.svg \
+  qt/bioa3/res/img/ic-copy.svg \
+  qt/bioa3/res/img/ic-copy-big.svg \
+  qt/bioa3/res/img/ic-copy-big-white.svg \
+  qt/bioa3/res/img/ic-submenu-unlock.svg \
+  qt/bioa3/res/img/img-nav-logo.png \
+  qt/bioa3/res/img/ic-arrow-white-left.svg \
+  qt/bioa3/res/img/ic-exit.svg \
+  qt/bioa3/res/img/ic-switch-liliac-on.svg \
+  qt/bioa3/res/img/img-nav-logo.svg \
+  qt/bioa3/res/img/ic-arrow-white-right.svg \
+  qt/bioa3/res/img/ic-expand.svg \
+  qt/bioa3/res/img/ic-switch-off.svg \
+  qt/bioa3/res/img/img-qr-test-big.png \
+  qt/bioa3/res/img/ic-check-active.svg \
+  qt/bioa3/res/img/ic-folder.svg \
+  qt/bioa3/res/img/ic-switch-on.svg \
+  qt/bioa3/res/img/img-qr-test.png \
+  qt/bioa3/res/img/ic-check-box.svg \
+  qt/bioa3/res/img/ic-check-box-dark-active.svg \
+  qt/bioa3/res/img/ic-check-box-indeterminate.svg \
+  qt/bioa3/res/img/ic-check-box-liliac-indeterminate.svg \
+  qt/bioa3/res/img/ic-label-liliac.svg \
+  qt/bioa3/res/img/ic-transaction-warning.svg \
+  qt/bioa3/res/img/ic-transaction-mint.svg \
+  qt/bioa3/res/img/ic-transaction-mint-inactive.svg \
+  qt/bioa3/res/img/ic-check-cold-staking.svg \
+  qt/bioa3/res/img/ic-check-cold-staking-off.svg \
+  qt/bioa3/res/img/ic-check-cold-staking-enabled.svg \
+  qt/bioa3/res/img/dark/ic-transaction-cs-contract.svg \
+  qt/bioa3/res/img/dark/ic-transaction-cs-contract-inactive.svg \
+  qt/bioa3/res/img/img-qr.svg \
+  qt/bioa3/res/img/ic-check-connect-off.svg \
+  qt/bioa3/res/img/ic-label.svg \
+  qt/bioa3/res/img/ic-transaction-received.svg \
+  qt/bioa3/res/img/dark/ic-transaction-received.svg \
+  qt/bioa3/res/img/dark/ic-transaction-warning.svg \
+  qt/bioa3/res/img/dark/ic-transaction-mint.svg \
+  qt/bioa3/res/img/dark/ic-transaction-mint-inactive.svg \
+  qt/bioa3/res/img/ic-transaction-received-inactive.svg \
+  qt/bioa3/res/img/dark/ic-transaction-received-inactive.svg \
+  qt/bioa3/res/img/img-welcome-step1.png \
+  qt/bioa3/res/img/ic-check-connect.svg \
+  qt/bioa3/res/img/ic-menu-hover.svg \
+  qt/bioa3/res/img/ic-transaction-sent.svg \
+  qt/bioa3/res/img/ic-transaction-sent-inactive.svg \
+  qt/bioa3/res/img/dark/ic-transaction-sent.svg \
+  qt/bioa3/res/img/dark/ic-transaction-sent-inactive.svg \
+  qt/bioa3/res/img/img-welcome-step2.png \
+  qt/bioa3/res/img/ic-check-dark.svg \
+  qt/bioa3/res/img/ic-mint.svg \
+  qt/bioa3/res/img/ic-transaction-staked.svg \
+  qt/bioa3/res/img/ic-transaction-staked-inactive.svg \
+  qt/bioa3/res/img/dark/ic-transaction-staked.svg \
+  qt/bioa3/res/img/dark/ic-transaction-staked-inactive.svg \
+  qt/bioa3/res/img/img-welcome-step3.png \
+  qt/bioa3/res/img/ic-check-liliac-on.svg \
+  qt/bioa3/res/img/ic-nav-address-active.svg \
+  qt/bioa3/res/img/ic-unlock-staking.svg \
+  qt/bioa3/res/img/img-welcome-step4.png \
+  qt/bioa3/res/img/ic-check-locked-off.svg \
+  qt/bioa3/res/img/ic-nav-address-hover.svg \
+  qt/bioa3/res/img/ic-update-liliac.svg \
+  qt/bioa3/res/img/ic-arrow-drop-down-purple.svg \
+  qt/bioa3/res/img/ic-arrow-drop-up-purple.svg \
+  qt/bioa3/res/img/ic-check-liliac-indeterminate.svg \
+  qt/bioa3/res/img/ic-check-box-liliac-indeterminate.svg \
+  qt/bioa3/res/img/ic-transaction-stake-delegated.svg \
+  qt/bioa3/res/img/ic-transaction-stake-delegated-inactive.svg \
+  qt/bioa3/res/img/ic-transaction-stake-hot.svg \
+  qt/bioa3/res/img/ic-transaction-stake-hot-inactive.svg \
+  qt/bioa3/res/img/dark/ic-transaction-stake-hot.svg \
+  qt/bioa3/res/img/dark/ic-transaction-stake-hot-inactive.svg \
+  qt/bioa3/res/img/dark/ic-transaction-stake-delegated.svg \
+  qt/bioa3/res/img/dark/ic-transaction-stake-delegated-inactive.svg \
+  qt/bioa3/res/img/ic-transaction-cs-contract.svg \
+  qt/bioa3/res/img/ic-transaction-cs-contract-inactive.svg \
+  qt/bioa3/res/img/ic-check-box-indeterminate.svg \
+  qt/bioa3/res/img/ani-loading-dark.gif \
+  qt/bioa3/res/img/ani-loading.gif
 
 
 
@@ -617,7 +617,7 @@ BITCOIN_QT_BASE_CPP = \
   qt/bantablemodel.cpp \
   qt/bitcoinaddressvalidator.cpp \
   qt/bitcoinamountfield.cpp \
-  qt/ecodollar/ecodollargui.cpp \
+  qt/bioa3/bioa3gui.cpp \
   qt/bitcoinunits.cpp \
   qt/blockexplorer.cpp \
   qt/clientmodel.cpp \
@@ -659,68 +659,68 @@ BITCOIN_QT_WALLET_CPP = \
   qt/transactiontablemodel.cpp \
   qt/walletmodel.cpp \
   qt/walletmodeltransaction.cpp \
-  qt/ecodollar/loadingdialog.cpp \
-  qt/zecoscontroldialog.cpp \
-  qt/ecodollar/pwidget.cpp \
-  qt/ecodollar/guitransactionsutils.cpp \
-  qt/ecodollar/snackbar.cpp \
-  qt/ecodollar/navmenuwidget.cpp \
-  qt/ecodollar/lockunlock.cpp \
-  qt/ecodollar/receivedialog.cpp \
-  qt/ecodollar/furabstractlistitemdelegate.cpp \
-  qt/ecodollar/txviewholder.cpp \
-  qt/ecodollar/qtutils.cpp \
-  qt/ecodollar/expandablebutton.cpp \
-  qt/ecodollar/walletpassworddialog.cpp \
-  qt/ecodollar/topbar.cpp \
-  qt/ecodollar/txrow.cpp \
-  qt/ecodollar/addressholder.cpp \
-  qt/ecodollar/addressfilterproxymodel.cpp \
-  qt/ecodollar/dashboardwidget.cpp \
-  qt/ecodollar/coincontrolecoswidget.cpp \
-  qt/ecodollar/addresslabelrow.cpp \
-  qt/ecodollar/contactdropdownrow.cpp \
-  qt/ecodollar/contactsdropdown.cpp \
-  qt/ecodollar/optionbutton.cpp \
-  qt/ecodollar/mninfodialog.cpp \
-  qt/ecodollar/coldstakingmodel.cpp \
-  qt/ecodollar/mnmodel.cpp \
-  qt/ecodollar/masternodewizarddialog.cpp \
-  qt/ecodollar/mnrow.cpp \
-  qt/ecodollar/masternodeswidget.cpp \
-  qt/ecodollar/myaddressrow.cpp \
-  qt/ecodollar/csrow.cpp \
-  qt/ecodollar/sendchangeaddressdialog.cpp \
-  qt/ecodollar/sendconfirmdialog.cpp \
-  qt/ecodollar/sendcustomfeedialog.cpp \
-  qt/ecodollar/sendchangeaddressdialog.cpp \
-  qt/ecodollar/sendmultirow.cpp \
-  qt/ecodollar/send.cpp \
-  qt/ecodollar/addnewaddressdialog.cpp \
-  qt/ecodollar/addnewcontactdialog.cpp \
-  qt/ecodollar/requestdialog.cpp \
-  qt/ecodollar/receivewidget.cpp \
-  qt/ecodollar/tooltipmenu.cpp \
-  qt/ecodollar/addresseswidget.cpp \
-  qt/ecodollar/defaultdialog.cpp \
-  qt/ecodollar/denomgenerationdialog.cpp \
-  qt/ecodollar/privacywidget.cpp \
-  qt/ecodollar/coldstakingwidget.cpp \
-  qt/ecodollar/settings/settingsbackupwallet.cpp \
-  qt/ecodollar/settings/settingsbittoolwidget.cpp \
-  qt/ecodollar/settings/settingsconsolewidget.cpp \
-  qt/ecodollar/settings/settingsdisplayoptionswidget.cpp \
-  qt/ecodollar/settings/settingsfaqwidget.cpp \
-  qt/ecodollar/settings/settingsinformationwidget.cpp \
-  qt/ecodollar/settings/settingsmainoptionswidget.cpp \
-  qt/ecodollar/settings/settingsmultisenddialog.cpp \
-  qt/ecodollar/settings/settingsmultisendwidget.cpp \
-  qt/ecodollar/settings/settingssignmessagewidgets.cpp \
-  qt/ecodollar/settings/settingswalletoptionswidget.cpp \
-  qt/ecodollar/settings/settingswalletrepairwidget.cpp \
-  qt/ecodollar/settings/settingswidget.cpp \
-  qt/ecodollar/welcomecontentwidget.cpp \
-  qt/ecodollar/splash.cpp
+  qt/bioa3/loadingdialog.cpp \
+  qt/zbioa3controldialog.cpp \
+  qt/bioa3/pwidget.cpp \
+  qt/bioa3/guitransactionsutils.cpp \
+  qt/bioa3/snackbar.cpp \
+  qt/bioa3/navmenuwidget.cpp \
+  qt/bioa3/lockunlock.cpp \
+  qt/bioa3/receivedialog.cpp \
+  qt/bioa3/furabstractlistitemdelegate.cpp \
+  qt/bioa3/txviewholder.cpp \
+  qt/bioa3/qtutils.cpp \
+  qt/bioa3/expandablebutton.cpp \
+  qt/bioa3/walletpassworddialog.cpp \
+  qt/bioa3/topbar.cpp \
+  qt/bioa3/txrow.cpp \
+  qt/bioa3/addressholder.cpp \
+  qt/bioa3/addressfilterproxymodel.cpp \
+  qt/bioa3/dashboardwidget.cpp \
+  qt/bioa3/coincontrolbioa3widget.cpp \
+  qt/bioa3/addresslabelrow.cpp \
+  qt/bioa3/contactdropdownrow.cpp \
+  qt/bioa3/contactsdropdown.cpp \
+  qt/bioa3/optionbutton.cpp \
+  qt/bioa3/mninfodialog.cpp \
+  qt/bioa3/coldstakingmodel.cpp \
+  qt/bioa3/mnmodel.cpp \
+  qt/bioa3/masternodewizarddialog.cpp \
+  qt/bioa3/mnrow.cpp \
+  qt/bioa3/masternodeswidget.cpp \
+  qt/bioa3/myaddressrow.cpp \
+  qt/bioa3/csrow.cpp \
+  qt/bioa3/sendchangeaddressdialog.cpp \
+  qt/bioa3/sendconfirmdialog.cpp \
+  qt/bioa3/sendcustomfeedialog.cpp \
+  qt/bioa3/sendchangeaddressdialog.cpp \
+  qt/bioa3/sendmultirow.cpp \
+  qt/bioa3/send.cpp \
+  qt/bioa3/addnewaddressdialog.cpp \
+  qt/bioa3/addnewcontactdialog.cpp \
+  qt/bioa3/requestdialog.cpp \
+  qt/bioa3/receivewidget.cpp \
+  qt/bioa3/tooltipmenu.cpp \
+  qt/bioa3/addresseswidget.cpp \
+  qt/bioa3/defaultdialog.cpp \
+  qt/bioa3/denomgenerationdialog.cpp \
+  qt/bioa3/privacywidget.cpp \
+  qt/bioa3/coldstakingwidget.cpp \
+  qt/bioa3/settings/settingsbackupwallet.cpp \
+  qt/bioa3/settings/settingsbittoolwidget.cpp \
+  qt/bioa3/settings/settingsconsolewidget.cpp \
+  qt/bioa3/settings/settingsdisplayoptionswidget.cpp \
+  qt/bioa3/settings/settingsfaqwidget.cpp \
+  qt/bioa3/settings/settingsinformationwidget.cpp \
+  qt/bioa3/settings/settingsmainoptionswidget.cpp \
+  qt/bioa3/settings/settingsmultisenddialog.cpp \
+  qt/bioa3/settings/settingsmultisendwidget.cpp \
+  qt/bioa3/settings/settingssignmessagewidgets.cpp \
+  qt/bioa3/settings/settingswalletoptionswidget.cpp \
+  qt/bioa3/settings/settingswalletrepairwidget.cpp \
+  qt/bioa3/settings/settingswidget.cpp \
+  qt/bioa3/welcomecontentwidget.cpp \
+  qt/bioa3/splash.cpp
 
 
 BITCOIN_QT_CPP = $(BITCOIN_QT_BASE_CPP)
@@ -736,7 +736,7 @@ RES_IMAGES = \
   qt/res/images/splash.png \
   qt/res/images/splash_testnet.png \
   qt/res/images/splash_regtest.png \
-  qt/res/images/ecodollar_logo_horizontal.png \
+  qt/res/images/bioa3_logo_horizontal.png \
   qt/res/images/downArrow_dark.png \
   qt/res/images/downArrow_small_dark.png \
   qt/res/images/downArrow_small.png \
@@ -748,12 +748,12 @@ RES_IMAGES = \
 
 RES_CSS = \
   qt/res/css/default.css \
-  qt/ecodollar/res/css/style_dark.css \
-  qt/ecodollar/res/css/style_light.css
+  qt/bioa3/res/css/style_dark.css \
+  qt/bioa3/res/css/style_light.css
 
 RES_MOVIES = $(wildcard $(srcdir)/qt/res/movies/spinner-*.png)
 
-BITCOIN_RC = qt/res/ecodollar-qt-res.rc
+BITCOIN_RC = qt/res/bioa3-qt-res.rc
 
 BITCOIN_QT_INCLUDES = -I$(builddir)/qt -I$(srcdir)/qt -I$(srcdir)/qt/forms \
   -I$(builddir)/qt/forms
@@ -775,71 +775,71 @@ QT_FORMS_H=$(join $(dir $(QT_FORMS_UI)),$(addprefix ui_, $(notdir $(QT_FORMS_UI:
 # Most files will depend on the forms and moc files as includes. Generate them
 # before anything else.
 $(QT_MOC): $(QT_FORMS_H)
-$(qt_libbitcoinqt_a_OBJECTS) $(qt_ecodollar_qt_OBJECTS) : | $(QT_MOC)
+$(qt_libbitcoinqt_a_OBJECTS) $(qt_bioa3_qt_OBJECTS) : | $(QT_MOC)
 
 #Generating these with a half-written protobuf header leads to wacky results.
 #This makes sure it's done.
 $(QT_MOC): $(PROTOBUF_H)
 $(QT_MOC_CPP): $(PROTOBUF_H)
 
-# ecodollar-qt binary #
-qt_ecodollar_qt_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
+# bioa3-qt binary #
+qt_bioa3_qt_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
   $(QT_INCLUDES) $(PROTOBUF_CFLAGS) $(QR_CFLAGS) $(SVG_CFLAGS) $(CHARTS_CFLAGS)
-qt_ecodollar_qt_CXXFLAGS = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
+qt_bioa3_qt_CXXFLAGS = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
 
-qt_ecodollar_qt_SOURCES = qt/ecodollar.cpp
+qt_bioa3_qt_SOURCES = qt/bioa3.cpp
 if TARGET_DARWIN
-  qt_ecodollar_qt_SOURCES += $(BITCOIN_MM)
+  qt_bioa3_qt_SOURCES += $(BITCOIN_MM)
 endif
 if TARGET_WINDOWS
-  qt_ecodollar_qt_SOURCES += $(BITCOIN_RC)
+  qt_bioa3_qt_SOURCES += $(BITCOIN_RC)
 endif
-qt_ecodollar_qt_LDADD = qt/libbitcoinqt.a $(LIBBITCOIN_SERVER)
+qt_bioa3_qt_LDADD = qt/libbitcoinqt.a $(LIBBITCOIN_SERVER)
 if ENABLE_WALLET
-qt_ecodollar_qt_LDADD += $(LIBBITCOIN_UTIL) $(LIBBITCOIN_WALLET)
+qt_bioa3_qt_LDADD += $(LIBBITCOIN_UTIL) $(LIBBITCOIN_WALLET)
 endif
 if ENABLE_ZMQ
-qt_ecodollar_qt_LDADD += $(LIBBITCOIN_ZMQ) $(ZMQ_LIBS)
+qt_bioa3_qt_LDADD += $(LIBBITCOIN_ZMQ) $(ZMQ_LIBS)
 endif
-qt_ecodollar_qt_LDADD += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBBITCOIN_ZEROCOIN) $(LIBLEVELDB) $(LIBLEVELDB_SSE42) $(LIBMEMENV) \
+qt_bioa3_qt_LDADD += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBBITCOIN_ZEROCOIN) $(LIBLEVELDB) $(LIBLEVELDB_SSE42) $(LIBMEMENV) \
   $(BOOST_LIBS) $(QT_LIBS) $(QT_DBUS_LIBS) $(QR_LIBS) $(PROTOBUF_LIBS) $(SVG_LIBS) $(CHARTS_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(LIBSECP256K1) \
   $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
-qt_ecodollar_qt_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(QT_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
-qt_ecodollar_qt_LIBTOOLFLAGS = $(AM_LIBTOOLFLAGS) --tag CXX
+qt_bioa3_qt_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(QT_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+qt_bioa3_qt_LIBTOOLFLAGS = $(AM_LIBTOOLFLAGS) --tag CXX
 
 #locale/foo.ts -> locale/foo.qm
 QT_QM=$(QT_TS:.ts=.qm)
 
 SECONDARY: $(QT_QM)
 
-$(srcdir)/qt/ecodollarstrings.cpp: $(libbitcoin_server_a_SOURCES) $(libbitcoin_wallet_a_SOURCES) $(libbitcoin_common_a_SOURCES) $(libbitcoin_zmq_a_SOURCES) $(libbitcoin_util_a_SOURCES)
+$(srcdir)/qt/bioa3strings.cpp: $(libbitcoin_server_a_SOURCES) $(libbitcoin_wallet_a_SOURCES) $(libbitcoin_common_a_SOURCES) $(libbitcoin_zmq_a_SOURCES) $(libbitcoin_util_a_SOURCES)
 	@test -n $(XGETTEXT) || echo "xgettext is required for updating translations"
 	$(AM_V_GEN) cd $(srcdir); XGETTEXT=$(XGETTEXT) PACKAGE_NAME="$(PACKAGE_NAME)" $(PYTHON) ../share/qt/extract_strings_qt.py $^
 
-translate: $(srcdir)/qt/ecodollarstrings.cpp $(QT_FORMS_UI) $(QT_FORMS_UI) $(BITCOIN_QT_BASE_CPP) qt/ecodollar.cpp $(BITCOIN_QT_WINDOWS_CPP) $(BITCOIN_QT_WALLET_CPP) $(BITCOIN_QT_H) $(BITCOIN_MM)
+translate: $(srcdir)/qt/bioa3strings.cpp $(QT_FORMS_UI) $(QT_FORMS_UI) $(BITCOIN_QT_BASE_CPP) qt/bioa3.cpp $(BITCOIN_QT_WINDOWS_CPP) $(BITCOIN_QT_WALLET_CPP) $(BITCOIN_QT_H) $(BITCOIN_MM)
 	@test -n $(LUPDATE) || echo "lupdate is required for updating translations"
-	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(LUPDATE) $^ -locations relative -no-obsolete -ts $(srcdir)/qt/locale/ecodollar_en.ts
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(LUPDATE) $^ -locations relative -no-obsolete -ts $(srcdir)/qt/locale/bioa3_en.ts
 
 $(QT_QRC_LOCALE_CPP): $(QT_QRC_LOCALE) $(QT_QM)
 	@test -f $(RCC)
 	@cp -f $< $(@D)/temp_$(<F)
-	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(RCC) -name ecodollar_locale $(@D)/temp_$(<F) | \
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(RCC) -name bioa3_locale $(@D)/temp_$(<F) | \
 	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
 	@rm $(@D)/temp_$(<F)
 
 $(QT_QRC_CPP): $(QT_QRC) $(QT_FORMS_H) $(RES_ICONS) $(RES_IMAGES) $(RES_CSS) $(RES_MOVIES) $(PROTOBUF_H)
 	@test -f $(RCC)
-	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(RCC) -name ecodollar $< | \
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(RCC) -name bioa3 $< | \
 	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
 
-CLEAN_QT = $(nodist_qt_libbitcoinqt_a_SOURCES) $(QT_QM) $(QT_FORMS_H) qt/*.gcda qt/*.gcno qt/temp_ecodollar_locale.qrc
+CLEAN_QT = $(nodist_qt_libbitcoinqt_a_SOURCES) $(QT_QM) $(QT_FORMS_H) qt/*.gcda qt/*.gcno qt/temp_bioa3_locale.qrc
 
 CLEANFILES += $(CLEAN_QT)
 
-ecodollar_qt_clean: FORCE
-	rm -f $(CLEAN_QT) $(qt_libbitcoinqt_a_OBJECTS) $(qt_ecodollar_qt_OBJECTS) qt/ecodollar-qt$(EXEEXT) $(LIBBITCOINQT)
+bioa3_qt_clean: FORCE
+	rm -f $(CLEAN_QT) $(qt_libbitcoinqt_a_OBJECTS) $(qt_bioa3_qt_OBJECTS) qt/bioa3-qt$(EXEEXT) $(LIBBITCOINQT)
 
-ecodollar_qt : qt/ecodollar-qt$(EXEEXT)
+bioa3_qt : qt/bioa3-qt$(EXEEXT)
 
 ui_%.h: %.ui
 	@test -f $(UIC)

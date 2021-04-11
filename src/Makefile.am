@@ -66,15 +66,15 @@ TESTS =
 BENCHMARKS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += ecodollard
+  bin_PROGRAMS += bioa3d
 endif
 
 if BUILD_BITCOIN_UTILS
-  bin_PROGRAMS += ecodollar-cli ecodollar-tx
+  bin_PROGRAMS += bioa3-cli bioa3-tx
 endif
 
 .PHONY: FORCE check-symbols check-security
-# ecodollar core #
+# bioa3 core #
 BITCOIN_CORE_H = \
   activemasternode.h \
   addrman.h \
@@ -179,21 +179,21 @@ BITCOIN_CORE_H = \
   wallet/wallet.h \
   wallet/wallet_ismine.h \
   wallet/walletdb.h \
-  zecoschain.h \
-  zecos/accumulators.h \
-  zecos/accumulatorcheckpoints.h \
-  zecos/accumulatorcheckpoints.json.h \
-  zecos/accumulatormap.h \
-  zecos/deterministicmint.h \
-  zecos/mintpool.h \
-  zecos/witness.h \
-  zecos/zerocoin.h \
-  zecos/zecostracker.h \
-  zecos/zecoswallet.h \
-  zecos/zecosmodule.h \
+  zbioa3chain.h \
+  zbioa3/accumulators.h \
+  zbioa3/accumulatorcheckpoints.h \
+  zbioa3/accumulatorcheckpoints.json.h \
+  zbioa3/accumulatormap.h \
+  zbioa3/deterministicmint.h \
+  zbioa3/mintpool.h \
+  zbioa3/witness.h \
+  zbioa3/zerocoin.h \
+  zbioa3/zbioa3tracker.h \
+  zbioa3/zbioa3wallet.h \
+  zbioa3/zbioa3module.h \
   genwit.h \
   concurrentqueue.h \
-  lightzecosthread.h \
+  lightzbioa3thread.h \
   zmq/zmqabstractnotifier.h \
   zmq/zmqconfig.h \
   zmq/zmqnotificationinterface.h \
@@ -205,7 +205,7 @@ obj/build.h: FORCE
 	  "$(abs_top_srcdir)"
 libbitcoin_util_a-clientversion.$(OBJEXT): obj/build.h
 
-# server: shared between ecodollard and ecodollar-qt
+# server: shared between bioa3d and bioa3-qt
 libbitcoin_server_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(MINIUPNPC_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
 libbitcoin_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_server_a_SOURCES = \
@@ -241,7 +241,7 @@ libbitcoin_server_a_SOURCES = \
   txdb.cpp \
   txmempool.cpp \
   validationinterface.cpp \
-  zecoschain.cpp \
+  zbioa3chain.cpp \
   $(BITCOIN_CORE_H)
 
 if ENABLE_ZMQ
@@ -253,7 +253,7 @@ libbitcoin_zmq_a_SOURCES = \
   zmq/zmqpublishnotifier.cpp
 endif
 
-# wallet: shared between ecodollard and ecodollar-qt, but only linked
+# wallet: shared between bioa3d and bioa3-qt, but only linked
 # when wallet enabled
 libbitcoin_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
@@ -280,17 +280,17 @@ libbitcoin_wallet_a_SOURCES = \
   wallet/wallet.cpp \
   wallet/wallet_ismine.cpp \
   wallet/walletdb.cpp \
-  zecos/deterministicmint.cpp \
-  zecos/zerocoin.cpp \
-  zecos/accumulators.cpp \
-  zecos/mintpool.cpp \
-  zecos/witness.cpp \
-  zecos/zecoswallet.cpp \
-  zecos/zecostracker.cpp \
+  zbioa3/deterministicmint.cpp \
+  zbioa3/zerocoin.cpp \
+  zbioa3/accumulators.cpp \
+  zbioa3/mintpool.cpp \
+  zbioa3/witness.cpp \
+  zbioa3/zbioa3wallet.cpp \
+  zbioa3/zbioa3tracker.cpp \
   stakeinput.cpp \
   genwit.cpp \
-  zecos/zecosmodule.cpp \
-  lightzecosthread.cpp \
+  zbioa3/zbioa3module.cpp \
+  lightzbioa3thread.cpp \
   $(BITCOIN_CORE_H)
 
 # crypto primitives library
@@ -366,13 +366,13 @@ if USE_NUM_OPENSSL
   libzerocoin_libbitcoin_zerocoin_a_SOURCES += libzerocoin/bignum_openssl.cpp
 endif
 
-# common: shared between ecodollard, and ecodollar-qt and non-server tools
+# common: shared between bioa3d, and bioa3-qt and non-server tools
 libbitcoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_common_a_SOURCES = \
-  zecos/accumulators.cpp \
-  zecos/accumulatorcheckpoints.cpp \
-  zecos/accumulatormap.cpp \
+  zbioa3/accumulators.cpp \
+  zbioa3/accumulatorcheckpoints.cpp \
+  zbioa3/accumulatormap.cpp \
   allocators.cpp \
   amount.cpp \
   base58.cpp \
@@ -382,9 +382,9 @@ libbitcoin_common_a_SOURCES = \
   compressor.cpp \
   consensus/merkle.cpp \
   primitives/block.cpp \
-  zecos/deterministicmint.cpp \
+  zbioa3/deterministicmint.cpp \
   primitives/transaction.cpp \
-  zecos/zerocoin.cpp \
+  zbioa3/zerocoin.cpp \
   core_read.cpp \
   core_write.cpp \
   hash.cpp \
@@ -432,7 +432,7 @@ libbitcoin_util_a_SOURCES += compat/glibc_compat.cpp
 AM_LDFLAGS += $(COMPAT_LDFLAGS)
 endif
 
-# cli: shared between ecodollar-cli and ecodollar-qt
+# cli: shared between bioa3-cli and bioa3-qt
 libbitcoin_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
 libbitcoin_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libbitcoin_cli_a_SOURCES = \
@@ -442,16 +442,16 @@ libbitcoin_cli_a_SOURCES = \
 nodist_libbitcoin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
-# ecodollard binary #
-ecodollard_SOURCES = ecodollard.cpp
-ecodollard_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-ecodollard_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-ecodollard_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# bioa3d binary #
+bioa3d_SOURCES = bioa3d.cpp
+bioa3d_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+bioa3d_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+bioa3d_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-ecodollard_SOURCES += ecodollard-res.rc
+bioa3d_SOURCES += bioa3d-res.rc
 endif
-ecodollard_LDADD = \
+bioa3d_LDADD = \
   $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_WALLET) \
   $(LIBBITCOIN_COMMON) \
@@ -465,38 +465,38 @@ ecodollard_LDADD = \
   $(LIBMEMENV) \
   $(LIBSECP256K1)
 
-ecodollard_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS)
+bioa3d_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS)
 
-# ecodollar-cli binary #
-ecodollar_cli_SOURCES = ecodollar-cli.cpp
-ecodollar_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
-ecodollar_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-ecodollar_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# bioa3-cli binary #
+bioa3_cli_SOURCES = bioa3-cli.cpp
+bioa3_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
+bioa3_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+bioa3_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-ecodollar_cli_SOURCES += ecodollar-cli-res.rc
+bioa3_cli_SOURCES += bioa3-cli-res.rc
 endif
 
-ecodollar_cli_LDADD = \
+bioa3_cli_LDADD = \
   $(LIBBITCOIN_CLI) \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_CRYPTO)
 
-ecodollar_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
+bioa3_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
 #
 
-# ecodollar-tx binary #
-ecodollar_tx_SOURCES = ecodollar-tx.cpp
-ecodollar_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-ecodollar_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-ecodollar_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# bioa3-tx binary #
+bioa3_tx_SOURCES = bioa3-tx.cpp
+bioa3_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+bioa3_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+bioa3_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-ecodollar_tx_SOURCES += ecodollar-tx-res.rc
+bioa3_tx_SOURCES += bioa3-tx-res.rc
 endif
 
-ecodollar_tx_LDADD = \
+bioa3_tx_LDADD = \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_ZEROCOIN) \
@@ -504,7 +504,7 @@ ecodollar_tx_LDADD = \
   $(LIBBITCOIN_CRYPTO) \
   $(LIBSECP256K1)
 
-ecodollar_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
+bioa3_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
 #
 
 # bitcoinconsensus library #
@@ -553,18 +553,18 @@ CLEANFILES += univalue/*.gcda univalue/*.gcno
 CLEANFILES += wallet/*.gcda wallet/*.gcno
 CLEANFILES += wallet/test/*.gcda wallet/test/*.gcno
 CLEANFILES += zmq/*.gcda zmq/*.gcno
-CLEANFILES += zecos/*.gcda zecos/*.gcno
+CLEANFILES += zbioa3/*.gcda zbioa3/*.gcno
 CLEANFILES += obj/build.h
 
 EXTRA_DIST =
 
 
-config/ecodollar-config.h: config/stamp-h1
+config/bioa3-config.h: config/stamp-h1
 	@$(MAKE) -C $(top_builddir) $(subdir)/$(@)
-config/stamp-h1: $(top_srcdir)/$(subdir)/config/ecodollar-config.h.in $(top_builddir)/config.status
+config/stamp-h1: $(top_srcdir)/$(subdir)/config/bioa3-config.h.in $(top_builddir)/config.status
 	$(AM_V_at)$(MAKE) -C $(top_builddir) $(subdir)/$(@)
-$(top_srcdir)/$(subdir)/config/ecodollar-config.h.in:  $(am__configure_deps)
-	$(AM_V_at)$(MAKE) -C $(top_srcdir) $(subdir)/config/ecodollar-config.h.in
+$(top_srcdir)/$(subdir)/config/bioa3-config.h.in:  $(am__configure_deps)
+	$(AM_V_at)$(MAKE) -C $(top_srcdir) $(subdir)/config/bioa3-config.h.in
 
 clean-local:
 	-$(MAKE) -C secp256k1 clean

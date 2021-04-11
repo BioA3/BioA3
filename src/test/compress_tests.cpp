@@ -4,7 +4,7 @@
 
 #include "compressor.h"
 #include "util.h"
-#include "test/test_ecodollar.h"
+#include "test/test_bioa3.h"
 
 #include <stdint.h>
 

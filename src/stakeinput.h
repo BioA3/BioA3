@@ -1,9 +1,9 @@
-// Copyright (c) 2017-2019 The ECODOLLAR developers
+// Copyright (c) 2017-2019 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef ECODOLLAR_STAKEINPUT_H
-#define ECODOLLAR_STAKEINPUT_H
+#ifndef BIOA3_STAKEINPUT_H
+#define BIOA3_STAKEINPUT_H
 
 #include "chain.h"
 #include "streams.h"
@@ -26,7 +26,7 @@ public:
     virtual CAmount GetValue() = 0;
     virtual bool CreateTxOuts(CWallet* pwallet, std::vector<CTxOut>& vout, CAmount nTotal) = 0;
     virtual bool GetModifier(uint64_t& nStakeModifier) = 0;
-    virtual bool IsZECOS() = 0;
+    virtual bool IsZBIOA3() = 0;
     virtual CDataStream GetUniqueness() = 0;
     virtual uint256 GetSerialHash() const = 0;
 
@@ -36,10 +36,10 @@ public:
 };
 
 
-// zECOSStake can take two forms
+// zBIOA3Stake can take two forms
 // 1) the stake candidate, which is a zcmint that is attempted to be staked
-// 2) a staked zecos, which is a zcspend that has successfully staked
-class CZEcosStake : public CStakeInput
+// 2) a staked zbioa3, which is a zcspend that has successfully staked
+class CZBioA3Stake : public CStakeInput
 {
 private:
     uint32_t nChecksum;
@@ -48,14 +48,14 @@ private:
     uint256 hashSerial;
 
 public:
-    explicit CZEcosStake(libzerocoin::CoinDenomination denom, const uint256& hashSerial)
+    explicit CZBioA3Stake(libzerocoin::CoinDenomination denom, const uint256& hashSerial)
     {
         this->denom = denom;
         this->hashSerial = hashSerial;
         fMint = true;
     }
 
-    explicit CZEcosStake(const libzerocoin::CoinSpend& spend);
+    explicit CZBioA3Stake(const libzerocoin::CoinSpend& spend);
 
     CBlockIndex* GetIndexFrom() override;
     bool GetTxFrom(CTransaction& tx) override;
@@ -65,14 +65,14 @@ public:
     bool CreateTxIn(CWallet* pwallet, CTxIn& txIn, uint256 hashTxOut = 0) override;
     bool CreateTxOuts(CWallet* pwallet, std::vector<CTxOut>& vout, CAmount nTotal) override;
     bool MarkSpent(CWallet* pwallet, const uint256& txid);
-    bool IsZECOS() override { return true; }
+    bool IsZBIOA3() override { return true; }
     uint256 GetSerialHash() const override { return hashSerial; }
     int GetChecksumHeightFromMint();
     int GetChecksumHeightFromSpend();
     uint32_t GetChecksum();
 };
 
-class CEcosStake : public CStakeInput
+class CBioA3Stake : public CStakeInput
 {
 private:
     CTransaction txFrom;
@@ -83,7 +83,7 @@ private:
     int nStakeModifierHeight = 0;
     int64_t nStakeModifierTime = 0;
 public:
-    CEcosStake(){}
+    CBioA3Stake(){}
 
     bool SetInput(CTransaction txPrev, unsigned int n);
 
@@ -94,11 +94,11 @@ public:
     CDataStream GetUniqueness() override;
     bool CreateTxIn(CWallet* pwallet, CTxIn& txIn, uint256 hashTxOut = 0) override;
     bool CreateTxOuts(CWallet* pwallet, std::vector<CTxOut>& vout, CAmount nTotal) override;
-    bool IsZECOS() override { return false; }
+    bool IsZBIOA3() override { return false; }
     uint256 GetSerialHash() const override { return uint256(0); }
 
     uint64_t getStakeModifierHeight() const override { return nStakeModifierHeight; }
 };
 
 
-#endif //ECODOLLAR_STAKEINPUT_H
+#endif //BIOA3_STAKEINPUT_H

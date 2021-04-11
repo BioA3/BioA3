@@ -1,6 +1,6 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2020 The ECODOLLAR developers
+// Copyright (c) 2015-2020 The BIOA3 developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -22,7 +22,7 @@
 #include "wallet/walletdb.h" // for BackupWallet
 #include <stdint.h>
 #include <iostream>
-#include "zecos/deterministicmint.h"
+#include "zbioa3/deterministicmint.h"
 
 #include <QDebug>
 #include <QSet>
@@ -378,7 +378,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
                 return InvalidAmount;
             }
             total += subtotal;
-        } else { // User-entered ecodollar address / amount:
+        } else { // User-entered bioa3 address / amount:
             if (!validateAddress(rcp.address)) {
                 return InvalidAddress;
             }
@@ -439,7 +439,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
 
 
         if (recipients[0].useSwiftTX && total > sporkManager.GetSporkValue(SPORK_5_MAX_VALUE) * COIN) {
-            emit message(tr("Send Coins"), tr("SwiftX doesn't support sending values that high yet. Transactions are currently limited to %1 ECOS.").arg(sporkManager.GetSporkValue(SPORK_5_MAX_VALUE)),
+            emit message(tr("Send Coins"), tr("SwiftX doesn't support sending values that high yet. Transactions are currently limited to %1 BIOA3.").arg(sporkManager.GetSporkValue(SPORK_5_MAX_VALUE)),
                 CClientUIInterface::MSG_ERROR);
             return TransactionCreationFailed;
         }
@@ -457,7 +457,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
         transaction.setTransactionFee(nFeeRequired);
 
         if (recipients[0].useSwiftTX && newTx->GetValueOut() > sporkManager.GetSporkValue(SPORK_5_MAX_VALUE) * COIN) {
-            emit message(tr("Send Coins"), tr("SwiftX doesn't support sending values that high yet. Transactions are currently limited to %1 ECOS.").arg(sporkManager.GetSporkValue(SPORK_5_MAX_VALUE)),
+            emit message(tr("Send Coins"), tr("SwiftX doesn't support sending values that high yet. Transactions are currently limited to %1 BIOA3.").arg(sporkManager.GetSporkValue(SPORK_5_MAX_VALUE)),
                 CClientUIInterface::MSG_ERROR);
             return TransactionCreationFailed;
         }
@@ -507,7 +507,7 @@ WalletModel::SendCoinsReturn WalletModel::sendCoins(WalletModelTransaction& tran
                 std::string value;
                 rcp.paymentRequest.SerializeToString(&value);
                 newTx->vOrderForm.push_back(std::make_pair(key, value));
-            } else if (!rcp.message.isEmpty()) // Message from normal ecodollar:URI (ecodollar:XyZ...?message=example)
+            } else if (!rcp.message.isEmpty()) // Message from normal bioa3:URI (bioa3:XyZ...?message=example)
             {
                 newTx->vOrderForm.push_back(std::make_pair("Message", rcp.message.toStdString()));
             }
@@ -552,7 +552,7 @@ bool WalletModel::mintCoins(CAmount value, CCoinControl* coinControl ,std::strin
 }
 
 
-bool WalletModel::createZecosSpend(
+bool WalletModel::createZbioa3Spend(
         CWalletTx &wtxNew,
         std::vector<CZerocoinMint> &vMintsSelected,
         bool fMintChange,
@@ -569,7 +569,7 @@ bool WalletModel::createZecosSpend(
     }
 
     if (wallet->IsLocked()) {
-        receipt.SetStatus("Error: Wallet locked, unable to create transaction!", ZECOS_WALLET_LOCKED);
+        receipt.SetStatus("Error: Wallet locked, unable to create transaction!", ZBIOA3_WALLET_LOCKED);
         return false;
     }
 
@@ -595,7 +595,7 @@ bool WalletModel::createZecosSpend(
     return CheckTransaction(wtxNew, true, true, state, true);
 }
 
-bool WalletModel::sendZecos(
+bool WalletModel::sendZbioa3(
         std::vector<CZerocoinMint> &vMintsSelected,
         bool fMintChange,
         bool fMinimizeChange,
@@ -624,7 +624,7 @@ bool WalletModel::sendZecos(
 
 }
 
-bool WalletModel::convertBackZecos(
+bool WalletModel::convertBackZbioa3(
         CAmount value,
         std::vector<CZerocoinMint> &vMintsSelected,
         bool fMintChange,
@@ -811,9 +811,9 @@ static void NotifyZerocoinChanged(WalletModel* walletmodel, CWallet* wallet, con
                               Q_ARG(int, status));
 }
 
-static void NotifyzECOSReset(WalletModel* walletmodel)
+static void NotifyzBIOA3Reset(WalletModel* walletmodel)
 {
-    qDebug() << "NotifyzECOSReset";
+    qDebug() << "NotifyzBIOA3Reset";
     QMetaObject::invokeMethod(walletmodel, "checkBalanceChanged", Qt::QueuedConnection);
 }
 
@@ -851,7 +851,7 @@ void WalletModel::subscribeToCoreSignals()
     wallet->NotifyWatchonlyChanged.connect(boost::bind(NotifyWatchonlyChanged, this, _1));
     wallet->NotifyMultiSigChanged.connect(boost::bind(NotifyMultiSigChanged, this, _1));
     wallet->NotifyZerocoinChanged.connect(boost::bind(NotifyZerocoinChanged, this, _1, _2, _3, _4));
-    wallet->NotifyzECOSReset.connect(boost::bind(NotifyzECOSReset, this));
+    wallet->NotifyzBIOA3Reset.connect(boost::bind(NotifyzBIOA3Reset, this));
     wallet->NotifyWalletBacked.connect(boost::bind(NotifyWalletBacked, this, _1, _2));
 }
 
@@ -865,7 +865,7 @@ void WalletModel::unsubscribeFromCoreSignals()
     wallet->NotifyWatchonlyChanged.disconnect(boost::bind(NotifyWatchonlyChanged, this, _1));
     wallet->NotifyMultiSigChanged.disconnect(boost::bind(NotifyMultiSigChanged, this, _1));
     wallet->NotifyZerocoinChanged.disconnect(boost::bind(NotifyZerocoinChanged, this, _1, _2, _3, _4));
-    wallet->NotifyzECOSReset.disconnect(boost::bind(NotifyzECOSReset, this));
+    wallet->NotifyzBIOA3Reset.disconnect(boost::bind(NotifyzBIOA3Reset, this));
     wallet->NotifyWalletBacked.disconnect(boost::bind(NotifyWalletBacked, this, _1, _2));
 }
 
@@ -950,7 +950,7 @@ bool WalletModel::blacklistAddressFromColdStaking(const QString &addressStr) {
 bool WalletModel::updateAddressBookPurpose(const QString &addressStr, const std::string& purpose) {
     CBitcoinAddress address(addressStr.toStdString());
     if (address.IsStakingAddress())
-        return error("Invalid ECODOLLAR address, cold staking address");
+        return error("Invalid BIOA3 address, cold staking address");
     CKeyID keyID;
     if (!getKeyId(address, keyID))
         return false;
@@ -959,10 +959,10 @@ bool WalletModel::updateAddressBookPurpose(const QString &addressStr, const std:
 
 bool WalletModel::getKeyId(const CBitcoinAddress& address, CKeyID& keyID) {
     if (!address.IsValid())
-        return error("Invalid ECODOLLAR address");
+        return error("Invalid BIOA3 address");
 
     if (!address.GetKeyID(keyID))
-        return error("Unable to get KeyID from ECODOLLAR address");
+        return error("Unable to get KeyID from BIOA3 address");
 
     return true;
 }
@@ -1064,7 +1064,7 @@ void WalletModel::listLockedCoins(std::vector<COutPoint>& vOutpts)
 void WalletModel::listZerocoinMints(std::set<CMintMeta>& setMints, bool fUnusedOnly, bool fMaturedOnly, bool fUpdateStatus, bool fWrongSeed)
 {
     setMints.clear();
-    setMints = pwalletMain->zecosTracker->ListMints(fUnusedOnly, fMaturedOnly, fUpdateStatus, fWrongSeed);
+    setMints = pwalletMain->zbioa3Tracker->ListMints(fUnusedOnly, fMaturedOnly, fUpdateStatus, fWrongSeed);
 }
 
 void WalletModel::loadReceiveRequests(std::vector<std::string>& vReceiveRequests)

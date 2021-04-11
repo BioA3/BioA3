@@ -1,13 +1,13 @@
-// Copyright (c) 2017-2019 The ECODOLLAR developers
+// Copyright (c) 2017-2019 The BIOA3 developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "libzerocoin/Denominations.h"
 #include "libzerocoin/CoinSpend.h"
 #include "libzerocoin/Accumulator.h"
-#include "zecos/zerocoin.h"
-#include "zecos/deterministicmint.h"
-#include "zecos/zecoswallet.h"
+#include "zbioa3/zerocoin.h"
+#include "zbioa3/deterministicmint.h"
+#include "zbioa3/zbioa3wallet.h"
 #include "libzerocoin/Coin.h"
 #include "amount.h"
 #include "chainparams.h"
@@ -16,7 +16,7 @@
 #include "wallet/wallet.h"
 #include "wallet/walletdb.h"
 #include "txdb.h"
-#include "test/test_ecodollar.h"
+#include "test/test_bioa3.h"
 #include <boost/test/unit_test.hpp>
 #include <iostream>
 
@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(zerocoin_wrapped_serial_spend_test)
     std::string strWalletFile = "unittestwallet.dat";
     CWalletDB walletdb(strWalletFile, "cr+");
     CWallet wallet(strWalletFile);
-    CzECOSWallet *czECOSWallet = new CzECOSWallet(wallet.strWalletFile);
+    CzBIOA3Wallet *czBIOA3Wallet = new CzBIOA3Wallet(wallet.strWalletFile);
 
     // Get the 5 created mints.
     libzerocoin::CoinDenomination denom = libzerocoin::CoinDenomination::ZQ_FIFTY;
@@ -48,8 +48,8 @@ BOOST_AUTO_TEST_CASE(zerocoin_wrapped_serial_spend_test)
     for (unsigned int i = 0; i < TESTS_COINS_TO_ACCUMULATE; i++) {
         libzerocoin::PrivateCoin coin(ZCParams, denom, false);
         CDeterministicMint dMint;
-        czECOSWallet->GenerateDeterministicZECOS(denom, coin, dMint, true);
-        czECOSWallet->UpdateCount();
+        czBIOA3Wallet->GenerateDeterministicZBIOA3(denom, coin, dMint, true);
+        czBIOA3Wallet->UpdateCount();
         vCoins.emplace_back(coin);
     }
 

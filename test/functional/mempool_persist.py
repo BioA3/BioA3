@@ -38,10 +38,10 @@ Test is as follows:
 import os
 import time
 
-from test_framework.test_framework import EcodollarTestFramework
+from test_framework.test_framework import BioA3TestFramework
 from test_framework.util import *
 
-class MempoolPersistTest(EcodollarTestFramework):
+class MempoolPersistTest(BioA3TestFramework):
     def set_test_params(self):
         self.num_nodes = 3
         self.extra_args = [[], ["-persistmempool=0"], []]

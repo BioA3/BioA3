@@ -168,7 +168,7 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
-  <include location="../ecodollar.qrc"/>
+  <include location="../bioa3.qrc"/>
  </resources>
  <connections/>
 </ui>

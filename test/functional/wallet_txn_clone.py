@@ -4,10 +4,10 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test the wallet accounts properly when there are cloned transactions with malleated scriptsigs."""
 
-from test_framework.test_framework import EcodollarTestFramework
+from test_framework.test_framework import BioA3TestFramework
 from test_framework.util import *
 
-class TxnMallTest(EcodollarTestFramework):
+class TxnMallTest(BioA3TestFramework):
     def set_test_params(self):
         self.num_nodes = 4
 
