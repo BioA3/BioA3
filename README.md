@@ -13,9 +13,9 @@ More information at [bioa3.org](http://www.bioa3.org) Visit our ANN thread at [B
 <tr><td>Algo</td><td>Quark</td></tr>
 <tr><td>Block Time</td><td>60 Seconds</td></tr>
 <tr><td>Difficulty Retargeting</td><td>Every Block</td></tr>
-<tr><td>Max Coin Supply (PoW Phase)</td><td>9,125.47528 BIOA3</td></tr>
+<tr><td>Max Coin Supply (PoW Phase)</td><td>34,400 BIOA3</td></tr>
 <tr><td>Max Coin Supply (PoS Phase)</td><td>Infinite</td></tr>
-<tr><td>Premine</td><td>100,000,000,000 BIOA3*</td></tr>
+<tr><td>Premine</td><td>3,000,000,000 BIOA3*</td></tr>
 </table>
 
 ### Reward Distribution
@@ -23,19 +23,19 @@ More information at [bioa3.org](http://www.bioa3.org) Visit our ANN thread at [B
 <table>
 <th colspan=4>Genesis Block</th>
 <tr><th>Block Height</th><th>Reward Amount</th><th>Notes</th></tr>
-<tr><td>1</td><td>100,000,000,000 BIOA3</td><td>Initial Pre-mine</td></tr>
+<tr><td>1</td><td>3,000,000,000 BIOA3</td><td>Initial Pre-mine</td></tr>
 </table>
 
 ### PoW Rewards Breakdown
 
 <table>
 <th>Block Height</th><th>Masternodes</th><th>Miner</th><th>Backbone Budget</th>
-<tr><td>2-400</td><td>20% (1,825.09506 BIOA3)</td><td>40% (3,650.19012 BIOA3)</td><td>40% (3,650.19012 BIOA3)</td></tr>
+<tr><td>2-400</td><td>50% (17,157 BIOA3)</td><td>40% (13,726.6 BIOA3)</td><td>10% (3,431.4 BIOA3)</td></tr>
 </table>
 
 ### PoS Rewards Breakdown
 
 <table>
 <th>Phase</th><th>Block Height</th><th>Reward</th><th>Masternodes & Stakers</th><th>Backbone Budget</th>
-<tr><td>Phase X</td><td>401-∞</td><td>X BIOA3</td><td>60% (X*0,60 BIOA3)</td><td>40% (X*0,40 BIOA3)</td></tr>
+<tr><td>Phase X</td><td>401-∞</td><td>X BIOA3</td><td>90% (X*0,90 BIOA3)</td><td>10% (X*0,10 BIOA3)</td></tr>
 </table>
